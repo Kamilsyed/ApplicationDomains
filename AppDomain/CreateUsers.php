@@ -162,9 +162,9 @@ if(Input::exists())
 	        	 <span id="spryselect1">
           			<label for="groups" style="color:#FFF;">User Type</label>
           			<select name="groups" id="groups">
-           				<option value="Admin">Admin</option>
-          	  			<option value="Accountant">Accountant</option>
-              			<option value="Manager">Manager</option>
+           				<option value="1">Admin</option>
+          	  			<option value="3">Accountant</option>
+              			<option value="2">Manager</option>
           			</select>
           <span class="selectRequiredMsg">Please select a user type.</span></span>
 
