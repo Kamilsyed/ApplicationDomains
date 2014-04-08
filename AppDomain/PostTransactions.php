@@ -1,6 +1,6 @@
 <?php
-//ini_set('display_startup_errors', TRUE);
-//ini_set('display_errors',1); 
+ini_set('display_startup_errors', TRUE);
+ini_set('display_errors',1); 
 require_once 'core/init.php';
 
 $set = new Set();
@@ -19,17 +19,17 @@ if(Input::exists())
 
 		if(Input::get($rad) != 0)
 		{
-			$con = mysql_connect('localhost', 'host', 'test');
+			$con = mysqli_connect('localhost', 'host', 'test', 'test');
 
 			if (!$con)
 			{
 				Redirect::to('errors/500.php');
 			}
-			mysql_select_db('test');
+			
 			$query = "SELECT * FROM `transactions` WHERE set_id='". Input::get($id) ."'";
-			$results = mysql_query($query);
+			$results = mysqli_query($con, $query);
 
-			while($res = mysql_fetch_assoc($results))
+			while($res = mysqli_fetch_assoc($results))
 			{
 				$acc->findByNumber($res['acct_id']);
 				$acc->update_balance($res['acct_id'], $res['type'], $res['amount']);
@@ -49,7 +49,7 @@ if(Input::exists())
 				$e->getMessage();
 			}
 
-			mysql_close($con);
+			mysqli_close($con);
 		}
 
 	}
@@ -78,6 +78,12 @@ if(Input::exists())
 <link href="SpryAssets/SpryValidationTextField.css" rel="stylesheet" type="text/css">
 <link href="SpryAssets/SpryValidationConfirm.css" rel="stylesheet" type="text/css">
 <link href="SpryAssets/SpryValidationSelect.css" rel="stylesheet" type="text/css">
+<script language="JavaScript">
+            function download (id)
+            {
+                window.open ("download.php?fileId="+id, "hiddenFrame");
+            }
+</script>
 </head>
 <body>
 		
@@ -127,24 +133,24 @@ if(Input::exists())
     <tbody>
     	<tr>
         	<?php
-			$con = mysql_connect("localhost","host","test");
+			$con = mysqli_connect("localhost","host","test","test");
 
 		    if (!$con)
 	        {
-	             die('Could not connect: ' . mysql_error());
+	             die('Could not connect: ' . mysqli_error($con));
 	        }
 
-		    mysql_select_db('test'); 
-		    $result = mysql_query("SELECT * FROM sets WHERE type='1'");
+		     
+		    $result = mysqli_query($con,"SELECT * FROM sets WHERE type='1'");
 
 		    if(!$result)
 	        {
-	            die(mysql_error());
+	            die(mysqli_error($con));
 	        }
 
 	        $c = 0;
 
-	        while($row = mysql_fetch_assoc($result))
+	        while($row = mysqli_fetch_assoc($result))
 	            {
 
 		    	echo "<tr id='set$c' name='set$c' value='" . $row['id'] . "'>";
@@ -156,11 +162,12 @@ if(Input::exists())
 	            echo "<input type='radio' name='rad$c' value='2'>Post</input><br>";
 	            echo "<input type='radio' name='rad$c' value='3'>Reject</input></th>";
 		    	echo "<input type='hidden' name='id$c' id='id$c' value='" . $row['id'] . "'>";
+		    	echo "<th><a href='javascript:download(".$row['id'].")'> ".$row['file_name']."</a></th>";
 		        echo "</tr>"; 
 	             
-	             $q = mysql_query("SELECT * FROM transactions WHERE set_id='" . $row['id'] . "'");
+	             $q = mysqli_query($con, "SELECT * FROM transactions WHERE set_id='" . $row['id'] . "'");
 
-	             while($row2 = mysql_fetch_assoc($q))
+	             while($row2 = mysqli_fetch_assoc($q))
 	             {
 	             	$account = new Account();
 	             	$account->findByNumber($row2['acct_id']);
@@ -169,6 +176,7 @@ if(Input::exists())
 	             	echo "<td>" . $account->data()->name . "</td>";
 	             	echo "<td>" . $row2['amount'] . "</td>";
 	             	echo "<td>" . $row2['type'] . "</td>";
+	             	echo "<td></td>";
 	             	echo "<td></td>";
 	             	echo "</tr>";
 	             }

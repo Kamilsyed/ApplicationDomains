@@ -29,39 +29,74 @@ if(Input::exists())
 	$user =  new User();
     date_default_timezone_set('America/New_York');
     $set = new Set();
-    $file = 'userFile';
+   
+      
+    /*$file = 'userFile';
 	$upload = Set::upload($file);
 	$fileName = $upload['file_name'];
 	$fileType = $upload['file_type'];
 	$fileSize = $upload['file_size'];
-	$fileData = $upload['file_data'];
+	$fileData = $upload['file_data'];*/
+
+
     /*This validates the amounts in the transactions, and checks for duplicate account entries.
     If the amount of credit and debit transactions do NOT match OR there are duplicate account entries
     then the page will display an error window.*/
     if($transaction->balanced($types, $amount))
     {        
+    	  $DB = mysqli_connect('localhost','host','test','test');
+        
+      
+            
+            $fileName = mysqli_real_escape_string($DB, $_FILES['userFile']["name"]);
+            $fileSize = mysqli_real_escape_string($DB, $_FILES['userFile']['size']);
+            $fileData = mysqli_real_escape_string($DB, file_get_contents($_FILES['userFile']["tmp_name"]));
+            $fileType = mysqli_real_escape_string($DB, $_FILES['userFile']["type"]);
+            $allowedExts = array("gif", "jpeg", "jpg", "png", "pdf"/*, "txt"*/);
+            $temp = explode(".", $_FILES['userFile']["name"]);
+            //$ext = end($temp);
+            $temp2 = end($temp);
+            $ext = (string) $temp2;
+
+            if ((($_FILES['userFile']["type"] == "image/gif")
+            || ($_FILES['userFile']["type"] == "image/jpeg")
+            || ($_FILES['userFile']["type"] == "image/jpg")
+            || ($_FILES['userFile']["type"] == "image/pjpeg")
+            //|| ($_FILES["upload"]["type"] == "text/plain")
+            || ($_FILES['userFile']["type"] == "image/x-png")
+            || ($_FILES['userFile']["type"] == "application/pdf")
+            || ($_FILES['userFile']["type"] == "image/png"))
+            && ($_FILES['userFile']["size"] < 1024000)
+            && in_array($ext, $allowedExts))
+            {
+            	try
+				{
+					$set->create(array(
+						'description' => Input::get('description'),
+						'user_added' => $user->data()->username,
+						'date_added' => date("Y-m-d H:i:s"),
+						'type' => 1,
+						'file_name'=>$fileName,
+						'file_type'=>$fileType,
+						'file_size'=>$fileSize,
+						'file_data'=>$fileData
+						));
+				}
+				catch(Exception $e)
+				{
+					Redirect::to('errors/500.php');
+				}
+		    }
+		    else
+		    	echo "Not acceptable file.";
+		        
+	
       	/*
 		Create a set passing description text field in HTML
 		user_added is a function call to $user to get current username
 		type defaults to 1 'ONE' alias for OPEN TRANSACTION DO NOT CHANGE TYPE
 		*/
-		try
-		{
-			$set->create(array(
-				'description' => Input::get('description'),
-				'user_added' => $user->data()->username,
-				'date_added' => date("Y-m-d H:i:s"),
-				'type' => 1,
-				'file_name'=>$fileName,
-				'file_type'=>$fileType,
-				'file_size'=>$fileSize,
-				'file_data'=>$fileData
-				));
-		}
-		catch(Exception $e)
-		{
-			Redirect::to('errors/500.php');
-		}
+		
 
 		/*After set is created, an ID for that set is retrieved. This will be the linking variable for all inserted
 		transactions.*/
