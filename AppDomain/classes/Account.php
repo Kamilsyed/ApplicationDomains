@@ -41,48 +41,80 @@ class Account
 
 		switch($type)
 		{
-			case 'asset':
-				if($number >= 1000000000)
+			case 'Current Assets':
+				if($number >= 100000000)
 				{
 					return $number + 1;
 				}
 				else
-					{return 1000000000;}
+					{return 100000000;}
 			break;
-			case 'liability':
-				if($number >= 2000000000)
+			case 'Long-Term Assests':
+				if($number >= 200000000)
 				{
 					return $number + 1;
 				}
 				else
-					{return 2000000000;}
+					{return 200000000;}
 			break;
-			case 'revenue':
-				if($number >= 3000000000)
+			case 'Current Liabilities':
+				if($number >= 300000000)
 				{
 					return $number + 1;
 				}
 				else
-					{return 3000000000;}
+					{return 300000000;}
 			break;
-			case 'equity':
-				if($number >= 4000000000)
+			case 'Long-Term Liabilites':
+				if($number >= 400000000)
 				{
 					return $number + 1;
 				}
 				else
-					{return 4000000000;}
+					{return 400000000;}
 			break;
-			case 'expenses':
-				if($number >= 5000000000)
+			case 'Equity':
+				if($number >= 500000000)
 				{
 					return $number + 1;
 				}
 				else
-					{return 5000000000;}
+					{return 500000000;}
+			break;
+				case 'Operating Revenue':
+				if($number >= 600000000)
+				{
+					return $number + 1;
+				}
+				else
+					{return 600000000;}
+			break;
+				case 'Operating Expenses':
+				if($number >= 700000000)
+				{
+					return $number + 1;
+				}
+				else
+					{return 700000000;}
+			break;
+				case 'Non-Operating Revenue':
+				if($number >= 800000000)
+				{
+					return $number + 1;
+				}
+				else
+					{return 800000000;}
+			break;
+				case 'Non-Operating Expenses':
+				if($number >= 900000000)
+				{
+					return $number + 1;
+				}
+				else
+					{return 900000000;}
 			break;
 			default:
-				return 0000000000;
+				return 000000000;
 			break;
 		}
 	}
@@ -91,19 +123,6 @@ class Account
 	{
 
 		$data = $this->_db->get('accounts', array('name', '=', $acc));
-
-		if($data->count())
-		{
-			$this->_data = $data->first();
-			return true;
-		}
-
-		return false;
-	}
-
-	public function findByNumber($id = null)
-	{
-		$data = $this->_db->get('accounts', array('number', '=', $id));
 
 		if($data->count())
 		{
