@@ -98,6 +98,8 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
     
 ?>
 
+
+
 <head>
 		<meta charset="utf-8">
 		<title>View Report</title>
@@ -491,6 +493,7 @@ break;
  
  }
 		 ?>
+         
          
          
          
