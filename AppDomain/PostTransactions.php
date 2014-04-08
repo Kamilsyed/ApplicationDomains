@@ -69,9 +69,11 @@ if(Input::exists())
 	          <div class="navbar-inner">
 	            <div class="container">
 	              <ul class="nav">
-	                <li class="active" style="margin-left:285px"><a href="#">Home</a></li>
-	                <li style="margin-left:25px"><a href="#" >About Us</a></li>
-	                <li style="margin-left:25px"><a href="#">Contact Us</a></li>
+	                <li style="margin-left:190px"><a href="MangerHomepage.html">Home</a></li>
+	                <li style="margin-left:25px"><a href="aboutus.html" >About Us</a></li>
+                    <li  style="margin-left:25px"><a href="services.html">Services</a></li>
+	                <li  style="margin-left:25px"><a href="contactus.html">Contact Us</a></li>
+                    <li style="margin-left:25px"><a href="">Log out</a></li>
 	              </ul>
 	            </div>
 	          </div>
@@ -84,17 +86,19 @@ if(Input::exists())
 	        	<div class="span4">
 	        		<ul class="nav nav-list">
 					  <li class="nav-header">Features</li>
-					  <li ><a href="ManagerHomepage.php">Chart of Accounts</a></li>
-					  <li class="active"><a href="PostTransactions.php">Post Transactions</a></li>
-					  
-                      <li ><a href="ViewFinalizedTransactions.php">View Finalized Transactions</a></li>
-                      <li><a href="index.php">Logout</a></li>
+					  <li ><a href="managerchartofaccounts.html">Chart of Accounts</a></li>
+					  <li class="active"><a href="PostTransactions.html">Post Transactions</a></li>
+                       <li ><a href="edittransactions.html">Edit Transactions</a></li>
+					  <li><a href="ViewOpenTransactions.html">Open Transactions</a></li>
+                      <li ><a href="ViewFinalizedTransactions.html">Final Transactions</a></li>
+                      <li><a href="viewreportsmanager.html">Reports</a></li>
 					  
 					</ul>
 	        	</div>
 	        	<!-- Right side Content Vertical Area -->
         	  <div class="span8">
-  <form name='form1' method='post' action=''>           
+  <form name='form1' method='post' action=''>
+          
   <table id="rounded-corner">
   <thead> <h3 style="margin-left:190px; color:#FFFFFF"> Transaction Log</h3>
     </thead>
@@ -127,6 +131,7 @@ if(Input::exists())
 	        	echo "<th scope='col' class='rounded-q2'>". $row['user_added'] . "</th>";
 	            echo "<th scope='col' class='rounded-q1'>". $row['date_added'] . "</th>";
 	            echo "<th scope='col' class='rounded-q3' width='100px'>";
+				echo '<textarea name="comments" cols="4" rows="3">' . '</textarea><br>';
 	            echo "<input type='radio' name='rad$c' value='2'>Post</input><br>";
 	            echo "<input type='radio' name='rad$c' value='3'>Reject</input></th>";
 		    	echo "<input type='hidden' name='id$c' id='id$c' value='" . $row['id'] . "'>";

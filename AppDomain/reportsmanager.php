@@ -179,11 +179,11 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
  	case "TrialBalance": 
 	
 	echo ' <table id="rounded-corner" summary="Trial Balance"> ';
-  	echo "<thead>";
+  	echo '<thead> <h3 style="margin-left:190px; color:#FFFFFF">Trial Balance</h3>';
         echo '<tr>';
-            echo '<th scope="col" class="rounded-company">Account Name</th>';
-            echo '<th scope="col" class="rounded-q1">Debit Amount</th>';
-            echo '<th scope="col" class="rounded-q4">Credit Amount</th>';
+            echo '<th scope="col" class="rounded-company"><b>Account Name</b></th>';
+            echo '<th scope="col" class="rounded-q1"><b>Debit Amount</b></th>';
+            echo '<th scope="col" class="rounded-q4"><b>Credit Amount</b></th>';
           
         echo '</tr>';
     echo '</thead>';
@@ -220,9 +220,9 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
              echo "</tr>";
             }
   		echo "<tr>";
-        echo "<th class=trbpt>" . 'Total' . "</th>";
-        echo "<td class=trbdrat align=right>" . $totaldebit . "</td>";
-		echo "<td class=trbcrat align=right>" . $totalcredit . "</td>";
+        echo "<th class=trbpt>" . '<b>' . 'Total' . '</b>' . "</th>";
+        echo "<td class=trbdrat align=right>" . '<b>' . $totaldebit . '</b>' . "</td>";
+		echo "<td class=trbcrat align=right>" . '<b>' . $totalcredit . '</b>' . "</td>";
         echo "</table>";        
        
         
@@ -234,10 +234,10 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
  		case "BalanceSheet":
 		
 		echo '<table id="rounded-corner" summary="Balance Sheet">';
- 	    echo '<thead>';
+ 	    echo '<thead> <h3 style="margin-left:190px; color:#FFFFFF">Balance Sheet</h3>';
          echo '<tr>';
-            echo '<th scope="col" class="rounded-company"> Assets</th>';
-             echo '<th scope="col" class="rounded-q4">Total Amount</th>';
+            echo '<th scope="col" class="rounded-company"> <b>Assets</b></th>';
+             echo '<th scope="col" class="rounded-q4"><b>Total Amount</b></th>';
           
          echo '</tr>';
      echo '</thead>';
@@ -267,8 +267,8 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
  echo '<table id="rounded-corner" summary="Balance Sheet">';
    echo '<thead>';
          echo '<tr>';
-             echo '<th scope="col" class="rounded-company"> Liabilities</th>';
-             echo '<th scope="col" class="rounded-q4">Total Amount</th>';
+             echo '<th scope="col" class="rounded-company"><b>Liabilities & Stockholder Equity</b></th>';
+             echo '<th scope="col" class="rounded-q4"><b>Total Amount</b></th>';
           
          echo '</tr>';
      echo '</thead>';
@@ -286,6 +286,15 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
              $totalcredit+= $row['balance'];        
              echo "</tr>";
             }
+			
+		while($row = mysqli_fetch_assoc($result4))
+            {
+             echo "<tr>";
+             echo "<td>" . $row['name'] . "</td>";
+			 echo "<td>" . $row['balance'] . "</td>";
+             $totalcredit+= $row['balance'];        
+             echo "</tr>";
+            }
   		echo "<tr>";
         echo "<th class=trbpt>" . 'Total:' . "</th>";
         echo "<td class=trbdrat align=right>" . $totalcredit . "</td>";
@@ -294,40 +303,10 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
         
     echo '</tbody>';
  echo '</table>';
- echo '<br/>';
-
- echo '<table id="rounded-corner" summary="Balance Sheet">';
-   echo '<thead>';
-         echo '<tr>';
-             echo '<th scope="col" class="rounded-company">Stockholder Equity</th>';
-             echo '<th scope="col" class="rounded-q4">Total Amount</th>';
-          
-         echo '</tr>';
-     echo '</thead>';
-
-	 echo '<tbody>';
-        
-        $totalcredit2=0;
-        
-		while($row = mysqli_fetch_assoc($result4))
-            {
-             echo "<tr>";
-             echo "<td>" . $row['name'] . "</td>";
-			 echo "<td>" . $row['balance'] . "</td>";
-             $totalcredit2+= $row['balance'];        
-             echo "</tr>";
-            }
-  		echo "<tr>";
-        echo "<th class=trbpt>" . 'Total:' . "</th>";
-        echo "<td class=trbdrat align=right>" . $totalcredit2 . "</td>";
-        echo "</table>";        
-        
-        
-    echo '</tbody>';
-
- echo '</table>';
 
 		break;
+		
+
 		
 	case "IncomeStatement":
 	
