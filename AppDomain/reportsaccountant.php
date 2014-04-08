@@ -28,59 +28,73 @@ $result4 = mysqli_query($con, "SELECT * FROM accounts WHERE type LIKE '%Equity%'
 
 $result5 = mysqli_query($con, "SELECT * FROM accounts WHERE type='Operating Revenue' AND  date_added >= '$fromdate'  AND date_added < '$todate' ");
 
-$result6 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Cost Of Goods Sold' AND  date_added >= '$fromdate'  AND date_added < '$todate' ");
+$result6 = mysqli_query($con, "SELECT * FROM accounts WHERE name LIKE '%Goods Sold%' AND  date_added >= '$fromdate'  AND date_added < '$todate' ");
 
 $result7 = mysqli_query($con, "SELECT * FROM accounts WHERE type='Operating Expenses' AND  date_added >= '$fromdate'  AND date_added < '$todate' ");
 
-$result8 = mysqli_query($con, "SELECT * FROM accounts WHERE type='Non-Operating Revenue' AND  date_added >= '$fromdate'  AND date_added < '$todate' ");
+$result8 = mysqli_query($con, "SELECT * FROM accounts WHERE type='Non-Operating Revenue' AND name !='Sales Discounts' AND name !='Sales Returns and Allowances' AND   date_added >= '$fromdate'  AND date_added < '$todate' ");
 
 $result9 = mysqli_query($con, "SELECT * FROM accounts WHERE type='Non-Operating Expenses' AND  date_added >= '$fromdate'  AND date_added < '$todate' ");
+
+$result10 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Sales Returns and Allowances' OR name='Sales Discounts' AND  date_added >= '$fromdate'  AND date_added < '$todate' ");
+
+$result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Returns and Allowances' OR name='Purchase Discounts' AND  date_added >= '$fromdate'  AND date_added < '$todate' ");
+
 
 
     if(!$result)
         {
-        //die(mysqli_error($con));
+       		die(mysqli_error($con));
         }
 		
 	if(!$result2)
         {
-       // die(mysqli_error($con));
+        die(mysqli_error($con));
         }
 		
 	if(!$result3)
         {
-       // die(mysqli_error($con));
+        die(mysqli_error($con));
         }
 		
 	if(!$result4)
         {
-        //die(mysqli_error($con));
+        die(mysqli_error($con));
         }
 		
 	if(!$result5)
         {
-        //die(mysqli_error($con));
+        die(mysqli_error($con));
         }
 		
 	if(!$result6)
         {
-        //die(mysqli_error($con));
+        die(mysqli_error($con));
         }
 		
 	if(!$result7)
         {
-        //die(mysqli_error($con));
+        die(mysqli_error($con));
         }
 		
 	if(!$result8)
         {
-        //die(mysqli_error($con));
+        die(mysqli_error($con));
         }
 	if(!$result9)
         {
-        //die(mysqli_error($con));
+        die(mysqli_error($con));
         }
     
+		if(!$result10)
+        {
+        die(mysqli_error($con));
+        }
+		
+		if(!$result11)
+        {
+        die(mysqli_error($con));
+        }
     
 ?>
 
@@ -322,7 +336,7 @@ echo '<table id="rounded-corner" summary="2007 Major IT Companies Profit">';
 
   echo '<thead> <h3 style="margin-left:190px; color:#FFFFFF">Income Statement</h3>';
     	echo '<tr>';
-        	echo '<th scope="col" class="rounded-company">Operating Revenue</th>';
+        	echo '<th scope="col" colspan="2" class="rounded-company"><b>Gross Profit</b></th>';
         	
         echo '</tr>';
     echo '</thead>';
@@ -330,43 +344,83 @@ echo '<table id="rounded-corner" summary="2007 Major IT Companies Profit">';
    echo '<tbody>';
    
     $grossprofit=0;
+	$operatingrev=0;
     $operatingexp=0;
     $operatingincome=0;
     $nonoperatingrev=0;
     $nonoperatingexp=0;
 	$nonoperatingsub=0;
     $netincome=0;
+	$cost=0;
         
         while($row = mysqli_fetch_assoc($result5))
         {
     		echo '<tr>';
-        	  echo "<td>" . '&nbsp;&nbsp;'. $row['name'] . "</td>";
+        	echo "<td>" . '&nbsp;&nbsp;'. $row['name'] . "</td>";
             echo "<td>" . $row['balance'] . "</td>";
-            $grossprofit+= $row['balance'];
+			$operatingrev+=$row['balance'];
+            
            
         	echo '</tr>';
         }
+		
+			 while($row = mysqli_fetch_assoc($result10))
+        {
+        
+       	 echo '<tr>';
+        	echo "<td>" . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . $row['name'] . "</td>";
+            echo "<td>" . '-' . $row['balance'] . "</td>";
+           	$operatingrev-= $row['balance'];
+        echo '</tr>';
+        
+        }
+		
+		echo "<tr>";
+        echo "<td>" . '<b>Total Operating Revenue:</b>' . "</td>";
+        echo "<td>" . '<b>' . $operatingrev . '</b>' . "</td>";
+        echo "</tr>";
+		
+		echo '<tr><td>&nbsp;</td><td>&nbsp;</td></tr>';
         
         while($row = mysqli_fetch_assoc($result6))
         {
         
        	 echo '<tr>';
         	echo "<td>" . '&nbsp;&nbsp;' . $row['name'] . "</td>";
-            echo "<td>" . $row['balance'] . "</td>";
-           	$grossprofit-= $row['balance'];
+            echo "<td>"  . $row['balance'] . "</td>";
+			$cost+= $row['balance'];
         echo '</tr>';
         
         }
+		
+		 while($row = mysqli_fetch_assoc($result11))
+        {
         
+       	 echo '<tr>';
+        	echo "<td>" . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . $row['name'] . "</td>";
+            echo "<td>" . '-' . $row['balance'] . "</td>";
+           	$cost-= $row['balance'];
+        echo '</tr>';
+        
+        }
+		
+		echo "<tr>";
+        echo "<td>" . '<b>Total Cost Of Goods Sold:</b>' . "</td>";
+        echo "<td>" . '<b>'  . $cost . '</b>' . "</td>";
+        echo "</tr>";
+		
+		echo '<tr><td>&nbsp;</td><td>&nbsp;</td></tr>';
+		
+        $grossprofit=($operatingrev-$cost);
+		
         echo "<tr>";
-        echo "<td>" . 'Gross Profit:' . "</td>";
-        echo "<td>" . '&nbsp;&nbsp;&nbsp;&nbsp;'  . $grossprofit . "</td>";
+        echo "<td>" . '<b>Gross Profit:</b>' . "</td>";
+        echo "<td>" . '&nbsp;&nbsp;&nbsp;&nbsp;' .'<b>'  . $grossprofit . '</b>' . "</td>";
         echo "</tr>";  
         
-        echo '<tr><td>&nbsp;</td><td>&nbsp;</td></tr>';
         
         
-        echo '<tr><th scope="col" class="rounded-company">Operating Expenses</th></tr>';
+        echo '<tr><th scope="col" colspan="2" class="rounded-company"><b>Operating Income</b></th></tr>';
         
 		while($row = mysqli_fetch_assoc($result7))
         {
@@ -382,20 +436,20 @@ echo '<table id="rounded-corner" summary="2007 Major IT Companies Profit">';
 		}
 		
 		echo "<tr>";
-        echo "<td>" . '&nbsp;&nbsp;'. 'Total Operating Expenses:' . "</td>";
-        echo "<td>"  . $operatingexp . "</td>";
+        echo "<td>" . '&nbsp;'. '<b>Total Operating Expenses:</b>' . "</td>";
+        echo "<td>" . '<b>'  . $operatingexp . '</b>' . "</td>";
         echo "</tr>";  
         
         echo '<tr><td>&nbsp;</td><td>&nbsp;</td></tr>';
 		$operatingincome=$grossprofit-$operatingexp;
-		echo '<tr>';
-		echo "<td>" . 'Operating Income:' . "<td>";
-		echo "<td>" . $operatingincome . "</td>";
-		echo '<tr>';
+		echo "<tr>";
+        echo "<td>" . '<b>Total Operating Income:</b>' . "</td>";
+        echo "<td>" . '<b>'  . $operatingincome . '</b>' . "</td>";
+        echo "</tr>";
 		
-		echo '<tr><td>&nbsp;</td><td>&nbsp;</td></tr>';
-        
-        echo '<tr><th scope="col" class="rounded-company">Non-Operating Revenues</th></tr>';
+		
+		
+        echo '<tr><th scope="col" colspan="2" class="rounded-company"><b>Non-Operating Revenues</b></th></tr>';
 		
         while($row = mysqli_fetch_assoc($result8))
         {
@@ -411,13 +465,13 @@ echo '<table id="rounded-corner" summary="2007 Major IT Companies Profit">';
 		}
 		
 		echo "<tr>";
-        echo "<td>" . '&nbsp;&nbsp;'. 'Total Non-Operating Revenues:' . "</td>";
-        echo "<td>"  . $nonoperatingrev . "</td>";
+        echo "<td>" . '<b>Total Non-Operating Revenues:</b>' . "</td>";
+        echo "<td>" . '<b>'  . $nonoperatingrev . '</b>' . "</td>";
         echo "</tr>";
 		
-		echo '<tr><td>&nbsp;</td><td>&nbsp;</td></tr>';
+
         
-        echo '<tr><th scope="col" class="rounded-company">Non-Operating Expenses</th></tr>';
+        echo '<tr><th scope="col" colspan="2" class="rounded-company"><b>Non-Operating Expenses</b></th></tr>';
 		
         while($row = mysqli_fetch_assoc($result9))
         {
@@ -433,12 +487,11 @@ echo '<table id="rounded-corner" summary="2007 Major IT Companies Profit">';
 		}
 		
 		echo "<tr>";
-        echo "<td>" . '&nbsp;&nbsp;'. 'Total Non-Operating Expenses:' . "</td>";
-        echo "<td>"  . $nonoperatingexp . "</td>";
+        echo "<td>" . '<b>Total Non-Operating Expenses:</b>' . "</td>";
+        echo "<td>" .'<b>' . $nonoperatingexp .'</b>' . "</td>";
         echo "</tr>";
 		
 		
-		echo '<tr><td>&nbsp;</td><td>&nbsp;</td></tr>';
 		echo '<tr><td>&nbsp;</td><td>&nbsp;</td></tr>';
 		
 		$nonoperatingsub=$nonoperatingrev-$nonoperatingexp;
@@ -446,8 +499,8 @@ echo '<table id="rounded-corner" summary="2007 Major IT Companies Profit">';
 		$netincome=$operatingincome+$nonoperatingsub;
 		
 		        echo '<tr>';
-				echo '<th scope="col" class="rounded-company">Net Income:</th>';
-				echo "<td>" . $netincome . "</td>";
+				echo '<th scope="col" class="rounded-company"><b>Net Income:</b></th>';
+				echo "<td>" .'<b>' . $netincome . '</b>' . "</td>";
 
 		echo '</tbody>';
 echo '</table>';
