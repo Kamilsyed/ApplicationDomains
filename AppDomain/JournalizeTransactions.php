@@ -29,7 +29,12 @@ if(Input::exists())
 	$user =  new User();
     date_default_timezone_set('America/New_York');
     $set = new Set();
-
+    $file = 'userFile';
+	$upload = Set::upload($file);
+	$fileName = $upload['file_name'];
+	$fileType = $upload['file_type'];
+	$fileSize = $upload['file_size'];
+	$fileData = $upload['file_data'];
     /*This validates the amounts in the transactions, and checks for duplicate account entries.
     If the amount of credit and debit transactions do NOT match OR there are duplicate account entries
     then the page will display an error window.*/
@@ -46,7 +51,11 @@ if(Input::exists())
 				'description' => Input::get('description'),
 				'user_added' => $user->data()->username,
 				'date_added' => date("Y-m-d H:i:s"),
-				'type' => 1
+				'type' => 1,
+				'file_name'=>$fileName,
+				'file_type'=>$fileType,
+				'file_size'=>$fileSize,
+				'file_data'=>$fileData
 				));
 		}
 		catch(Exception $e)
@@ -151,7 +160,7 @@ if(Input::exists())
 	        	</div>
 	        	<!-- Right side Content Vertical Area -->
 	        	<div class="span8" spry:region="mulitple">
-	        		<form name="form1" method="post" action="">
+	        		<form enctype="multipart/form-data" action="" method="post">
 	        		<input type="button" value="Add Account" onClick="addRow('account')"class="btn btn-med btn-success" /> 
 					<input type="button" value="Remove Account" onClick="deleteRow('account')" class="btn btn-med btn-success" /> 
 	        		<input name="Journalize" type="submit" value="Journalize" class="btn btn-med btn-success" />
@@ -174,10 +183,10 @@ if(Input::exists())
 					            		<select name="accountname[]" id="account">
 						            		<?php $con = mysql_connect("localhost","root","test"); 
 												mysql_select_db('test');?> 
-										   	<?php $result = mysql_query('SELECT * FROM accounts'); ?> 
+										   	<?php $result = mysql_query('SELECT * FROM accounts ORDER BY name'); ?> 
 										   	<?php while($row = mysql_fetch_assoc($result)) { ?> 
 										       	<option value="<?php echo htmlspecialchars($row['name']);?>"> 
-										           	<?php echo htmlspecialchars($row['name']); ?> 
+										           	<?php echo htmlspecialchars($row['name']) . "-" . htmlspecialchars($row['type']); ?> 
 										       	</option> 
 										   	<?php } ?>
 										   	<?php mysql_close();?> 
@@ -214,10 +223,10 @@ if(Input::exists())
 			            		<select name="accountname[]" id="account">
 				            		<?php $con = mysql_connect("localhost","root","test"); 
 										mysql_select_db('test');?> 
-								   	<?php $result = mysql_query('SELECT * FROM accounts'); ?> 
+								   	<?php $result = mysql_query('SELECT * FROM accounts ORDER BY name'); ?> 
 								   	<?php while($row = mysql_fetch_assoc($result)) { ?> 
 								       	<option value="<?php echo htmlspecialchars($row['name']);?>"> 
-								           	<?php echo htmlspecialchars($row['name']); ?> 
+								           	<?php echo htmlspecialchars($row['name']) . "-" . htmlspecialchars($row['type']); ?> 
 								       	</option> 
 								   	<?php } ?>
 								   	<?php mysql_close();?> 
@@ -244,7 +253,8 @@ if(Input::exists())
 			            		<span id="spryselect2"></span> 
 			            		</td>
 			            		
-			            	</tr>        				
+			            	</tr>  
+			            	<input type="file" size=50 name="userFile">      				
              		 </form>
           			</table>
               </div>
