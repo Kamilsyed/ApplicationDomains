@@ -44,31 +44,44 @@ if(Input::exists())
     then the page will display an error window.*/
     if($transaction->balanced($types, $amount))
     {        
-    	  $DB = mysqli_connect('localhost','host','test','test');
-        
-      
-            
-            $fileName = mysqli_real_escape_string($DB, $_FILES['userFile']["name"]);
-            $fileSize = mysqli_real_escape_string($DB, $_FILES['userFile']['size']);
-            $fileData = mysqli_real_escape_string($DB, file_get_contents($_FILES['userFile']["tmp_name"]));
-            $fileType = mysqli_real_escape_string($DB, $_FILES['userFile']["type"]);
-            $allowedExts = array("gif", "jpeg", "jpg", "png", "pdf"/*, "txt"*/);
-            $temp = explode(".", $_FILES['userFile']["name"]);
-            //$ext = end($temp);
-            $temp2 = end($temp);
-            $ext = (string) $temp2;
+    
 
-            if ((($_FILES['userFile']["type"] == "image/gif")
-            || ($_FILES['userFile']["type"] == "image/jpeg")
-            || ($_FILES['userFile']["type"] == "image/jpg")
-            || ($_FILES['userFile']["type"] == "image/pjpeg")
-            //|| ($_FILES["upload"]["type"] == "text/plain")
-            || ($_FILES['userFile']["type"] == "image/x-png")
-            || ($_FILES['userFile']["type"] == "application/pdf")
-            || ($_FILES['userFile']["type"] == "image/png"))
-            && ($_FILES['userFile']["size"] < 1024000)
-            && in_array($ext, $allowedExts))
-            {
+	    $DB = mysqli_connect('localhost','host','test','test');
+	    $set = new Set();
+	    extract( $_POST );
+	    $tmpName = mysqli_real_escape_string($DB, $_FILES['userFile']["tmp_name"]);
+	    $fileName = mysqli_real_escape_string($DB, $_FILES['userFile']["name"]);
+	    $fileSize = mysqli_real_escape_string($DB, $_FILES['userFile']['size']);
+	    //$fileData = file($DB, $fileName);
+	    $fileType = mysqli_real_escape_string($DB, $_FILES['userFile']["type"]);
+	    if(!get_magic_quotes_gpc()) {
+	        $fileName = addslashes($fileName);
+	    }
+	    move_uploaded_file ($tmpName, "/temp/$fileName");
+	    $tmpName = "/temp/$fileName";
+
+	    $fp = fopen($tmpName, 'r');
+	    $content = fread($fp, filesize($tmpName));
+	#       $content = addslashes($content);
+	    fclose($fp);
+
+	    $allowedExts = array("gif", "jpeg", "jpg", "png", "pdf"/*, "txt"*/);
+	    $temp = explode(".", $_FILES['userFile']["name"]);
+	    //$ext = end($temp);
+	    $temp2 = end($temp);
+	    $ext = (string) $temp2;
+
+	    if ((($_FILES['userFile']["type"] == "image/gif")
+	    || ($_FILES['userFile']["type"] == "image/jpeg")
+	    || ($_FILES['userFile']["type"] == "image/jpg")
+	    || ($_FILES['userFile']["type"] == "image/pjpeg")
+	    //|| ($_FILES["upload"]["type"] == "text/plain")
+	    || ($_FILES['userFile']["type"] == "image/x-png")
+	    || ($_FILES['userFile']["type"] == "application/pdf")
+	    || ($_FILES['userFile']["type"] == "image/png"))
+	    && ($_FILES['userFile']["size"] < 1024000)
+	    && in_array($ext, $allowedExts))
+	    {
             	try
 				{
 					$set->create(array(
@@ -79,7 +92,7 @@ if(Input::exists())
 						'file_name'=>$fileName,
 						'file_type'=>$fileType,
 						'file_size'=>$fileSize,
-						'file_data'=>$fileData
+						'file_data'=>$content
 						));
 				}
 				catch(Exception $e)
