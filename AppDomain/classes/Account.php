@@ -137,6 +137,18 @@ class Account
 	{
 		return $this->_data;
 	}
+		public function findByNumber($id = null)
+	{
+		$data = $this->_db->get('accounts', array('number', '=', $id));
+
+		if($data->count())
+		{
+			$this->_data = $data->first();
+			return true;
+		}
+
+		return false;
+	}
 
 	//Use this to update the amount in a given account
 	//$type = type of the transaction
