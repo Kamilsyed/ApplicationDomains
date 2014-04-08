@@ -5,22 +5,23 @@
 require_once 'core/init.php';
 
 
-    $con = mysql_connect("localhost","host","test");
+    $con = mysqli_connect("localhost","host","test", "test");
 
     if (!$con)
         {
-             die('Could not connect: ' . mysql_error());
+             die('Could not connect: ' . mysqli_error($con));
         }
 
-    mysql_select_db('test'); 
-    $result = mysql_query("SELECT * FROM accounts");
+     
+    $result = mysqli_query($con,"SELECT * FROM accounts");
 
     if(!$result)
         {
-        die(mysql_error());
+        die(mysqli_error($con));
         }
     
-?><head>
+?>
+<head>
 		<meta charset="utf-8">
 		<title>Chart Of Accounts</title>
 		<link rel="stylesheet" type="text/css" href="bootstrap.css">
@@ -103,7 +104,7 @@ require_once 'core/init.php';
         
     <tbody>
  	 	<?php
-        while($row = mysql_fetch_assoc($result))
+        while($row = mysqli_fetch_assoc($result))
             {
              echo "<tr>";
              echo "<td>" . $row['name'] . "</td>";

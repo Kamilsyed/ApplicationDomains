@@ -1,43 +1,37 @@
 <?php
-//ini_set('display_startup_errors', TRUE);
-//ini_set('display_errors',1); 
-//error_reporting(E_ALL);
+ini_set('display_startup_errors', TRUE);
+ini_set('display_errors',1); 
+error_reporting(E_ALL);
 require_once 'core/init.php';
 
 
-    $con = mysql_connect("localhost","host","test");
+    $con = mysqli_connect("localhost","host","test","test");
 
     if (!$con)
         {
-             die('Could not connect: ' . mysql_error());
+             die('Could not connect: ' . mysqli_error($con));
         }
-
-    mysql_select_db('test');
 	 
 	$id=$_POST["searchid"];
-	
-$result = mysql_query("SELECT * FROM accounts WHERE number = $id");
-$a = mysql_query("SELECT * FROM accounts WHERE number = $id");
 
-$result1 = mysql_query("SELECT set_id FROM transactions WHERE acct_id=$id");
-$b = mysql_query("SELECT set_id FROM transactions WHERE acct_id=$id");
+$a = mysqli_query($con,"SELECT * FROM accounts WHERE number = $id");
+
+$b = mysqli_query($con,"SELECT set_id FROM transactions WHERE acct_id=$id");
 
 	
 
-
-	
-
-    if(!$result)
+    if(!$a)
         {
-        die(mysql_error());
+        die(mysqli_error($con));
         }
 		
-	if(!$result1)
+	if(!$b)
         {
-        die(mysql_error());
+        die(mysqli_error($con));
         }
 		
 ?>
+
 
 <head>
 		<meta charset="utf-8">
@@ -74,7 +68,7 @@ $b = mysql_query("SELECT set_id FROM transactions WHERE acct_id=$id");
 	                <li style="margin-left:25px"><a href="aboutus.html" >About Us</a></li>
                     <li  style="margin-left:25px"><a href="services.html">Services</a></li>
 	                <li  style="margin-left:25px"><a href="contactus.html">Contact Us</a></li>
-                    <li style="margin-left:25px"><a href="#">Log out</a></li>
+                    <li style="margin-left:25px"><a href="logout.php">Log out</a></li>
 	              </ul>
 	            </div>
 	          </div>
@@ -93,10 +87,10 @@ $b = mysql_query("SELECT set_id FROM transactions WHERE acct_id=$id");
 	        	<div class="span4">
 	        		<ul class="nav nav-list">
 					   <li class="nav-header">Features</li>
-                      <li><a href="accountantchartofaccounts.html">Chart Of Accounts</a></li>
-					  <li><a href="JournalizeTransactions.html">Journalize Transactions</a></li>
-					  <li><a href="ViewOpenTransactionsAccountant.html">Open Transactions</a></li>
-                      <li><a href="ViewFinalizedTransactionsAccountant.html">Finalized Transactions</a></li>
+                      <li><a href="accountantchartofaccounts.php">Chart Of Accounts</a></li>
+					  <li><a href="JournalizeTransactions.php">Journalize Transactions</a></li>
+					  <li><a href="ViewOpenTransactionsAccountant.php">Open Transactions</a></li>
+                      <li><a href="ViewFinalizedTransactionsAccountant.php">Finalized Transactions</a></li>
                       <li><a href="viewreportsaccountant.html">Reports</a></li>
                       
 					  
@@ -106,11 +100,10 @@ $b = mysql_query("SELECT set_id FROM transactions WHERE acct_id=$id");
 	        	<!-- Right side Content Vertical Area -->
 	        	<div class="span8">
             <?php 
+
 			
-		      if(mysql_fetch_assoc($result) != false)	
- 	       {
             echo ' <table id="rounded-corner" summary="2007 Major IT Companies Profit" style="margin:auto;"> ';
-            echo '<thead>';
+             echo '<thead>' . '<h3 style="margin-left:190px; color:#FFFFFF "></h3>';
         	echo '<tr>';
         	echo '<th scope="col" class="rounded-company">Act. Name</th>';
             echo '<th scope="col" class="rounded-q2">Act. Number</th>';
@@ -125,7 +118,7 @@ $b = mysql_query("SELECT set_id FROM transactions WHERE acct_id=$id");
         
             echo '<tbody>';
  	
-        while($row = mysql_fetch_assoc($a))
+        while($row = mysqli_fetch_assoc($a))
             {
              echo "<tr>";
              echo "<td>" . $row['name'] . "</td>";
@@ -142,11 +135,12 @@ $b = mysql_query("SELECT set_id FROM transactions WHERE acct_id=$id");
         
    echo '</tbody>';
 echo '</table>';
-		   }
-		     if(mysql_fetch_assoc($result1) != false)
-            {
+
+echo '<br>';
+echo '<br>';	 
+		     
  echo ' <table id="rounded-corner" summary="2007 Major IT Companies Profit" style="margin:auto;"> ';
-  echo '<thead>';
+ echo '<thead>' . '<h3 style="margin-left:190px; color:#FFFFFF "></h3>';
     	echo '<tr>';
         	echo '<th scope="col" class="rounded-company">Trans ID</th>';
             echo '<th scope="col" class="rounded-q2">Acct. ID</th>';
@@ -160,22 +154,22 @@ echo '</table>';
         
     echo '<tbody>';
  	
-        while($row = mysql_fetch_assoc($b))
+        while($row = mysqli_fetch_assoc($b))
             {
          		
-				
-				 $q = mysql_query("SELECT * FROM transactions WHERE set_id='" . $row['set_id'] . "'");
+				$cn= $row['set_id'];
+				 $q = mysqli_query($con,"SELECT * FROM transactions WHERE set_id=$cn");
 
-	             while($row2 = mysql_fetch_assoc($q))
+	             while($row2 = mysqli_fetch_assoc($q))
 	             {
 	             	echo "<tr>";
-             		echo "<td>" . $row['trans_id'] . "</td>";
-            		 echo "<td>" . $row['acct_id'] . "</td>";
-            		 echo "<td>" . $row['set_id'] . "</td>";
-             		echo "<td>" . $row['type'] . "</td>";
-             		echo "<td>" . $row['amount'] . "</td>";
-					echo "<td>" . $row['user_added'] . "</td>";
-            		 echo "<td>" . $row['date_added'] . "</td>";
+             		echo "<td>" . $row2['trans_id'] . "</td>";
+            		 echo "<td>" . $row2['acct_id'] . "</td>";
+            		 echo "<td>" . $row2['set_id'] . "</td>";
+             		echo "<td>" . $row2['type'] . "</td>";
+             		echo "<td>" . $row2['amount'] . "</td>";
+					echo "<td>" . $row2['user_added'] . "</td>";
+            		 echo "<td>" . $row2['date_added'] . "</td>";
             		 echo "</tr>";
 	             
 	            
@@ -187,7 +181,7 @@ echo '</table>';
    echo '</tbody>';
 echo '</table>';
 
- }
+
 
 		 ?>
                 
