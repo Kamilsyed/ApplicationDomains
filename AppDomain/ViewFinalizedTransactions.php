@@ -83,7 +83,7 @@ require_once 'core/init.php';
         
     <tbody>
         <?php
-            $con = mysql_connect("localhost","host","test");
+            $con = mysql_connect("localhost","root","test");
 
             if (!$con)
             {
@@ -111,29 +111,46 @@ require_once 'core/init.php';
                 echo "</tr>";
                 echo "<tr>";
                 echo "<th scope='col' class='rounded-q1'>Account Name</th>";
-                echo "<th scope='col' class='rounded-q1'>Amount</th>";
-                echo "<th scope='col' class='rounded-q1'>Trans.Type</th>";
+                echo "<th scope='col' class='rounded-q1'>DR</th>";
+                echo "<th scope='col' class='rounded-q1'>CR</th>";
                 echo "<th scope='col' class='rounded-q1'></th>";
                 echo "<th scope='col' class='rounded-q1'></th>";
                 echo "<th scope='col' class='rounded-q1'></th>";
                 echo "</tr>"; 
                  
-                 $q = mysql_query("SELECT * FROM transactions WHERE set_id='" . $row['id'] . "'");
+                $q = mysql_query("SELECT * FROM transactions WHERE set_id='" . $row['id'] . "'");
 
-                 while($row2 = mysql_fetch_assoc($q))
-                 {
-                    $account = new Account();
-                    $account->findByNumber($row2['acct_id']);
-                    
+                while($row2 = mysql_fetch_assoc($q))
+                {
+                    if($row2['type'] == 'debit' || $row2['type'] == 'Debit')
+                    {
+                    $account1 = new Account();
+                    $account1->findByNumber($row2['acct_id']);
+
                     echo "<tr>";
-                    echo "<td>" . $account->data()->name . "</td>";
+                    echo "<td>" . $account1->data()->name . "</td>";
                     echo "<td>" . $row2['amount'] . "</td>";
-                    echo "<td>" . $row2['type'] . "</td>";
-                    echo "<td></td>";
-                    echo "<td></td>";
-                    echo "<td></td>";
+                    echo "<td>---</td>";
                     echo "</tr>";
-                 }
+                    }
+                }
+
+                $q2 = mysql_query("SELECT * FROM transactions WHERE set_id='" . $row['id'] . "'");
+
+                while($row3 = mysql_fetch_assoc($q2))
+                {
+                    if($row3['type'] == 'credit' || $row3['type'] == 'Credit')
+                    {
+                    $account2 = new Account();
+                    $account2->findByNumber($row3['acct_id']);
+
+                    echo "<tr>";
+                    echo "<td>" . $account2->data()->name . "</td>";
+                    echo "<td>---</td>";
+                    echo "<td>" . $row3['amount'] . "</td>";
+                    echo "</tr>";
+                    }
+                }
                  
                  echo "</tr>";
                 }
@@ -158,7 +175,7 @@ require_once 'core/init.php';
         
     <tbody>
            <?php
-            $con = mysql_connect("localhost","host","test");
+            $con = mysql_connect("localhost","root","test");
 
             if (!$con)
             {
@@ -186,29 +203,46 @@ require_once 'core/init.php';
                 echo "</tr>";
                 echo "<tr>";
                 echo "<th scope='col' class='rounded-q1'>Account Name</th>";
-                echo "<th scope='col' class='rounded-q1'>Amount</th>";
-                echo "<th scope='col' class='rounded-q1'>Trans.Type</th>";
+                echo "<th scope='col' class='rounded-q1'>DR</th>";
+                echo "<th scope='col' class='rounded-q1'>CR</th>";
                 echo "<th scope='col' class='rounded-q1'></th>";
                 echo "<th scope='col' class='rounded-q1'></th>";
                 echo "<th scope='col' class='rounded-q1'></th>";
                 echo "</tr>"; 
                  
-                 $q = mysql_query("SELECT * FROM transactions WHERE set_id='" . $row['id'] . "'");
+                $q = mysql_query("SELECT * FROM transactions WHERE set_id='" . $row['id'] . "'");
 
-                 while($row2 = mysql_fetch_assoc($q))
-                 {
-                    $account = new Account();
-                    $account->findByNumber($row2['acct_id']);
-                    
+                while($row2 = mysql_fetch_assoc($q))
+                {
+                    if($row2['type'] == 'debit' || $row2['type'] == 'Debit')
+                    {
+                    $account1 = new Account();
+                    $account1->findByNumber($row2['acct_id']);
+
                     echo "<tr>";
-                    echo "<td>" . $account->data()->name . "</td>";
+                    echo "<td>" . $account1->data()->name . "</td>";
                     echo "<td>" . $row2['amount'] . "</td>";
-                    echo "<td>" . $row2['type'] . "</td>";
-                    echo "<td></td>";
-                    echo "<td></td>";
-                    echo "<td></td>";
+                    echo "<td>---</td>";
                     echo "</tr>";
-                 }
+                    }
+                }
+
+                $q2 = mysql_query("SELECT * FROM transactions WHERE set_id='" . $row['id'] . "'");
+
+                while($row3 = mysql_fetch_assoc($q2))
+                {
+                    if($row3['type'] == 'credit' || $row3['type'] == 'Credit')
+                    {
+                    $account2 = new Account();
+                    $account2->findByNumber($row3['acct_id']);
+
+                    echo "<tr>";
+                    echo "<td>" . $account2->data()->name . "</td>";
+                    echo "<td>---</td>";
+                    echo "<td>" . $row3['amount'] . "</td>";
+                    echo "</tr>";
+                    }
+                }
                  
                  echo "</tr>";
                 }

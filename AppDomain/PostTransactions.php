@@ -5,30 +5,51 @@ require_once 'core/init.php';
 
 $set = new Set();
 date_default_timezone_set('America/New_York');
-$date = date("Y-m-d H:i:s");
+$acc = new Account();
 
 if(Input::exists())
 {
+	$user = new User();
+
 	for($x = 0; $x < intval(Input::get('c')); $x++)
 	{
 		$id = 'id' . $x;
 		$rad = 'rad' . $x;
+		$com = 'comments' . $x;
 
 		if(Input::get($rad) != 0)
 		{
+			$con = mysql_connect('localhost', 'host', 'test');
+
+			if (!$con)
+			{
+				Redirect::to('errors/500.php');
+			}
+			mysql_select_db('test');
+			$query = "SELECT * FROM `transactions` WHERE set_id='". Input::get($id) ."'";
+			$results = mysql_query($query);
+
+			while($res = mysql_fetch_assoc($results))
+			{
+				$acc->findByNumber($res['acct_id']);
+				$acc->update_balance($res['acct_id'], $res['type'], $res['amount']);
+			}
+
 			try
 			{
 				$set->change(array(
 					'type' => Input::get($rad),
-					'comment' => 'Test Comment',
-					'user_changed' => 'tharrell',
-					'date_changed' => $date
+					'comment' => Input::get($com),
+					'user_changed' => $user->data()->username,
+					'date_changed' => date("Y-m-d H:i:s"),
 					), Input::get($id));
 			}
 			catch(Exception $e)
 			{
 				$e->getMessage();
 			}
+
+			mysql_close($con);
 		}
 
 	}
@@ -131,7 +152,7 @@ if(Input::exists())
 	        	echo "<th scope='col' class='rounded-q2'>". $row['user_added'] . "</th>";
 	            echo "<th scope='col' class='rounded-q1'>". $row['date_added'] . "</th>";
 	            echo "<th scope='col' class='rounded-q3' width='100px'>";
-				echo '<textarea name="comments" cols="4" rows="3">' . '</textarea><br>';
+				echo '<textarea name="comments$c" cols="4" rows="3">' . '</textarea><br>';
 	            echo "<input type='radio' name='rad$c' value='2'>Post</input><br>";
 	            echo "<input type='radio' name='rad$c' value='3'>Reject</input></th>";
 		    	echo "<input type='hidden' name='id$c' id='id$c' value='" . $row['id'] . "'>";

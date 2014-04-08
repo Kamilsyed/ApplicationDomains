@@ -62,7 +62,7 @@ if(Input::exists())
         {
         	$account->find($accountname[$y]);
         	$acct_number = $account->data()->number;
-        	$account->update_balance($acct_number, $types[$y], floatval($amount[$y]));
+        	/*$account->update_balance($acct_number, $types[$y], floatval($amount[$y]));*/
 
         	try
             {
