@@ -152,7 +152,7 @@ if(Input::exists())
 	        	echo "<th scope='col' class='rounded-q2'>". $row['user_added'] . "</th>";
 	            echo "<th scope='col' class='rounded-q1'>". $row['date_added'] . "</th>";
 	            echo "<th scope='col' class='rounded-q3' width='100px'>";
-				echo '<textarea name="comments$c" cols="4" rows="3">' . '</textarea><br>';
+				echo "<input type='text' name='comments$c' size='4'></input>";
 	            echo "<input type='radio' name='rad$c' value='2'>Post</input><br>";
 	            echo "<input type='radio' name='rad$c' value='3'>Reject</input></th>";
 		    	echo "<input type='hidden' name='id$c' id='id$c' value='" . $row['id'] . "'>";
