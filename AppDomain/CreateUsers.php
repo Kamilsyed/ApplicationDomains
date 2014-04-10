@@ -54,7 +54,7 @@ if(Input::exists())
 					));
 
 				Session::flash('home', 'You have registered a user');
-				Redirect::to('AdminHomepage.html');
+				Redirect::to('AdminHomepage.php');
 			}
 			catch(Exception $e)
 			{
@@ -106,12 +106,10 @@ if(Input::exists())
 	          <div class="navbar-inner">
 	            <div class="container">
 	              <ul class="nav">
-	                <li class="nav-header">Features</li>
-					  <li style="margin-left:190px"><a href="adminHomepage.html">Home</a></li>
-	                <li style="margin-left:25px"><a href="aboutus.html" >About Us</a></li>
-                    <li  style="margin-left:25px"><a href="services.html">Services</a></li>
-	                <li class="active" style="margin-left:25px"><a href="contactus.html">Contact Us</a></li>
-                    <li style="margin-left:25px"><a href="logout.php">Log out</a></li>
+	                <li class="active" style="margin-left:285px"><a href="#">Home</a></li>
+	                <li style="margin-left:25px"><a href="#" >About Us</a></li>
+	                <li style="margin-left:25px"><a href="#">Contact Us</a></li>
+	              </ul>
 	            </div>
 	          </div>
           </div>
@@ -126,11 +124,12 @@ if(Input::exists())
 	        	<div class="span4">
 	        		<ul class="nav nav-list">
 					  <li class="nav-header">Features</li>
-					  <li><a href="adminchartofaccounts.php">Chart of Accounts</a></li>
+					  <li ><a href="adminchartofaccounts.php">Chart of Accounts</a></li>
 					  <li><a href="CreateAccount.php">Create Account</a></li>
 					  <li><a href="DeactivateAccount.php">Deactivate Account</a></li>
 					  <li class="active"><a href="CreateUsers.php">Create Users</a></li>
-					  <li><a href="EditUsers.php">Edit Users</a></li>					  
+					  <li><a href="EditUsers.php">Edit Users</a></li>
+					  <li><a href="deactivatedaccounts.php"> View Deactivated Accounts</a></li>					  
 					</ul>
 	        	</div>
 
@@ -162,9 +161,9 @@ if(Input::exists())
 	        	 <span id="spryselect1">
           			<label for="groups" style="color:#FFF;">User Type</label>
           			<select name="groups" id="groups">
-           				<option value="1">Admin</option>
-          	  			<option value="3">Accountant</option>
-              			<option value="2">Manager</option>
+           				<option value="Admin">Admin</option>
+          	  			<option value="Accountant">Accountant</option>
+              			<option value="Manager">Manager</option>
           			</select>
           <span class="selectRequiredMsg">Please select a user type.</span></span>
 

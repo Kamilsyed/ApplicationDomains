@@ -37,7 +37,7 @@ if(Input::exists())
                     'status' => 1,
                     'date_added' => $time
                     ));
-                Redirect::to('adminHomepage.html');
+                Redirect::to('adminHomepage.php');
             }
             catch(Exception $e)
             {
@@ -90,12 +90,9 @@ if(Input::exists())
 	          <div class="navbar-inner">
 	            <div class="container">
 	              <ul class="nav">
-	                <li class="nav-header">Features</li>
-                      <li style="margin-left:190px"><a href="adminHomepage.html">Home</a></li>
-                    <li style="margin-left:25px"><a href="aboutus.html" >About Us</a></li>
-                    <li  style="margin-left:25px"><a href="services.html">Services</a></li>
-                    <li class="active" style="margin-left:25px"><a href="contactus.html">Contact Us</a></li>
-                    <li style="margin-left:25px"><a href="logout.php">Log out</a></li>
+	                <li class="active" style="margin-left:285px"><a href="#">Home</a></li>
+	                <li style="margin-left:25px"><a href="#" >About Us</a></li>
+	                <li style="margin-left:25px"><a href="#">Contact Us</a></li>
 	              </ul>
 	            </div>
 	          </div>
@@ -113,6 +110,7 @@ if(Input::exists())
 					  <li><a href="DeactivateAccount.php">Deactive Account</a></li>
 					  <li><a href="CreateUsers.php">Create Users</a></li>
 					  <li><a href="EditUsers.php">Edit Users</a></li>
+                      <li><a href="deactivatedaccounts.php"> View Deactivated Accounts</a></li>
                       
 					  
 					</ul>
@@ -133,8 +131,8 @@ if(Input::exists())
                 <label for="normal" style="color:#FFF;">Normal Side</label>
                 <select name="normal" id="normal">
                 <option>Select</option>
-                <option value="Debit">Debit</option>
-                <option value="Credit">Credit</option>
+                <option value="debit">Debit</option>
+                <option value="credit">Credit</option>
                 </select>
           		
                 
@@ -142,15 +140,11 @@ if(Input::exists())
                 <label for="type" style="color:#FFF;">Account Type</label>
                 <select name="type" id="type">
                 <option>Select</option>
-                    <option value="Current Assets">Current Assets</option>
-                    <option value="Long-Term Assests">Long-Term Assests</option>
-                    <option value="Current Liabilites">Current Liabilites</option>
-                    <option value="Long-Term Liabilites">Long-Term Liabilites</option>
-                    <option value="Equity">Equity</option>
-                    <option value="Operating Revenue">Operating Revenue</option>
-                    <option value="Operating Expenses">Operating Expenses</option>
-                    <option value="Non-Operating Revenue">Non-Operating Revenue</option>
-                    <option value="Non-Operating Expenses">Non-Operating Expenses</option>
+                 <option value="asset"> Asset</option>
+                <option value="liability"> Liability</option>
+                 <option value="equity"> Equity</option>
+                <option value="revenue"> Revenue</option>
+                <option value="expenses"> Expenses</option>
                 </select>
           		<span class="selectRequiredMsg">Please select an type.</span></span>
                 

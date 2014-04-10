@@ -13,7 +13,7 @@ require_once 'core/init.php';
         }
 
     mysql_select_db('test'); 
-    $result = mysql_query("SELECT * FROM accounts");
+    $result = mysql_query("SELECT * FROM accounts WHERE status = '0'");
 
     if(!$result)
         {
@@ -56,7 +56,7 @@ require_once 'core/init.php';
 	                <li class="active" style="margin-left:285px"><a href="#">Home</a></li>
 	                <li style="margin-left:25px"><a href="#" >About Us</a></li>
 	                <li style="margin-left:25px"><a href="#">Contact Us</a></li>
-	                <li><a href="index.php">Logout</a></li>
+	                <li><a href="logout.php">Logout</a></li>
 	              </ul>
 	            </div>
 	          </div>
@@ -69,12 +69,13 @@ require_once 'core/init.php';
 	        	<div class="span3">
 	        		<ul class="nav nav-list">
 					  <li class="nav-header">Features</li>
-					  <li class="active"><a href="adminchartofaccounts.php">Chart of Accounts</a></li>
+					  <li ><a href="adminchartofaccounts.php">Chart of Accounts</a></li>
 					  <li><a href="CreateAccount.php">Create Account</a></li>
 					  <li><a href="DeactivateAccount.php">Deactivate Account</a></li>
 					  <li><a href="CreateUsers.php">Create Users</a></li>
 					  <li><a href="EditUsers.php">Edit Users</a></li>
-					  <li><a href="deactivatedaccounts.php"> View Deactivated Accounts</a></li>
+					  <li class="active"><a href="deactivatedaccounts.php">View Deactivated Accounts</a></li>
+                      
 					</ul>
 	        	</div>
 	        	
