@@ -29,7 +29,7 @@ if(Input::exists())
 	$user =  new User();
     date_default_timezone_set('America/New_York');
     $set = new Set();
-   
+ 
       
     /*$file = 'userFile';
 	$upload = Set::upload($file);
@@ -44,66 +44,24 @@ if(Input::exists())
     then the page will display an error window.*/
     if($transaction->balanced($types, $amount))
     {        
-    
-
-	    $DB = mysqli_connect('localhost','host','test','test');
-	    $set = new Set();
-	    extract( $_POST );
-	    $tmpName = mysqli_real_escape_string($DB, $_FILES['userFile']["tmp_name"]);
-	    $fileName = mysqli_real_escape_string($DB, $_FILES['userFile']["name"]);
-	    $fileSize = mysqli_real_escape_string($DB, $_FILES['userFile']['size']);
-	    //$fileData = file($DB, $fileName);
-	    $fileType = mysqli_real_escape_string($DB, $_FILES['userFile']["type"]);
-	    if(!get_magic_quotes_gpc()) {
-	        $fileName = addslashes($fileName);
-	    }
-	    move_uploaded_file ($tmpName, "/temp/$fileName");
-	    $tmpName = "/temp/$fileName";
-
-	    $fp = fopen($tmpName, 'r');
-	    $content = fread($fp, filesize($tmpName));
-	#       $content = addslashes($content);
-	    fclose($fp);
-
-	    $allowedExts = array("gif", "jpeg", "jpg", "png", "pdf"/*, "txt"*/);
-	    $temp = explode(".", $_FILES['userFile']["name"]);
-	    //$ext = end($temp);
-	    $temp2 = end($temp);
-	    $ext = (string) $temp2;
-
-	    if ((($_FILES['userFile']["type"] == "image/gif")
-	    || ($_FILES['userFile']["type"] == "image/jpeg")
-	    || ($_FILES['userFile']["type"] == "image/jpg")
-	    || ($_FILES['userFile']["type"] == "image/pjpeg")
-	    //|| ($_FILES["upload"]["type"] == "text/plain")
-	    || ($_FILES['userFile']["type"] == "image/x-png")
-	    || ($_FILES['userFile']["type"] == "application/pdf")
-	    || ($_FILES['userFile']["type"] == "image/png"))
-	    && ($_FILES['userFile']["size"] < 1024000)
-	    && in_array($ext, $allowedExts))
-	    {
-            	try
-				{
-					$set->create(array(
-						'description' => Input::get('description'),
-						'user_added' => $user->data()->username,
-						'date_added' => date("Y-m-d H:i:s"),
-						'type' => 1,
-						'file_name'=>$fileName,
-						'file_type'=>$fileType,
-						'file_size'=>$fileSize,
-						'file_data'=>$content
-						));
-				}
-				catch(Exception $e)
-				{
-					Redirect::to('errors/500.php');
-				}
-		    }
-		    else
-		    	echo "Not acceptable file.";
-		        
+    	
+        	try
+			{
+				$set->create(array(
+					'description' => Input::get('description'),
+					'user_added' => $user->data()->username,
+					'date_added' => date("Y-m-d H:i:s"),
+					'type' => 1
+					));
+			}
+			catch(Exception $e)
+			{
+				die($e->getMessage());
+			}
+	    
+		
 	
+			
       	/*
 		Create a set passing description text field in HTML
 		user_added is a function call to $user to get current username
@@ -120,27 +78,99 @@ if(Input::exists())
         	$account->find($accountname[$y]);
         	$acct_number = $account->data()->number;
         	/*$account->update_balance($acct_number, $types[$y], floatval($amount[$y]));*/
+        	
+ 	
+		    	/*
+			    for($i=0; $i<$c; $i++) 
+			    {*/
+			    $c = count($_FILES['userFile']['name']);;
+			    if($_FILES['userFile']['name'][$y]==true)
+			    {
+			    	
 
-        	try
-            {
-                $transaction->create(array(
-                	'acct_id' => $acct_number,
-                	'set_id' => $set_id,
-                	'amount' => floatval($amount[$y]),
-                	'type' => $types[$y], 
-                    'user_added' => $user->data()->username,
-                    'date_added' => date("Y-m-d H:i:s")
-                    ));
-            }
-            catch(Exception $e)
-            {
-				Redirect::to('errors/500.php');
-            }
-        }
+				    extract( $_POST );
+				    $tmpName = $_FILES['userFile']["tmp_name"][$y];
+				    $fileName = $_FILES['userFile']["name"][$y];
+				    $fileSize = $_FILES['userFile']['size'][$y];				    
+				    $fileType = $_FILES['userFile']["type"][$y];
+				    $fileData = file_get_contents($_FILES['userFile']['tmp_name'][$y]);
+				    
+				    if(!get_magic_quotes_gpc()) 
+				    {
+				        $fileName = addslashes($fileName);
+				    }
+				    /*move_uploaded_file($tmpName, "/temp/$fileName");
+				    $tmpName = "/temp/$fileName";
+
+				    $fp = fopen($tmpName, 'r');
+				    $content = fread($fp, filesize($tmpName));
+				    fclose($fp);*/
+
+				    $allowedExts = array("gif", "jpeg", "jpg", "png", "pdf"/*, "txt"*/);
+				    $temp = explode(".", $_FILES['userFile']["name"][$y]);
+				    //$ext = end($temp);
+				    $temp2 = end($temp);
+				    $ext = (string) $temp2;
+
+				    if ((($_FILES['userFile']["type"][$y] == "image/gif")
+				    || ($_FILES['userFile']["type"][$y] == "image/jpeg")
+				    || ($_FILES['userFile']["type"][$y] == "image/jpg")
+				    || ($_FILES['userFile']["type"][$y] == "image/pjpeg")
+				    //|| ($_FILES["upload"]["type"] == "text/plain")
+				    || ($_FILES['userFile']["type"][$y] == "image/x-png")
+				    || ($_FILES['userFile']["type"][$y] == "application/pdf")
+				    || ($_FILES['userFile']["type"][$y] == "image/png"))
+				    && ($_FILES['userFile']["size"][$y] < 1024000)
+				    && in_array($ext, $allowedExts))
+				    {
+			        	try
+			            {
+			                $transaction->create(array(
+			                	'acct_id' => $acct_number,
+			                	'set_id' => $set_id,
+			                	'amount' => floatval($amount[$y]),
+			                	'type' => $types[$y], 
+			                    'user_added' => $user->data()->username,
+			                    'date_added' => date("Y-m-d H:i:s"),
+			                    'file_name'=>$fileName,
+								'file_type'=>$fileType,
+								'file_size'=>$fileSize,
+								'file_data'=>$fileData
+			                    ));
+			            }
+			            catch(Exception $e)
+			            {
+							die($e->getMessage());
+			            }
+			        }
+				    else
+				    	echo "Not acceptable file.";
+				}
+				
+			    else
+			    {
+			    	
+			    	try
+		            {
+		                $transaction->create(array(
+		                	'acct_id' => $acct_number,
+		                	'set_id' => $set_id,
+		                	'amount' => floatval($amount[$y]),
+		                	'type' => $types[$y], 
+		                    'user_added' => $user->data()->username,
+		                    'date_added' => date("Y-m-d H:i:s")
+		                     ));
+		            }
+		            catch(Exception $e)
+		            {
+						Redirect::to('index.php');
+		            }
+			    }
+		}
     }
     else
     {
-    	Redirect::to('errors/500.php');
+    	Redirect::to('files.php');
     }
 }
 
@@ -229,15 +259,14 @@ if(Input::exists())
 				              	  	<span id="spryselect2">
 					             		<label for="accountname" style="color:#FFFFFF;">Account</label>
 					            		<select name="accountname[]" id="account">
-						            		<?php $con = mysql_connect("localhost","root","test"); 
-												mysql_select_db('test');?> 
-										   	<?php $result = mysql_query('SELECT * FROM accounts ORDER BY name'); ?> 
-										   	<?php while($row = mysql_fetch_assoc($result)) { ?> 
+						            		<?php $con = mysqli_connect("localhost","host","test","test");?> 
+										   	<?php $result = mysqli_query($con,'SELECT * FROM accounts ORDER BY name'); ?> 
+										   	<?php while($row = mysqli_fetch_assoc($result)) { ?> 
 										       	<option value="<?php echo htmlspecialchars($row['name']);?>"> 
 										           	<?php echo htmlspecialchars($row['name']) . "-" . htmlspecialchars($row['type']); ?> 
 										       	</option> 
 										   	<?php } ?>
-										   	<?php mysql_close();?> 
+										   	<?php mysqli_close($con);?> 
 					            		</select>
 					            		<!--error message-->
 					            	<span class="selectRequiredMsg">Please select an account.</span></span>     
@@ -248,8 +277,8 @@ if(Input::exists())
               					<label for="type" style="color:#FFFFFF;">Side</label>
               					<select name="type[]" id="type[]">
               						<option value="Select">Select one...</option>
-              						<option value="debit">Debit</option>
-              						<option value="credit">Credit</option>
+              						<option value="Debit">Debit</option>
+              						<option value="Credit">Credit</option>
               					</select>
               					<span class="selectRequiredMsg">Please select a side</span></span>
 			            		</td>
@@ -261,6 +290,7 @@ if(Input::exists())
 			          	 		<span class="textfieldRequiredMsg">A numeric value is required.</span></span> 
 			            		<span id="spryselect2"></span>
 			            		</td>
+			    <!-- HERE  -->       		<td><input type="file" size=50 name="userFile[]" multiple></td>
 			            		</tr>
 		            		<tr>							
 		              <!--second Account-->
@@ -269,15 +299,14 @@ if(Input::exists())
 		              	  <span id="spryselect2">
 			             		<label for="accountname" style="color:#FFFFFF;">Account</label>
 			            		<select name="accountname[]" id="account">
-				            		<?php $con = mysql_connect("localhost","root","test"); 
-										mysql_select_db('test');?> 
-								   	<?php $result = mysql_query('SELECT * FROM accounts ORDER BY name'); ?> 
-								   	<?php while($row = mysql_fetch_assoc($result)) { ?> 
+				            		<?php $con = mysqli_connect("localhost","host","test", "test");?> 
+								   	<?php $result = mysqli_query($con,'SELECT * FROM accounts ORDER BY name'); ?> 
+								   	<?php while($row = mysqli_fetch_assoc($result)) { ?> 
 								       	<option value="<?php echo htmlspecialchars($row['name']);?>"> 
 								           	<?php echo htmlspecialchars($row['name']) . "-" . htmlspecialchars($row['type']); ?> 
 								       	</option> 
 								   	<?php } ?>
-								   	<?php mysql_close();?> 
+								   	<?php mysqli_close($con);?> 
 			            		</select>
 			            		<!--error message-->
 			            		<span class="selectRequiredMsg">Please select an account.</span></span>     
@@ -287,8 +316,8 @@ if(Input::exists())
               					<label for="type" style="color:#FFFFFF;">Side</label>
               					<select name="type[]" id="type[]">
               						<option value="Select">Select one...</option>
-              						<option value="debit">Debit</option>
-              						<option value="credit">Credit</option>
+              						<option value="Debit">Debit</option>
+              						<option value="Credit">Credit</option>
               					</select>
               					<span class="selectRequiredMsg">Please select a side</span></span>
 			            		</td>
@@ -300,9 +329,12 @@ if(Input::exists())
 			          	 		<span class="textfieldRequiredMsg">A numeric value is required.</span></span> 
 			            		<span id="spryselect2"></span> 
 			            		</td>
+			            		</td>
+			            		<td><input type="file" size=50 name="userFile[]" multiple></td>
+			            		</tr>
 			            		
 			            	</tr>  
-			            	<input type="file" size=50 name="userFile">      				
+			            	    				
              		 </form>
           			</table>
               </div>

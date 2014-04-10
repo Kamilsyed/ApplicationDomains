@@ -162,7 +162,7 @@ if(Input::exists())
 	            echo "<input type='radio' name='rad$c' value='2'>Post</input><br>";
 	            echo "<input type='radio' name='rad$c' value='3'>Reject</input></th>";
 		    	echo "<input type='hidden' name='id$c' id='id$c' value='" . $row['id'] . "'>";
-		    	echo "<th><a href='javascript:download(".$row['id'].")'> ".$row['file_name']."</a></th>";
+		    	echo "<th></th>";
 		        echo "</tr>"; 
 	             
 	             $q = mysqli_query($con, "SELECT * FROM transactions WHERE set_id='" . $row['id'] . "'");
@@ -176,7 +176,7 @@ if(Input::exists())
 	             	echo "<td>" . $account->data()->name . "</td>";
 	             	echo "<td>" . $row2['amount'] . "</td>";
 	             	echo "<td>" . $row2['type'] . "</td>";
-	             	echo "<td></td>";
+	             	echo "<td><a href='javascript:download(".$row2['trans_id'].")'> ".$row2['file_name']."</a></td>";
 	             	echo "<td></td>";
 	             	echo "</tr>";
 	             }
