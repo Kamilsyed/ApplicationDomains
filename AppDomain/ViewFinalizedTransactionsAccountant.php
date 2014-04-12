@@ -47,10 +47,10 @@ require_once 'core/init.php';
                 <div class="span4">
                     <ul class="nav nav-list">
                       <li class="nav-header">Features</li>
-                      <li><a href="Accountantchartofaccounts.php">Chart of Accounts</a></li>
-                      <li<a href="JournalizeTransactions.php">Journalize Transactions</a></li>
-                      <li><a href="ViewOpenTransactionsaccountant.php">View Open Transactions</a></li>
-                      <li class="active"><a href="ViewFinalizedTransactionsaccountant.php">View Finalized Transactions</a></li>
+                      <li><a href="ChartofAccounts.php">Chart of Accounts</a></li>
+                      <li><a href="JournalizeTransactions.php">Journalize Transactions</a></li>
+                      <li><a href="ViewOpenTransaction.html">View Open Transactions</a></li>
+                      <li class="active"><a href="ViewFinalizedTransactions.html">View Finalized Transactions</a></li>
                       
                     </ul>
                 </div>
@@ -80,22 +80,22 @@ require_once 'core/init.php';
         
     <tbody>
         <?php
-            $con = mysql_connect("localhost","host","test");
+            $con = mysqli_connect("localhost","host","test", "test");
 
             if (!$con)
             {
                  die('Could not connect: ' . mysql_error());
             }
 
-            mysql_select_db('test'); 
-            $result = mysql_query("SELECT * FROM sets WHERE type='2'");
+             
+            $result = mysqli_query($con, "SELECT * FROM sets WHERE type='2'");
 
             if(!$result)
             {
-                die(mysql_error());
+                die(mysqli_error($con));
             }
 
-            while($row = mysql_fetch_assoc($result))
+            while($row = mysqli_fetch_assoc($result))
                 {
 
                 echo "<tr>";
@@ -108,16 +108,14 @@ require_once 'core/init.php';
                 echo "</tr>";
                 echo "<tr>";
                 echo "<th scope='col' class='rounded-q1'>Account Name</th>";
-                echo "<th scope='col' class='rounded-q1'>DR</th>";
-                echo "<th scope='col' class='rounded-q1'>CR</th>";
-                echo "<th scope='col' class='rounded-q1'></th>";
-                echo "<th scope='col' class='rounded-q1'></th>";
+                echo "<th scope='col' class='rounded-q1' colspan='2' align='center'>DR</th>";
+                echo "<th scope='col' class='rounded-q1' colspan='2' align='center'>CR</th>";
                 echo "<th scope='col' class='rounded-q1'></th>";
                 echo "</tr>"; 
                  
-                $q = mysql_query("SELECT * FROM transactions WHERE set_id='" . $row['id'] . "'");
+                $q = mysqli_query($con, "SELECT * FROM transactions WHERE set_id='" . $row['id'] . "'");
 
-                while($row2 = mysql_fetch_assoc($q))
+                while($row2 = mysqli_fetch_assoc($q))
                 {
                     if($row2['type'] == 'debit' || $row2['type'] == 'Debit')
                     {
@@ -126,15 +124,16 @@ require_once 'core/init.php';
 
                     echo "<tr>";
                     echo "<td>" . $account1->data()->name . "</td>";
-                    echo "<td>" . $row2['amount'] . "</td>";
-                    echo "<td>---</td>";
+                    echo "<td colspan='2' align='center'>" . $row2['amount'] . "</td>";
+                    echo "<td colspan='2'></td>";
+                    echo "<td><a href='javascript:download(".$row2['trans_id'].")'> ".$row2['file_name']."</a></td>";
                     echo "</tr>";
                     }
                 }
 
-                $q2 = mysql_query("SELECT * FROM transactions WHERE set_id='" . $row['id'] . "'");
+                $q2 = mysqli_query($con, "SELECT * FROM transactions WHERE set_id='" . $row['id'] . "'");
 
-                while($row3 = mysql_fetch_assoc($q2))
+                while($row3 = mysqli_fetch_assoc($q2))
                 {
                     if($row3['type'] == 'credit' || $row3['type'] == 'Credit')
                     {
@@ -143,9 +142,9 @@ require_once 'core/init.php';
 
                     echo "<tr>";
                     echo "<td>" . $account2->data()->name . "</td>";
-                    echo "<td>---</td>";
-                    echo "<td>" . $row3['amount'] . "</td>";
-                    echo "</tr>";
+                    echo "<td colspan='2'></td>";
+                    echo "<td colspan='2' align='center'>" . $row3['amount'] . "</td>";
+                    echo "<td><a href='javascript:download(".$row3['trans_id'].")'> ".$row3['file_name']."</a></td>";
                     }
                 }
                  
@@ -172,22 +171,22 @@ require_once 'core/init.php';
         
     <tbody>
            <?php
-            $con = mysql_connect("localhost","root","test");
+            $con = mysqli_connect("localhost","host","test", "test");
 
             if (!$con)
             {
                  die('Could not connect: ' . mysql_error());
             }
 
-            mysql_select_db('test'); 
-            $result = mysql_query("SELECT * FROM sets WHERE type='3'");
+            
+            $result = mysqli_query($con, "SELECT * FROM sets WHERE type='3'");
 
             if(!$result)
             {
-                die(mysql_error());
+                die(mysqli_error($con));
             }
 
-            while($row = mysql_fetch_assoc($result))
+            while($row = mysqli_fetch_assoc($result))
                 {
 
                 echo "<tr>";
@@ -200,16 +199,14 @@ require_once 'core/init.php';
                 echo "</tr>";
                 echo "<tr>";
                 echo "<th scope='col' class='rounded-q1'>Account Name</th>";
-                echo "<th scope='col' class='rounded-q1'>DR</th>";
-                echo "<th scope='col' class='rounded-q1'>CR</th>";
-                echo "<th scope='col' class='rounded-q1'></th>";
-                echo "<th scope='col' class='rounded-q1'></th>";
+                echo "<th scope='col' class='rounded-q1' colspan='2' align='center'>DR</th>";
+                echo "<th scope='col' class='rounded-q1' colspan='2' align='center'>CR</th>";
                 echo "<th scope='col' class='rounded-q1'></th>";
                 echo "</tr>"; 
                  
-                $q = mysql_query("SELECT * FROM transactions WHERE set_id='" . $row['id'] . "'");
+                $q = mysqli_query($con, "SELECT * FROM transactions WHERE set_id='" . $row['id'] . "'");
 
-                while($row2 = mysql_fetch_assoc($q))
+                while($row2 = mysqli_fetch_assoc($q))
                 {
                     if($row2['type'] == 'debit' || $row2['type'] == 'Debit')
                     {
@@ -218,15 +215,16 @@ require_once 'core/init.php';
 
                     echo "<tr>";
                     echo "<td>" . $account1->data()->name . "</td>";
-                    echo "<td>" . $row2['amount'] . "</td>";
-                    echo "<td>---</td>";
+                    echo "<td colspan='2' align='center'>" . $row2['amount'] . "</td>";
+                    echo "<td colspan='2'></td>";
+                    echo "<td><a href='javascript:download(".$row2['trans_id'].")'> ".$row2['file_name']."</a></td>";
                     echo "</tr>";
                     }
                 }
 
-                $q2 = mysql_query("SELECT * FROM transactions WHERE set_id='" . $row['id'] . "'");
+                $q2 = mysqli_query($con, "SELECT * FROM transactions WHERE set_id='" . $row['id'] . "'");
 
-                while($row3 = mysql_fetch_assoc($q2))
+                while($row3 = mysqli_fetch_assoc($q2))
                 {
                     if($row3['type'] == 'credit' || $row3['type'] == 'Credit')
                     {
@@ -235,8 +233,9 @@ require_once 'core/init.php';
 
                     echo "<tr>";
                     echo "<td>" . $account2->data()->name . "</td>";
-                    echo "<td>---</td>";
-                    echo "<td>" . $row3['amount'] . "</td>";
+                    echo "<td colspan='2'></td>";
+                    echo "<td colspan='2' align='center'>" . $row3['amount'] . "</td>";
+                    echo "<td><a href='javascript:download(".$row3['trans_id'].")'> ".$row3['file_name']."</a></td>";
                     echo "</tr>";
                     }
                 }
@@ -248,6 +247,7 @@ require_once 'core/init.php';
         
     </tbody>
 </table>
+
 
 
 
