@@ -5,22 +5,22 @@
 require_once 'core/init.php';
 
 
-    $con = mysql_connect("localhost","host","test");
+    $con = mysqli_connect("localhost","mmollica","Thepw164", "app_domain");
 
     if (!$con)
         {
-             die('Could not connect: ' . mysql_error());
+             die('Could not connect: ' . mysqli_error($con));
         }
 
-    mysql_select_db('test');
+    
 	 
 	$id=$_POST["searchid"];
 	
-$result = mysql_query("SELECT * FROM accounts WHERE number = $id");
-$a = mysql_query("SELECT * FROM accounts WHERE number = $id");
+$result = mysqli_query($con, "SELECT * FROM accounts WHERE number = $id");
+$a = mysqli_query($con, "SELECT * FROM accounts WHERE number = $id");
 
-$result1 = mysql_query("SELECT set_id FROM transactions WHERE acct_id=$id");
-$b = mysql_query("SELECT set_id FROM transactions WHERE acct_id=$id");
+$result1 = mysqli_query($con, "SELECT set_id FROM transactions WHERE acct_id=$id");
+$b = mysqli_query($con, "SELECT set_id FROM transactions WHERE acct_id=$id");
 
 	
 
@@ -29,12 +29,12 @@ $b = mysql_query("SELECT set_id FROM transactions WHERE acct_id=$id");
 
     if(!$result)
         {
-        die(mysql_error());
+        die(mysqli_error($con));
         }
 		
 	if(!$result1)
         {
-        die(mysql_error());
+        die(mysqli_error($con));
         }
 		
 ?>
@@ -106,7 +106,7 @@ $b = mysql_query("SELECT set_id FROM transactions WHERE acct_id=$id");
 	        	<div class="span8">
             <?php 
 			
-		      if(mysql_fetch_assoc($result) != false)	
+		      if(mysqli_fetch_assoc($result) != false)	
  	       {
             echo ' <table id="rounded-corner" summary="2007 Major IT Companies Profit" style="margin:auto;"> ';
             echo '<thead>';
@@ -124,7 +124,7 @@ $b = mysql_query("SELECT set_id FROM transactions WHERE acct_id=$id");
         
             echo '<tbody>';
  	
-        while($row = mysql_fetch_assoc($a))
+        while($row = mysqli_fetch_assoc($a))
             {
              echo "<tr>";
              echo "<td>" . $row['name'] . "</td>";
@@ -142,7 +142,7 @@ $b = mysql_query("SELECT set_id FROM transactions WHERE acct_id=$id");
    echo '</tbody>';
 echo '</table>';
 		   }
-		     if(mysql_fetch_assoc($result1) != false)
+		     if(mysqli_fetch_assoc($result1) != false)
             {
  echo ' <table id="rounded-corner" summary="2007 Major IT Companies Profit" style="margin:auto;"> ';
   echo '<thead>';

@@ -114,15 +114,14 @@ if(Input::exists())
                 <span id="spryselect1">
               	  <label for="username" style="color:#FFFFFF;">Username</label>
               	 <select name="username" id="username">
-	              	  	<?php $con = mysql_connect("localhost","host","test"); 
-						mysql_select_db('test')?> 
-					   	<?php $result = mysql_query('SELECT * FROM users'); ?> 
-					   	<?php while($row = mysql_fetch_assoc($result)) { ?> 
+	              	  	<?php $con = mysqli_connect("localhost","mmollica","Thepw164", "app_domain");?> 
+					   	<?php $result = mysqli_query($con, 'SELECT * FROM users'); ?> 
+					   	<?php while($row = mysqli_fetch_assoc($result)) { ?> 
 					       	<option value="<?php echo htmlspecialchars($row['username']);?>"> 
 					           	<?php echo htmlspecialchars($row['username']); ?> 
 					       	</option> 
 					   	<?php } ?>
-					   	<?php mysql_close();
+					   	<?php mysqli_close($con);
 					   	?> 
            	      </select>
            	  

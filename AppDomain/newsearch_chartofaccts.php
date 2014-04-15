@@ -24,17 +24,17 @@
  exit; 
  } 
  // Otherwise we connect to our Database 
- mysql_connect("localhost", "root","test") or die(mysql_error()); 
- mysql_select_db("test") or die(mysql_error()); 
+ $con = mysqli_connect("localhost","mmollica","Thepw164", "app_domain") or die(mysqli_error($con)); 
+  
  
  //Now we search for our search term, in the field the user specified 
  $field = Input::get('field'); $find = Input::get('find');
   
  $query_accounts = "SELECT DISTINCT a.number,a.name,a.type,a.status,a.balance,t.type, a.user_added FROM accounts a LEFT JOIN transactions t ON a.number = t.acct_id WHERE $field LIKE '%$find%'";
- $data_accounts = mysql_query($query_accounts);
+ $data_accounts = mysqli_query($con, $query_accounts);
  
  //while ($result_accounts = mysql_num_fields($data_accounts))
- while($result_accounts = mysql_fetch_assoc($data_accounts)) 
+ while($result_accounts = mysqli_fetch_assoc($data_accounts)) 
  { 
  echo $result_accounts['number']; 
  echo "<br>"; 

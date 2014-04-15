@@ -4,7 +4,7 @@ ini_set('display_errors',1);
 error_reporting(E_ALL);
 require_once 'core/init.php';
 $fileId = $_GET["fileId"];
-$DB = mysqli_connect("localhost", "host", "test", "test");
+$DB = mysqli_connect("localhost","mmollica","Thepw164", "app_domain");
 $sql = "SELECT * FROM transactions WHERE trans_id = $fileId";
 $results = mysqli_query($DB, $sql);
 $row = mysqli_fetch_assoc($results);

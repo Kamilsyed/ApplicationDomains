@@ -19,7 +19,7 @@ if(Input::exists())
 
 		if(Input::get($rad) != 0)
 		{
-			$con = mysqli_connect('localhost', 'host', 'test', 'test');
+			$con = mysqli_connect("localhost","mmollica","Thepw164", "app_domain");
 
 			if (!$con)
 			{
@@ -133,7 +133,7 @@ if(Input::exists())
     <tbody>
     	<tr>
         	<?php
-			$con = mysqli_connect("localhost","host","test","test");
+			$con = mysqli_connect("localhost","mmollica","Thepw164", "app_domain");
 
 		    if (!$con)
 	        {

@@ -5,19 +5,19 @@
 require_once 'core/init.php';
 
 
-    $con = mysql_connect("localhost","host","test");
+    $con = mysqli_connect("localhost","mmollica","Thepw164", "app_domain");
 
     if (!$con)
         {
-             die('Could not connect: ' . mysql_error());
+             die('Could not connect: ' . mysqli_error($con));
         }
 
-    mysql_select_db('test'); 
-    $result = mysql_query("SELECT * FROM accounts WHERE status = '0'");
+    
+    $result = mysqli_query($con, "SELECT * FROM accounts WHERE status = '0'");
 
     if(!$result)
         {
-        die(mysql_error());
+        die(mysqli_error($con));
         }
     
 ?>
@@ -102,7 +102,7 @@ require_once 'core/init.php';
     </tfoot>
     <tbody>
     	<?php
-        while($row = mysql_fetch_assoc($result))
+        while($row = mysqli_fetch_assoc($result))
             {
              echo "<tr>";
              echo "<td>" . $row['name'] . "</td>";

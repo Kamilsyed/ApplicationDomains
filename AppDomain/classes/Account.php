@@ -21,22 +21,22 @@ class Account
 	public function get_number($type)
 	{	
 
-		$con = mysql_connect("localhost","host","test");
+		$con = mysqli_connect("localhost","mmollica","Thepw164", "app_domain");
 
 	    if (!$con)
 	        {
-	             die('Could not connect: ' . mysql_error());
+	             die('Could not connect: ' . mysqli_error($con));
 	        }
 
-	    mysql_select_db('test');
+	    
 	    $query = "SELECT number FROM accounts WHERE type='" . $type ."' ORDER BY `date_added` DESC LIMIT 1"; 
-	    $result = mysql_query($query);
-	    $row = mysql_fetch_assoc($result);
+	    $result = mysqli_query($con, $query);
+	    $row = mysqli_fetch_assoc($con, $result);
 	    $number = $row['number'];
 
 	    if(!$result)
 	        {
-	        	die(mysql_error());
+	        	die(mysqli_error($con));
 	        }
 
 		switch($type)
@@ -166,19 +166,19 @@ class Account
 			$bal -= $amount;
 		}
 
-		mysql_connect("localhost", "host", "test");
-		mysql_select_db('test');
+		mysqli_connect("localhost", "host", "test", "app_domain");
+		
 
 	    $query = "UPDATE accounts SET balance='$bal' WHERE number='$num'";
 
 	    try
-	    {mysql_query($query);}
+	    {mysqli_query($con, $query);}
 	    catch(Exception $e)
 	    {
 	    	die('Balance did not update:<br>' . $query . "<br>" . mysql_error());
 	    }
 
-	    mysql_close();
+	    mysqli_close($con);
 	}
 
 /*	public static function accountValidation()

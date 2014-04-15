@@ -76,17 +76,17 @@ class Set
 	public function get_last_id()
 	{
 
-		$con = mysql_connect("localhost","host","test");
+		$con = mysqli_connect("localhost","host","test", "app_domain");
 
 		   if (!$con)
 		       {
-		            die('Could not connect: ' . mysqli_error());
+		            die('Could not connect: ' . mysqli_error($con));
 		       }
 
-		   mysql_select_db('test');
+		  
 		   $query = "SELECT id FROM sets ORDER BY `date_added` DESC LIMIT 1"; 
-		   $result = mysql_query($query);
-		   $row = mysql_fetch_assoc($result);
+		   $result = mysqli_query($con, $query);
+		   $row = mysqli_fetch_assoc($result);
 		   $number = $row['id'];
 
 		   return $number;

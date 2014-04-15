@@ -5,19 +5,19 @@
 require_once 'core/init.php';
 
 
-    $con = mysql_connect("localhost","host","test");
+    $con = mysqli_connect("localhost","mmollica","Thepw164", "app_domain");
 
     if (!$con)
         {
              die('Could not connect: ' . mysql_error());
         }
 
-    mysql_select_db('test'); 
-    $result = mysql_query("SELECT * FROM accounts");
+   
+    $result = mysqli_query($con, "SELECT * FROM accounts");
 
     if(!$result)
         {
-        die(mysql_error());
+        die(mysqli_error($con));
         }
     
 ?>
@@ -103,7 +103,7 @@ require_once 'core/init.php';
         $totaldebit=0;
         $totalcredit=0;
         
-        while($row = mysql_fetch_assoc($result))
+        while($row = mysqli_fetch_assoc($result))
             {
              echo "<tr>";
              echo "<td>" . $row['name'] . "</td>";

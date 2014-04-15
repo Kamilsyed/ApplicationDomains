@@ -5,11 +5,11 @@
 require_once 'core/init.php';
 
 
-    $con = mysqli_connect("localhost","host","test","test");
+    $con = mysqli_connect("localhost","mmollica","Thepw164", "app_domain");
 
     if (!$con)
         {
-             die('Could not connect: ' . mysql_error());
+             die('Could not connect: ' . mysqli_error($con));
         }
 	 
 	$id=$_POST["searchid"];
@@ -162,13 +162,13 @@ echo '<br>';
 	             {
 	             	echo "<tr>";
              		echo "<td>" . $row2['trans_id'] . "</td>";
-            		 echo "<td>" . $row2['acct_id'] . "</td>";
-            		 echo "<td>" . $row2['set_id'] . "</td>";
+            		echo "<td>" . $row2['acct_id'] . "</td>";
+            		echo "<td>" . $row2['set_id'] . "</td>";
              		echo "<td>" . $row2['type'] . "</td>";
              		echo "<td>" . $row2['amount'] . "</td>";
 					echo "<td>" . $row2['user_added'] . "</td>";
-            		 echo "<td>" . $row2['date_added'] . "</td>";
-            		 echo "</tr>";
+            		echo "<td>" . $row2['date_added'] . "</td>";
+            		echo "</tr>";
 	             
 	            
  	             }

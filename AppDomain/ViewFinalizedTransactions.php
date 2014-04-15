@@ -83,7 +83,7 @@ require_once 'core/init.php';
         
     <tbody>
         <?php
-            $con = mysqli_connect("localhost","host","test", "test");
+            $con = mysqli_connect("localhost","mmollica","Thepw164", "app_domain");
 
             if (!$con)
             {
@@ -174,7 +174,7 @@ require_once 'core/init.php';
         
     <tbody>
            <?php
-            $con = mysqli_connect("localhost","host","test", "test");
+            $con = mysqli_connect("localhost","mmollica","Thepw164", "app_domain");
 
             if (!$con)
             {

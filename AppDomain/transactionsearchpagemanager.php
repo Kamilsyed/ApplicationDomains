@@ -5,22 +5,22 @@
 require_once 'core/init.php';
 
 
-    $con = mysql_connect("localhost","host","test");
+    $con = mysqli_connect("localhost","mmollica","Thepw164", "app_domain");
 
     if (!$con)
         {
-             die('Could not connect: ' . mysql_error());
+             die('Could not connect: ' . mysqli_error($con));
         }
 
-    mysql_select_db('test'); 
+    
 	$id=$_POST["searchid"];
 	
     
-    $result = mysql_query("SELECT * FROM transactions WHERE id = $id ");
+    $result = mysqli_query($con, "SELECT * FROM transactions WHERE id = $id ");
 	
     if(!$result)
         {
-        die(mysql_error());
+        die(mysqli_error($con));
         }
             
 ?>
@@ -110,7 +110,7 @@ require_once 'core/init.php';
     <tbody>
     	<?php
 		
-    	while($row = mysql_fetch_assoc($result))
+    	while($row = mysqli_fetch_assoc($result))
             {
              echo "<tr>";
              echo "<td>" . $row['id'] . "</td>";

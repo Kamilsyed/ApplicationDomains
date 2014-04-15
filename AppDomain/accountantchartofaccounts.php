@@ -5,7 +5,7 @@
 require_once 'core/init.php';
 
 
-    $con = mysqli_connect("localhost","host","test", "test");
+    $con = mysqli_connect("localhost","mmollica","Thepw164", "app_domain");
 
     if (!$con)
         {
