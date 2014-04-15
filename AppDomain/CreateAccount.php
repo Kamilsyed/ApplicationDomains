@@ -141,9 +141,9 @@ if(Input::exists())
                 <select name="type" id="type">
                 <option>Select</option>
                  <option value="Current Assets">Current Assets</option>
-                 <option value="Long-Term Assests">Long-Term Assests</option>
+                 <option value="Long Term Assests">Long-Term Assests</option>
                 <option value="Current Liabilities">Current Liabilities</option>
-                 <option value="Long-Term Liabilites">Long-Term Liabilites</option>
+                 <option value="Long Term Liabilites">Long-Term Liabilites</option>
                 <option value="Equity">Equity</option>
                 <option value="Operating Revenue">Operating Revenue</option>
                 <option value="Operating Expenses">Operating Expenses</option>

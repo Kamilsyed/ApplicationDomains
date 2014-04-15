@@ -28,11 +28,11 @@ $result = mysqli_query($con, "SELECT * FROM accounts WHERE date_added >= '2014-0
 	
 $result2 = mysqli_query($con, "SELECT * FROM accounts WHERE type LIKE '%Current Asset%' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
 
-$result21 = mysqli_query($con, "SELECT * FROM accounts WHERE type LIKE '%Long Terms Asset%' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
+$result21 = mysqli_query($con, "SELECT * FROM accounts WHERE type LIKE '%Long-Term Asset%' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
 	
 $result3 = mysqli_query($con, "SELECT * FROM accounts WHERE type LIKE '%Current Liabilities%' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
 
-$result31 = mysqli_query($con, "SELECT * FROM accounts WHERE type LIKE '%Long Term Liabilities%' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
+$result31 = mysqli_query($con, "SELECT * FROM accounts WHERE type LIKE '%Long-Term Liabilities%' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
 	
 $result4 = mysqli_query($con, "SELECT * FROM accounts WHERE type LIKE '%Equity%' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
 
@@ -42,9 +42,9 @@ $result6 = mysqli_query($con, "SELECT * FROM accounts WHERE name LIKE '%Goods So
 
 $result7 = mysqli_query($con, "SELECT * FROM accounts WHERE type='Operating Expenses' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
 
-$result8 = mysqli_query($con, "SELECT * FROM accounts WHERE type='Non Operating Revenue' AND name !='Sales Discounts' AND name !='Sales Returns and Allowances' AND   date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
+$result8 = mysqli_query($con, "SELECT * FROM accounts WHERE type='Non-Operating Revenue' AND name !='Sales Discounts' AND name !='Sales Returns and Allowances' AND   date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
 
-$result9 = mysqli_query($con, "SELECT * FROM accounts WHERE type='Non Operating Expenses' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
+$result9 = mysqli_query($con, "SELECT * FROM accounts WHERE type='Non-Operating Expenses' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
 
 $result10 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Sales Returns and Allowances' OR name='Sales Discounts' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
 
