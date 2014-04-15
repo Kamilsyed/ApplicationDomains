@@ -90,9 +90,11 @@ if(Input::exists())
 	          <div class="navbar-inner">
 	            <div class="container">
 	              <ul class="nav">
-	                <li class="active" style="margin-left:285px"><a href="#">Home</a></li>
-	                <li style="margin-left:25px"><a href="#" >About Us</a></li>
-	                <li style="margin-left:25px"><a href="#">Contact Us</a></li>
+	                <li style="margin-left:190px"><a href="AdminHomepage.html">Home</a></li>
+                  <li style="margin-left:25px"><a href="aboutus.html" >About Us</a></li>
+                    <li  style="margin-left:25px"><a href="services.html">Services</a></li>
+                  <li  style="margin-left:25px"><a href="contactus.html">Contact Us</a></li>
+                    <li style="margin-left:25px"><a href="logout.php">Log out</a></li>
 	              </ul>
 	            </div>
 	          </div>
@@ -110,7 +112,7 @@ if(Input::exists())
 					  <li><a href="DeactivateAccount.php">Deactive Account</a></li>
 					  <li><a href="CreateUsers.php">Create Users</a></li>
 					  <li><a href="EditUsers.php">Edit Users</a></li>
-                      <li><a href="deactivatedaccounts.php"> View Deactivated Accounts</a></li>
+            <li><a href="deactivatedaccounts.php"> View Deactivated Accounts</a></li>
                       
 					  
 					</ul>
