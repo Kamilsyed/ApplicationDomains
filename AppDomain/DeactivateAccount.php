@@ -75,7 +75,7 @@ if(!$user->hasPermission('admin'))
 	        	<label for="Account ID:" style="color:#FFF;">Account Name</label>
 	        	<select name="account" id="account">
 					<?php
-						$con = mysqli_connect('localhost', 'host', 'test', 'test');
+						$con = mysqli_connect('localhost', 'mmollica', 'Thepw164', 'app_domain');
 
 						$query = "SELECT * FROM accounts";
 						$results = mysqli_query($con, $query);
@@ -100,7 +100,7 @@ if(!$user->hasPermission('admin'))
 						$acc = new Account();
 						/*SEE ACCOUNT.PHP LINE 123 FOR MORE INFORMATION*/
 						$acc->findByNumber(Input::get('account'));
-						$con = mysqli_connect('localhost', 'host', 'test', 'test');
+						$con = mysqli_connect('localhost', 'mmollica', 'Thepw164', 'app_domain');
 						if(!$con){Redirect::to('errors/500.php');}
 						$query = "SELECT * FROM transactions WHERE acct_id='". $acc->data()->number ."'";
 						$res = mysqli_query($con, $query);
