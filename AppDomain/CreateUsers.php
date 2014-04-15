@@ -9,26 +9,20 @@ require_once 'core/init.php';
 include 'checkpassword.php';
 
 
-if(Input::exists())
-{
-	echo "submitted </br>";
-	
-}
-
 //****TESTING*****erase when finished testing input
-if (!empty($_POST)) {
+/*if (!empty($_POST)) {
 testAllStuff();
-}
+}*/
 //****TESTING*****erase when finished testing input
 
 if(Input::exists())
 {
-	if(Token::check(Input::get('token')))
-	{
+	/*if(Token::check(Input::get('token')))
+	{*/
 		$validate = new Validate();
 	
 		$validation = $validate->check($_POST, array(
-			'username' => array('required' => true, 'min' => 6, 'max' => 25, 'unique' => 'users', 'user' => true),
+			'username' => array('required' => true, 'min' => 5, 'max' => 25, 'unique' => 'users', 'user' => true),
 			'password' => array('required' => true, 'min' => 6, 'max' => 25, 'password' => true),
 			'password_again' => array('required' => true, 'matches' => 'password'),
 			'first' => array('required' => true, 'min' => 1, 'max' => 25, 'name' => true),
@@ -53,13 +47,13 @@ if(Input::exists())
 					'groups' => Input::get('groups')
 					));
 
-				Session::flash('home', 'You have registered a user');
-				Redirect::to('AdminHomepage.php');
+				
 			}
 			catch(Exception $e)
 			{
 				die($e->getMessage());
 			}
+
 		}
 		else
 		{
@@ -68,7 +62,8 @@ if(Input::exists())
 				echo $error, '<br>';
 			}
 		}
-	}
+	//}
+	Redirect::to('AdminHomepage.html');
 }
 
 ?>
@@ -144,41 +139,42 @@ if(Input::exists())
 
                 <span id="sprytextfield1">
 	        	 <label for="Username" style="color:#FFF;">Username</label>
-	        	 <input type="text" name="username" id="username" value="<?php echo escape(Input::get('username')); ?>" autocomplete="off">
+	        	 <input type="text" name="username" id="username" autocomplete="off">
 	        	 <span class="textfieldRequiredMsg">A Username is required.</span></span>  
 
                 <span id="sprytextfield2">
           		 <label for="Password" style="color:#FFF;">Password</label>
-          		 <input type="password" name="password" id="password" value="<?php echo escape(Input::get('password')); ?>" autocomplete="off">         		
+          		 <input type="password" name="password" id="password"  autocomplete="off">         		
           		 <span class="textfieldRequiredMsg">A Password is required.</span></span>
 
           		<span id="sprytextfield3">
           		 <label for="Password" style="color:#FFF;">Confirm Password</label>
-          		 <input type="password" name="password_again" id="password_again" value="<?php echo escape(Input::get('password_again')); ?>" autocomplete="off">          		
+          		 <input type="password" name="password_again" id="password_again"  autocomplete="off">          		
                  <span class="textfieldRequiredMsg">Enter Password again.</span></span>
 
 
 	        	 <span id="spryselect1">
           			<label for="groups" style="color:#FFF;">User Type</label>
           			<select name="groups" id="groups">
-           				<option value="Admin">Admin</option>
-          	  			<option value="Accountant">Accountant</option>
-              			<option value="Manager">Manager</option>
+           				<option value="1">Admin</option>
+          	  			<option value="3">Accountant</option>
+              			<option value="2">Manager</option>
           			</select>
           <span class="selectRequiredMsg">Please select a user type.</span></span>
 
 	        	<span id="sprytextfield5">
 	        	 <label for="fname" style="color:#FFF;">First Name</label>
-	        	 <input type="text" name="first" id="first" value="<?php echo escape(Input::get('first')); ?>" autocomplete="off">
+	        	 <input type="text" name="first" id="first" autocomplete="off">
 	        	 <span class="textfieldRequiredMsg">A First Name is required.</span></span>
 
 	        	<span id="sprytextfield6">
 	        	 <label for="lname" style="color:#FFF;">Last Name</label>
-	        	 <input type="text" name="last" id="last" value="<?php echo escape(Input::get('last')); ?>" autocomplete="off">
+	        	 <input type="text" name="last" id="last" autocomplete="off">
 	        	 <span class="textfieldRequiredMsg">A Last Name is required.</span></span>
 
                 <br/>   
-                <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">
+
+                <input type="hidden" name="token" >
 				<input type="submit" value="Add User"class="btn btn-large btn-success"></td>
               </form> 
         	 </div>

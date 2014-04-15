@@ -29,9 +29,9 @@ class Account
 	        }
 
 	    
-	    $query = "SELECT number FROM accounts WHERE type='" . $type ."' ORDER BY `date_added` DESC LIMIT 1"; 
+	    $query = "SELECT number FROM accounts WHERE type='" . $type ."' ORDER BY `number` DESC LIMIT 1"; 
 	    $result = mysqli_query($con, $query);
-	    $row = mysqli_fetch_assoc($con, $result);
+	    $row = mysqli_fetch_assoc($result);
 	    $number = $row['number'];
 
 	    if(!$result)
@@ -49,7 +49,7 @@ class Account
 				else
 					{return 100000000;}
 			break;
-			case 'Long-Term Assests':
+			case 'Long Term Assets':
 				if($number >= 200000000)
 				{
 					return $number + 1;
@@ -65,7 +65,7 @@ class Account
 				else
 					{return 300000000;}
 			break;
-			case 'Long-Term Liabilites':
+			case 'Long Term Liabilites':
 				if($number >= 400000000)
 				{
 					return $number + 1;

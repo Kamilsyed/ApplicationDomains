@@ -37,7 +37,7 @@ if(Input::exists())
                     'status' => 1,
                     'date_added' => $time
                     ));
-                Redirect::to('adminHomepage.php');
+                Redirect::to('AdminHomepage.html');
             }
             catch(Exception $e)
             {
@@ -141,7 +141,7 @@ if(Input::exists())
                 <select name="type" id="type">
                 <option>Select</option>
                  <option value="Current Assets">Current Assets</option>
-                 <option value="Long Term Assests">Long-Term Assests</option>
+                 <option value="Long Term Assets">Long-Term Assets</option>
                 <option value="Current Liabilities">Current Liabilities</option>
                  <option value="Long Term Liabilites">Long-Term Liabilites</option>
                 <option value="Equity">Equity</option>

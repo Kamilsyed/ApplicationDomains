@@ -76,7 +76,7 @@ class Set
 	public function get_last_id()
 	{
 
-		$con = mysqli_connect("localhost","host","test", "app_domain");
+		$con = mysqli_connect("localhost","mmollica","Thepw164", "app_domain");
 
 		   if (!$con)
 		       {

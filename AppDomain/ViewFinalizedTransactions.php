@@ -35,9 +35,11 @@ require_once 'core/init.php';
               <div class="navbar-inner">
                 <div class="container">
                   <ul class="nav">
-                    <li class="active" style="margin-left:285px"><a href="#">Home</a></li>
-                    <li style="margin-left:25px"><a href="#" >About Us</a></li>
-                    <li style="margin-left:25px"><a href="#">Contact Us</a></li>
+                     <li style="margin-left:190px"><a href="ManagerHomepage.html">Home</a></li>
+                    <li style="margin-left:25px"><a href="aboutus.html" >About Us</a></li>
+                    <li  style="margin-left:25px"><a href="services.html">Services</a></li>
+                    <li  style="margin-left:25px"><a href="contactus.html">Contact Us</a></li>
+                    <li style="margin-left:25px"><a href="logout.php">Log out</a></li>
                   </ul>
                 </div>
               </div>
@@ -50,10 +52,13 @@ require_once 'core/init.php';
                 <div class="span4">
                     <ul class="nav nav-list">
                       <li class="nav-header">Features</li>
-                      <li ><a href="Managerchartofaccounts.php">Chart of Accounts</a></li>
+                      <li><a href="managerchartofaccounts.php">Chart of Accounts</a></li>
                       <li><a href="PostTransactions.php">Post Transactions</a></li>
-                     
-                      <li class="active"><a href="ViewFinalizedTransactions.html">View Finalized Transactions</a></li>
+                      <li><a href="edittransactions.html">Edit Transactions</a></li>
+                      <li><a href="ViewOpenTransactions.php">View Open Transactions</a></li>
+                      <li class="active"><a href="ViewFinalizedTransactions.php">View Finalized Transactions</a></li>
+                      <li><a href="viewreportsmanager.html">Reports</a></li>
+                      
                       
                     </ul>
                 </div>

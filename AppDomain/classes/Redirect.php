@@ -17,7 +17,7 @@ class Redirect
 					break;
 				}
 			}
-			header('Location: ' . $location);
+			header('Location: /' . $location);
 			exit();
 		}
 	}

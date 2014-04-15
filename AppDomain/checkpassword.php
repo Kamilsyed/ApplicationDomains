@@ -114,7 +114,7 @@ function checkPasswordStrength($val) {
 }
 
 function checkUsernameStrength($user) {
-	if (preg_match_all('$\S*(?=\S{6,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$', $user)) {
+	if (preg_match_all('$\S*(?=\S{5,})(?=\S*[a-z])(?=\S*[A-Z])\S*$', $user)) {
 		//if string contains at least 6 characters, 1 uppercase, and 1 lower case:
 		if (!preg_match('$(?=\S*[\W])$',  $user)) {
 			//..and if string DOES NOT contain any special characters (underscores accepted),

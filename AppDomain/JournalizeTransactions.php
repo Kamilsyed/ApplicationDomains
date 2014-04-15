@@ -163,14 +163,16 @@ if(Input::exists())
 		            }
 		            catch(Exception $e)
 		            {
-						Redirect::to('index.php');
+						die($e->getMessage());
 		            }
 			    }
 		}
     }
     else
     {
-    	Redirect::to('files.php');
+    	Redirect::to('JournalizeTransactions.php');
+    	Echo "Transactions not Balanced";
+    	
     }
 }
 
