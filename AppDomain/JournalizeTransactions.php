@@ -231,11 +231,11 @@ if(Input::exists())
 	        	<div class="span4">
 	        		<ul class="nav nav-list">
 					  <li class="nav-header">Features</li>
-					  <li><a href="Accountantchartofaccounts.php">Chart of Accounts</a></li>
+					  <li><a href="accountantchartofaccounts.php">Chart of Accounts</a></li>
 					  <li class="active"><a href="JournalizeTransactions.php">Journalize Transactions</a></li>
-					  <li><a href="ViewOpenTransactionsaccountant.php">View Open Transactions</a></li>
-                      <li><a href="ViewFinalizedTransactionsaccountant.php">View Finalized Transactions</a></li>
-                      
+					  <li><a href="ViewOpenTransactionsAccountant.php">View Open Transactions</a></li>
+                      <li><a href="ViewFinalizedTransactionsAccountant.php">View Finalized Transactions</a></li>
+                      <li><a href="viewreportsaccountant.html">Reports</a></li>
 					</ul>
 	        	</div>
 	        	<!-- Right side Content Vertical Area -->
@@ -262,7 +262,7 @@ if(Input::exists())
 					             		<label for="accountname" style="color:#FFFFFF;">Account</label>
 					            		<select name="accountname[]" id="account">
 						            		<?php $con = mysqli_connect("localhost","mmollica","Thepw164", "app_domain");?> 
-										   	<?php $result = mysqli_query($con,'SELECT * FROM accounts ORDER BY name'); ?> 
+										   	<?php $result = mysqli_query($con,'SELECT * FROM accounts WHERE status=1 ORDER BY name'); ?> 
 										   	<?php while($row = mysqli_fetch_assoc($result)) { ?> 
 										       	<option value="<?php echo htmlspecialchars($row['name']);?>"> 
 										           	<?php echo htmlspecialchars($row['name']) . "-" . htmlspecialchars($row['type']); ?> 
@@ -302,7 +302,7 @@ if(Input::exists())
 			             		<label for="accountname" style="color:#FFFFFF;">Account</label>
 			            		<select name="accountname[]" id="account">
 				            		<?php $con = mysqli_connect("localhost","mmollica","Thepw164", "app_domain");?> 
-								   	<?php $result = mysqli_query($con,'SELECT * FROM accounts ORDER BY name'); ?> 
+								   	<?php $result = mysqli_query($con,'SELECT * FROM accounts WHERE status=1 ORDER BY name'); ?> 
 								   	<?php while($row = mysqli_fetch_assoc($result)) { ?> 
 								       	<option value="<?php echo htmlspecialchars($row['name']);?>"> 
 								           	<?php echo htmlspecialchars($row['name']) . "-" . htmlspecialchars($row['type']); ?> 
