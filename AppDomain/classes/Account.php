@@ -119,6 +119,14 @@ class Account
 		}
 	}
 
+	/*  NOTE IMPORTANT: THIS FUNCTION WILL NOT WORK IF THERE IS A SPACE IN THE NAME OF
+		THE ACCOUNT! USE Account::findByNumber() TO ACCESS ACCOUNT DATA
+
+		IF ANY PAGE REQUIRES A DROP DOWN TO GIVE INFORMATION TO ACCOUNT.php FOR DATA
+		RETRIEVAL, SET THE DROP DOWN VALUE TO row['number'] AND NOT row['name']. 
+
+		SEE Travis Harrell FOR MORE DETAILS
+	*/
 	public function find($acc = null)
 	{
 
@@ -137,7 +145,8 @@ class Account
 	{
 		return $this->_data;
 	}
-		public function findByNumber($id = null)
+
+	public function findByNumber($id = null)
 	{
 		$data = $this->_db->get('accounts', array('number', '=', $id));
 
@@ -181,8 +190,27 @@ class Account
 	    mysqli_close($con);
 	}
 
-/*	public static function accountValidation()
+	public static function disable($number)
 	{
-		
-	}*/
+		$con = mysqli_connect('localhost', 'host', 'test', 'test');
+
+		if(!$con){Redirect::to('errors/500.php');}
+
+		$query = "UPDATE accounts SET status='0' WHERE number='{$number}'";
+
+		if(!mysqli_query($con, $query))
+			{throw new Exception("Could not update account!");}
+	}
+
+	public static function enable($number)
+	{
+		$con = mysqli_connect('localhost', 'host', 'test', 'test');
+
+		if(!$con){Redirect::to('errors/500.php');}
+
+		$query = "UPDATE accounts SET status='1' WHERE number='{$number}'";
+
+		if(!mysqli_query($con, $query))
+			{throw new Exception("Could not update account!");}
+	}
 }
