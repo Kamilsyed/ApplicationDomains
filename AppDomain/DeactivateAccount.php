@@ -43,7 +43,7 @@ if(!$user->hasPermission('admin'))
 	            <div class="container">
 	              <ul class="nav">
 	                <!-- <li class="nav-header">Features</li> -->
-					<li style="margin-left:190px"><a href="adminHomepage.html">Home</a></li>
+					<li style="margin-left:190px"><a href="AdminHomepage.html">Home</a></li>
 	                <li style="margin-left:25px"><a href="aboutus.html" >About Us</a></li>
                     <li  style="margin-left:25px"><a href="services.html">Services</a></li>
 	                <li class="active" style="margin-left:25px"><a href="contactus.html">Contact Us</a></li>
