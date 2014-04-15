@@ -28,11 +28,11 @@ $result = mysqli_query($con, "SELECT * FROM accounts WHERE date_added >= '2014-0
 	
 $result2 = mysqli_query($con, "SELECT * FROM accounts WHERE type LIKE '%Current Asset%' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
 
-$result21 = mysqli_query($con, "SELECT * FROM accounts WHERE type LIKE '%Long-Term Asset%' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
+$result21 = mysqli_query($con, "SELECT * FROM accounts WHERE type LIKE '%Long Term Asset%' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
 	
 $result3 = mysqli_query($con, "SELECT * FROM accounts WHERE type LIKE '%Current Liabilities%' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
 
-$result31 = mysqli_query($con, "SELECT * FROM accounts WHERE type LIKE '%Long-Term Liabilities%' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
+$result31 = mysqli_query($con, "SELECT * FROM accounts WHERE type LIKE '%Long Term Liabilities%' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
 	
 $result4 = mysqli_query($con, "SELECT * FROM accounts WHERE type LIKE '%Equity%' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
 
@@ -212,12 +212,12 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
         while($row = mysqli_fetch_assoc($result))
             {
              echo "<tr>";
-             echo '<td align="center">' . $row['name'] . "</td>";
+             echo '<td align="left">' . $row['name'] . "</td>";
              $side= $row['normal'];
              
              if($side=="Debit")
              {
-             	echo '<td align="center">' . $row['balance'] . "</td>";
+             	echo '<td align="right">' . $row['balance'] . "</td>";
                 echo '<td align="center">' . '&nbsp;' . "</td>";
                 $totaldebit+= $row['balance'];
              }
@@ -225,7 +225,7 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
              if($side=="Credit")
              {
 				echo '<td align="center">' . '&nbsp;' . "</td>";             
-             	echo '<td align="center">' . $row['balance'] . "</td>";
+             	echo '<td align="right">' . $row['balance'] . "</td>";
                 $totalcredit+= $row['balance'];
              }
              
@@ -233,7 +233,7 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
             }
 			
   		echo "<tr>";
-        echo '<th align="center">' . '<b>' . 'Total:' . '</b>' . "</th>";
+        echo '<th align="left">' . '<b>' . 'Total:' . '</b>' . "</th>";
         echo "<td  align=right>" . '<b>' . $totaldebit . '</b>' . "</td>";
 		echo "<td  align=right>" . '<b>' . $totalcredit . '</b>' . "</td>";
         echo "</table>";        
@@ -285,8 +285,8 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 			if($count==1)
 			{
 			 echo "<tr>";
-             echo '<td >' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
-			 echo '<td align="center">' . '$'  . $row['balance'] . "</td>";
+             echo '<td align="left">' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
+			 echo '<td align="right">' . '$'  . $row['balance'] . "</td>";
              $totalcurassets+= $row['balance'];        
              echo "</tr>";
 			 $count++;
@@ -296,8 +296,8 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 			else if($count==$size)
 			{
 			 echo "<tr>";
-             echo '<td >' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
-			 echo '<td align="center">' . '<u>' . $row['balance'] . '</u>' . "</td>";
+             echo '<td align="left">' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
+			 echo '<td align="right">' . '<u>' . $row['balance'] . '</u>' . "</td>";
              $totalcurassets+= $row['balance'];        
              echo "</tr>";
 			 $count++;	
@@ -307,8 +307,8 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 			else
 			{
              echo "<tr>";
-             echo '<td >' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
-			 echo '<td align="center">' . $row['balance'] . "</td>";
+             echo '<td align="left">' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
+			 echo '<td align="right">' . $row['balance'] . "</td>";
              $totalcurassets+= $row['balance'];        
              echo "</tr>";
 			 $count++;
@@ -317,8 +317,8 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 			
             }	
   		echo "<tr>";
-        echo '<td>' . '&nbsp;&nbsp;&nbsp;'  . 'Total current assets' . "</td>";
-        echo '<td align="center">'  . $totalcurassets  . "</td>";
+        echo '<td align="left">' . '&nbsp;&nbsp;&nbsp;'  . 'Total current assets' . "</td>";
+        echo '<td align="right">'  . $totalcurassets  . "</td>";
         echo "</tr>";
 		
 		
@@ -339,8 +339,8 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 			if( $count2==$size2)
 			{
              echo "<tr>";
-             echo '<td >' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
-			 echo '<td align="center">' . '<u>' . $row['balance'] . '</u>' . "</td>";
+             echo '<td align="left">' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
+			 echo '<td align="right">' . '<u>' . $row['balance'] . '</u>' . "</td>";
              $totallongassets+= $row['balance'];        
              echo "</tr>";
 			 
@@ -348,8 +348,8 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 			else
 			{
 			 echo "<tr>";
-             echo '<td >' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
-			 echo '<td align="center">' . $row['balance'] . "</td>";
+             echo '<td align="left">' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
+			 echo '<td align="right">' . $row['balance'] . "</td>";
              $totallongassets+= $row['balance'];        
              echo "</tr>";
 			 $count2++;
@@ -360,8 +360,8 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 			$totalassets=$totalcurassets + $totallongassets;
 				
   		echo "<tr>";
-        echo '<td>' . '&nbsp;&nbsp;&nbsp;&nbsp;'  . 'Total assets' . "</td>";
-        echo '<td align="center">' .'<u style=" border-bottom: 1px solid black">' .'$' . $totalassets . '</u>' .  "</td>";
+        echo '<td align="left">' . '&nbsp;&nbsp;&nbsp;&nbsp;'  . 'Total assets' . "</td>";
+        echo '<td align="right">' .'<u style=" border-bottom: 1px solid black">' .'$' . $totalassets . '</u>' .  "</td>";
         echo "</tr>";
 		   
         echo '<tr><td>&nbsp;</td><td>&nbsp;</td></tr>';
@@ -391,8 +391,8 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 				if($count3==1)
 			{
 			 echo "<tr>";
-             echo '<td >' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
-			 echo '<td align="center">' . '$'  . $row['balance'] . "</td>";
+             echo '<td align="left">' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
+			 echo '<td align="right">' . '$'  . $row['balance'] . "</td>";
              $totalcurlib+= $row['balance'];        
              echo "</tr>";
 			 $count3++;
@@ -402,8 +402,8 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 			else if($count3==$size3)
 			{
 			 echo "<tr>";
-             echo '<td >' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
-			 echo '<td align="center">' . '<u>' . $row['balance'] . '</u>' . "</td>";
+             echo '<td align="left">' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
+			 echo '<td align="right">' . '<u>' . $row['balance'] . '</u>' . "</td>";
              $totalcurlib+= $row['balance'];        
              echo "</tr>";
 			 $count3++;	
@@ -412,8 +412,8 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 			else
 			{
              echo "<tr>";
-             echo '<td >' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
-			 echo '<td align="center">' . $row['balance'] . "</td>";
+             echo '<td align="left">' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
+			 echo '<td align="right">' . $row['balance'] . "</td>";
              $totalcurlib+= $row['balance'];        
              echo "</tr>";
 			 $count3++;
@@ -421,8 +421,8 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 			}
 		}
   		echo "<tr>";
-        echo '<td>' . '&nbsp;&nbsp;&nbsp;&nbsp;'  . 'Total current liabilities' . "</td>";
-        echo '<td align="center">' . $totalcurlib  . "</td>";
+        echo '<td align="left">' . '&nbsp;&nbsp;&nbsp;&nbsp;'  . 'Total current liabilities' . "</td>";
+        echo '<td align="right">' . $totalcurlib  . "</td>";
         echo "</tr>";
 		
 		
@@ -443,8 +443,8 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
            	if( $count4==$size4)
 			{
              echo "<tr>";
-             echo '<td >' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
-			 echo '<td align="center">' . '<u>' . $row['balance'] . '</u>' . "</td>";
+             echo '<td align="left">' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
+			 echo '<td align="right">' . '<u>' . $row['balance'] . '</u>' . "</td>";
              $totallonglib+= $row['balance'];        
              echo "</tr>";
 			 
@@ -452,8 +452,8 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 			else
 			{
 			 echo "<tr>";
-             echo '<td >' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
-			 echo '<td align="center">' . $row['balance'] . "</td>";
+             echo '<td align="left" >' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
+			 echo '<td align="right">' . $row['balance'] . "</td>";
              $totallonglib+= $row['balance'];        
              echo "</tr>";
 			 $count4++;
@@ -465,8 +465,8 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 			$totallib=$totalcurlib + $totallonglib;
 				
   		echo "<tr>";
-        echo '<td>' . '&nbsp;&nbsp;&nbsp;&nbsp;'  . 'Total liabilties' . "</td>";
-        echo '<td align="center">' . $totallib .  "</td>";
+        echo '<td align="left">' . '&nbsp;&nbsp;&nbsp;&nbsp;'  . 'Total liabilties' . "</td>";
+        echo '<td align="right">' . $totallib .  "</td>";
         echo "</tr>";
 		
 		
@@ -474,7 +474,7 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 		
 			 echo "<tr>";
              echo '<td align="left">' .'<b>' . "Stockholder's Equity:"  . '</b>' . "</td>";
-			 echo '<td align="center">' . '&nbsp' . "</td>";       
+			 echo '<td align="right">' . '&nbsp' . "</td>";       
              echo "</tr>";
 			 
 			 $equity=0;
@@ -488,8 +488,8 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
            	if( $count5==$size5)
 			{
              echo "<tr>";
-             echo '<td >' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
-			 echo '<td align="center">' . '<u>' . $row['balance'] . '</u>' . "</td>";
+             echo '<td align="left">' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
+			 echo '<td align="right">' . '<u>' . $row['balance'] . '</u>' . "</td>";
              $equity+= $row['balance'];        
              echo "</tr>";
 			 
@@ -497,8 +497,8 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 			else
 			{
 			 echo "<tr>";
-             echo '<td >' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
-			 echo '<td align="center">' . $row['balance'] . "</td>";
+             echo '<td align="left">' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
+			 echo '<td align="right">' . $row['balance'] . "</td>";
              $equity+= $row['balance'];        
              echo "</tr>";
 			 $count5++;
@@ -508,15 +508,15 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
             
             }
   		echo "<tr>";
-        echo '<td>' . '&nbsp;&nbsp;&nbsp;&nbsp;' . "Total Stockholder's Equity:" . "</td>";
-        echo '<td  align="center">' . '<u>' . $equity . '</u>' . "</td>";
+        echo '<td align="left">' . '&nbsp;&nbsp;&nbsp;&nbsp;' . "Total Stockholder's Equity:" . "</td>";
+        echo '<td  align="right">' . '<u>' . $equity . '</u>' . "</td>";
         echo "</tr>"; 
 		
 		$totalrightside+= $totallib + $equity;
 		
 		echo "<tr>";
-        echo '<td>' . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . "Total Liabilities &amp; Stockholder's Equity:" . "</td>";
-         echo '<td align="center">' .'<u style=" border-bottom: 1px solid black">' .'$' . $totalrightside . '</u>' .  "</td>";
+        echo '<td align="left">' . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . "Total Liabilities &amp; Stockholder's Equity:" . "</td>";
+         echo '<td align="right">' .'<u style=" border-bottom: 1px solid black">' .'$' . $totalrightside . '</u>' .  "</td>";
         echo "</tr>";      
         
         
