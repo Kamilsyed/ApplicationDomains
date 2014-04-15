@@ -15,13 +15,24 @@ require_once 'core/init.php';
   
 	 
 	$todate=$_POST["todate"] . "23:59:59";
+	$header=$_POST["todate"]. "23:59:59";
 	$report=$_POST["SelectReport"];
+	
+	date_default_timezone_set('America/New_York');
+	
+	$date=date_create($header);
+	
+	$hea= date_format($date,"l F jS Y");
 	
 $result = mysqli_query($con, "SELECT * FROM accounts WHERE date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
 	
-$result2 = mysqli_query($con, "SELECT * FROM accounts WHERE type LIKE '%Asset%' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
+$result2 = mysqli_query($con, "SELECT * FROM accounts WHERE type LIKE '%Current Asset%' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
+
+$result21 = mysqli_query($con, "SELECT * FROM accounts WHERE type LIKE '%Long Terms Asset%' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
 	
-$result3 = mysqli_query($con, "SELECT * FROM accounts WHERE type LIKE '%Liabilities%' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
+$result3 = mysqli_query($con, "SELECT * FROM accounts WHERE type LIKE '%Current Liabilities%' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
+
+$result31 = mysqli_query($con, "SELECT * FROM accounts WHERE type LIKE '%Long Term Liabilities%' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
 	
 $result4 = mysqli_query($con, "SELECT * FROM accounts WHERE type LIKE '%Equity%' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
 
@@ -31,7 +42,7 @@ $result6 = mysqli_query($con, "SELECT * FROM accounts WHERE name LIKE '%Goods So
 
 $result7 = mysqli_query($con, "SELECT * FROM accounts WHERE type='Operating Expenses' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
 
-$result8 = mysqli_query($con, "SELECT * FROM accounts WHERE type='Non-Operating Revenue' AND name !='Sales Discounts' AND name !='Sales Returns and Allowances' AND   date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
+$result8 = mysqli_query($con, "SELECT * FROM accounts WHERE type='Non Operating Revenue' AND name !='Sales Discounts' AND name !='Sales Returns and Allowances' AND   date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
 
 $result9 = mysqli_query($con, "SELECT * FROM accounts WHERE type='Non Operating Expenses' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
 
@@ -176,14 +187,12 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
  {   
  	case "TrialBalance": 
 	
-		echo '<h3 style="margin-left:190px; color:#FFFFFF">Astute Solutions</h3>';
-		echo '<h3 style="margin-left:190px; color:#FFFFFF">' . '&nbsp;&nbsp;&nbsp;&nbsp;' . 'Trial Balance' . '</h3>';
-		echo '<h3 style="margin-left:190px; color:#FFFFFF">' . $todate . '</h3>';
-		echo '<br>';
 	
 	echo ' <table id="rounded-corner" summary="Trial Balance"> ';
   	echo '<thead>';
+	echo '<th scope="col" class="rounded-company" align="center" colspan="3"> <b>Astute Solutions<br>Balance Sheet<br> As of ' . $hea. '</b></th>';
         echo '<tr bordercolor="">';
+		
             echo '<th scope="col" class="rounded-company" align="center"><b>Account</b></th>';
             echo '<th scope="col" class="rounded-q1" align="center"><b>DR</b></th>';
             echo '<th scope="col" class="rounded-q4" align="center"><b>CR</b></th>';
@@ -237,67 +246,277 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
  
  		case "BalanceSheet":
 		
-		echo '<h3 style="margin-left:190px; color:#FFFFFF">Astute Solutions</h3>';
-		echo '<h3 style="margin-left:190px; color:#FFFFFF">' . '&nbsp;&nbsp;' . 'Balance Sheet' . '</h3>';
-		echo '<h3 style="margin-left:190px; color:#FFFFFF">' . $todate . '</h3>';
-		echo '<br>';
 		
 		echo '<table id="rounded-corner" summary="Balance Sheet">';
  	    echo '<thead>';
          echo '<tr>';
-            echo '<th scope="col" class="rounded-company" align="center"> <b>Assets</b></th>';
-             echo '<th scope="col" class="rounded-q4" style="border:5px; "><b>DR</b></th>';
+            echo '<th scope="col" class="rounded-company" align="center" colspan="2"> <b>Astute Solutions<br>Balance Sheet<br> As of ' . $hea. '</b></th>';
+           
           
          echo '</tr>';
      echo '</thead>';
 
 	 echo '<tbody>';
        
-        $totaldebit=0;
+        $totalcurassets=0;
+		$totallongassets=0;
+	    $totalassets=0;
 		
+			 echo "<tr>";
+             echo '<td align="left">' . '&nbsp' . "</td>";
+			 echo '<td align="center"  style="font-size:15px;">' . 'January 6,<br> <u>2014</u>' . "</td>";       
+             echo "</tr>";
+		
+			 echo "<tr>";
+             echo '<td align="left">' . '<b>' . 'Assets' . '</b>' . "</td>";
+			 echo '<td align="center">' . '&nbsp' . "</td>";       
+             echo "</tr>";
+			 
+			 echo "<tr>";
+             echo '<td align="left">'  . 'Current Assets:' .  "</td>";
+			 echo '<td align="center">' . '&nbsp;' . "</td>";       
+             echo "</tr>";
+			 
+			$size=mysqli_num_rows($result2);
+			$count=1;
         while($row = mysqli_fetch_assoc($result2))
             {
-             echo "<tr>";
-             echo '<td align="center">' . $row['name'] . "</td>";
-			 echo '<td align="center">' . $row['balance'] . "</td>";
-             $totaldebit+= $row['balance'];        
+				
+			if($count==1)
+			{
+			 echo "<tr>";
+             echo '<td >' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
+			 echo '<td align="center">' . '$'  . $row['balance'] . "</td>";
+             $totalcurassets+= $row['balance'];        
              echo "</tr>";
-            }
+			 $count++;
+				
+			}
+			
+			else if($count==$size)
+			{
+			 echo "<tr>";
+             echo '<td >' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
+			 echo '<td align="center">' . '<u>' . $row['balance'] . '</u>' . "</td>";
+             $totalcurassets+= $row['balance'];        
+             echo "</tr>";
+			 $count++;	
+			
+			}
+			
+			else
+			{
+             echo "<tr>";
+             echo '<td >' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
+			 echo '<td align="center">' . $row['balance'] . "</td>";
+             $totalcurassets+= $row['balance'];        
+             echo "</tr>";
+			 $count++;
+			 
+			}
+			
+            }	
   		echo "<tr>";
-        echo '<td align="center">' .'<b>'. 'Total:' . '</b>' . "</td>";
-        echo "<td  align=right>" .'<b>' . $totaldebit . '</b>' . "</td>";
+        echo '<td>' . '&nbsp;&nbsp;&nbsp;'  . 'Total current assets' . "</td>";
+        echo '<td align="center">'  . $totalcurassets  . "</td>";
         echo "</tr>";
 		
-		   
-        
-         echo '<tr>';
-             echo '<th scope="col" class="rounded-company" align="center"><b>Liabilities & Stockholder Equity</b></th>';
-             echo '<th scope="col" class="rounded-q4"><b>CR</b></th>';
-          
-         echo '</tr>';
-        
-        $totalcredit=0;
 		
+		
+		echo '<tr><td>&nbsp;</td><td>&nbsp;</td></tr>';
+		
+		
+		 echo "<tr>";
+             echo '<td align="left">'  . 'Long Term Assets:' .  "</td>";
+			 echo '<td align="center">' . '&nbsp;' . "</td>";       
+             echo "</tr>";
+		
+		$size2=mysqli_num_rows($result21);
+		$count2=1;
+        while($row = mysqli_fetch_assoc($result21))
+            {
+			
+			if( $count2==$size2)
+			{
+             echo "<tr>";
+             echo '<td >' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
+			 echo '<td align="center">' . '<u>' . $row['balance'] . '</u>' . "</td>";
+             $totallongassets+= $row['balance'];        
+             echo "</tr>";
+			 
+			}
+			else
+			{
+			 echo "<tr>";
+             echo '<td >' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
+			 echo '<td align="center">' . $row['balance'] . "</td>";
+             $totallongassets+= $row['balance'];        
+             echo "</tr>";
+			 $count2++;
+			 
+			}
+			
+            }
+			$totalassets=$totalcurassets + $totallongassets;
+				
+  		echo "<tr>";
+        echo '<td>' . '&nbsp;&nbsp;&nbsp;&nbsp;'  . 'Total assets' . "</td>";
+        echo '<td align="center">' .'<u style=" border-bottom: 1px solid black">' .'$' . $totalassets . '</u>' .  "</td>";
+        echo "</tr>";
+		   
+        echo '<tr><td>&nbsp;</td><td>&nbsp;</td></tr>';
+		
+         
+		 
+		 
+         $totalcurlib=0;
+		$totallonglib=0;
+	    $totallib=0;
+		
+		
+			 echo "<tr>";
+             echo '<td align="left">' . '<b>' . 'Liabilities' . '</b>' . "</td>";
+			 echo '<td align="center">' . '&nbsp' . "</td>";       
+             echo "</tr>";
+			 
+			 echo "<tr>";
+             echo '<td align="left">'  . 'Current Liabilities:' .  "</td>";
+			 echo '<td align="center">' . '&nbsp;' . "</td>";       
+             echo "</tr>";
+		
+		$size3=mysqli_num_rows($result3);
+		$count3=1;
         while($row = mysqli_fetch_assoc($result3))
             {
-             echo "<tr>";
-             echo '<td align="center">' . $row['name'] . "</td>";
-			 echo '<td align="center">' . $row['balance'] . "</td>";
-             $totalcredit+= $row['balance'];        
+				if($count3==1)
+			{
+			 echo "<tr>";
+             echo '<td >' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
+			 echo '<td align="center">' . '$'  . $row['balance'] . "</td>";
+             $totalcurlib+= $row['balance'];        
              echo "</tr>";
+			 $count3++;
+				
+			}
+			
+			else if($count3==$size3)
+			{
+			 echo "<tr>";
+             echo '<td >' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
+			 echo '<td align="center">' . '<u>' . $row['balance'] . '</u>' . "</td>";
+             $totalcurlib+= $row['balance'];        
+             echo "</tr>";
+			 $count3++;	
             }
 			
+			else
+			{
+             echo "<tr>";
+             echo '<td >' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
+			 echo '<td align="center">' . $row['balance'] . "</td>";
+             $totalcurlib+= $row['balance'];        
+             echo "</tr>";
+			 $count3++;
+			 
+			}
+		}
+  		echo "<tr>";
+        echo '<td>' . '&nbsp;&nbsp;&nbsp;&nbsp;'  . 'Total current liabilities' . "</td>";
+        echo '<td align="center">' . $totalcurlib  . "</td>";
+        echo "</tr>";
+		
+		
+		
+		echo '<tr><td>&nbsp;</td><td>&nbsp;</td></tr>';
+		
+		
+		 echo "<tr>";
+             echo '<td align="left">'  . 'Long Term Liabilities:' .  "</td>";
+			 echo '<td align="center">' . '&nbsp;' . "</td>";       
+             echo "</tr>";
+		
+		
+		$size4=mysqli_num_rows($result31);
+		$count4=1;
+        while($row = mysqli_fetch_assoc($result31))
+            {
+           	if( $count4==$size4)
+			{
+             echo "<tr>";
+             echo '<td >' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
+			 echo '<td align="center">' . '<u>' . $row['balance'] . '</u>' . "</td>";
+             $totallonglib+= $row['balance'];        
+             echo "</tr>";
+			 
+			}
+			else
+			{
+			 echo "<tr>";
+             echo '<td >' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
+			 echo '<td align="center">' . $row['balance'] . "</td>";
+             $totallonglib+= $row['balance'];        
+             echo "</tr>";
+			 $count4++;
+			 
+			}
+			
+            
+            }
+			$totallib=$totalcurlib + $totallonglib;
+				
+  		echo "<tr>";
+        echo '<td>' . '&nbsp;&nbsp;&nbsp;&nbsp;'  . 'Total liabilties' . "</td>";
+        echo '<td align="center">' . $totallib .  "</td>";
+        echo "</tr>";
+		
+		
+		echo '<tr><td>&nbsp;</td><td>&nbsp;</td></tr>';
+		
+			 echo "<tr>";
+             echo '<td align="left">' .'<b>' . "Stockholder's Equity:"  . '</b>' . "</td>";
+			 echo '<td align="center">' . '&nbsp' . "</td>";       
+             echo "</tr>";
+			 
+			 $equity=0;
+			 $totalrightside=0;	
+			 $size5=mysqli_num_rows($result4);
+		 	 $count5=1;
+				
 		while($row = mysqli_fetch_assoc($result4))
             {
+                 
+           	if( $count5==$size5)
+			{
              echo "<tr>";
-             echo '<td align="center">' . $row['name'] . "</td>";
-			 echo '<td align="center">' . $row['balance'] . "</td>";
-             $totalcredit+= $row['balance'];        
+             echo '<td >' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
+			 echo '<td align="center">' . '<u>' . $row['balance'] . '</u>' . "</td>";
+             $equity+= $row['balance'];        
              echo "</tr>";
+			 
+			}
+			else
+			{
+			 echo "<tr>";
+             echo '<td >' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
+			 echo '<td align="center">' . $row['balance'] . "</td>";
+             $equity+= $row['balance'];        
+             echo "</tr>";
+			 $count5++;
+			 
+			}
+			
+            
             }
   		echo "<tr>";
-        echo '<td align="center">' .'<b>'. 'Total:' . '</b>' . "</td>";
-        echo "<td  align=right>" .'<b>' . $totalcredit . '</b>' . "</td>";
+        echo '<td>' . '&nbsp;&nbsp;&nbsp;&nbsp;' . "Total Stockholder's Equity:" . "</td>";
+        echo '<td  align="center">' . '<u>' . $equity . '</u>' . "</td>";
+        echo "</tr>"; 
+		
+		$totalrightside+= $totallib + $equity;
+		
+		echo "<tr>";
+        echo '<td>' . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . "Total Liabilities &amp; Stockholder's Equity:" . "</td>";
+         echo '<td align="center">' .'<u style=" border-bottom: 1px solid black">' .'$' . $totalrightside . '</u>' .  "</td>";
         echo "</tr>";      
         
         
@@ -310,17 +529,11 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 		
 	case "IncomeStatement":
 	
-		echo '<h3 style="margin-left:190px; color:#FFFFFF">Astute Solutions</h3>';
-		echo '<h3 style="margin-left:190px; color:#FFFFFF">' . '&nbsp;&nbsp;' . 'Income Statement' . '</h3>';
-		echo '<h3 style="margin-left:190px; color:#FFFFFF">' . $todate . '</h3>';
-		echo '<br>';
-	
-	
 echo '<table id="rounded-corner" summary="2007 Major IT Companies Profit">';
 
   echo '<thead>';
     	echo '<tr>';
-        	echo '<th scope="col" colspan="2" class="rounded-company" align="center"><b>Revenue</b></th>';
+        	 echo '<th scope="col" class="rounded-company" align="center" colspan="3"> <b>Astute Solutions<br>Income Statement<br> As of ' . $hea. '</b></th>';
         	
         echo '</tr>';
     echo '</thead>';
@@ -336,155 +549,205 @@ echo '<table id="rounded-corner" summary="2007 Major IT Companies Profit">';
 	$nonoperatingsub=0;
     $netincome=0;
 	$cost=0;
+	$o=0;
         
         while($row = mysqli_fetch_assoc($result5))
         {
-    		echo '<tr>';
-        	echo '<td align="center">' . '&nbsp;&nbsp;'. $row['name'] . "</td>";
-            echo '<td align="center">' . $row['balance'] . "</td>";
+    	
 			$operatingrev+=$row['balance'];
-            
-           
-        	echo '</tr>';
         }
 		
 			 while($row = mysqli_fetch_assoc($result10))
         {
         
-       	 echo '<tr>';
-        	echo '<td align="center">' . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . $row['name'] . "</td>";
-            echo '<td align="center">' . '-' . $row['balance'] . "</td>";
            	$operatingrev-= $row['balance'];
-        echo '</tr>';
         
         }
 		
 		echo "<tr>";
-        echo '<td align="center">' . '<b>Net Sales:</b>' . "</td>";
-        echo '<td align="right">' . '<b>' . $operatingrev . '</b>' . "</td>";
+        echo '<td align="left">' . 'Net Sales' . "</td>";
+		echo '<td></td>';
+        echo '<td align="right">' . '$' . $operatingrev  . "</td>";
         echo "</tr>";
 		
-		echo '<tr><td>&nbsp;</td><td>&nbsp;</td></tr>';
         
         while($row = mysqli_fetch_assoc($result6))
         {
-        
-       	 echo '<tr>';
-        	echo '<td align="center">' . '&nbsp;&nbsp;' . $row['name'] . "</td>";
-            echo '<td align="center">'  . $row['balance'] . "</td>";
 			$cost+= $row['balance'];
-        echo '</tr>';
         
         }
 		
 		 while($row = mysqli_fetch_assoc($result11))
         {
-        
-       	 echo '<tr>';
-        	echo '<td align="center">' . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . $row['name'] . "</td>";
-            echo '<td align="center">' . '-' . $row['balance'] . "</td>";
            	$cost-= $row['balance'];
-        echo '</tr>';
         
         }
 		
 		echo "<tr>";
-        echo '<td align="center">' . '<b>Total Cost Of Goods Sold:</b>' . "</td>";
-        echo '<td align="right">' . '<b>'  . $cost . '</b>' . "</td>";
+        echo '<td align="left">' . 'Total Cost Of Goods Sold' . "</td>";
+		echo '<td></td>';
+        echo '<td align="right">'. '&nbsp;&nbsp;' . '<u>' . '(' . $cost  . ')' . '</u>' . "</td>";
         echo "</tr>";
-		
-		echo '<tr><td>&nbsp;</td><td>&nbsp;</td></tr>';
 		
         $grossprofit=($operatingrev-$cost);
 		
         echo "<tr>";
-        echo '<td align="center">' . '<b>Gross Profit:</b>' . "</td>";
-        echo '<td align="right">' . '&nbsp;&nbsp;&nbsp;&nbsp;' .'<b>'  . $grossprofit . '</b>' . "</td>";
+        echo '<td align="left">'  . 'Gross Profit' . "</td>";
+		echo '<td></td>';
+        echo '<td align="right">' . '&nbsp;&nbsp;' .'<u>'  . $grossprofit .  '</u>' . "</td>";
         echo "</tr>";  
         
-        
-        
-        echo '<tr><th scope="col" colspan="2" class="rounded-company" align="center"><b>Operating Expenses</b></th></tr>';
-        
+        echo '<tr>';
+		echo '<td align="left">'  . 'Operating Expenses:' . "</td>";
+        echo '<td></td>';
+		echo '<td></td>';
+		echo '</tr>';
+		
+		$size10=mysqli_num_rows($result7);
+		$count10=1;
 		while($row = mysqli_fetch_assoc($result7))
         {
-        
+        	if($count10==1)
+		{
         	echo '<tr>';
         
-        	echo '<td align="center">' . '&nbsp;&nbsp;' . $row['name'] . "</td>";
-            echo '<td align="center">' . $row['balance'] . "</td>";
+        	echo '<td align="left">' . '&nbsp;&nbsp;' . $row['name'] . "</td>";
+            echo '<td align="right">' . '$' . $row['balance'] . "</td>";
+			echo '<td></td>';
 			$operatingexp+= $row['balance'];
         
         	echo '</tr>';
-        
+			$count10++;
 		}
 		
-		echo "<tr>";
-        echo '<td align="center">' . '&nbsp;'. '<b>Total Operating Expenses:</b>' . "</td>";
-        echo '<td align="right">' . '<b>'  . $operatingexp . '</b>' . "</td>";
-        echo "</tr>";  
+		else if($count10==$size10)
+		{
+			echo '<tr>';
         
-        echo '<tr><td>&nbsp;</td><td>&nbsp;</td></tr>';
+        	echo '<td align="left">' . '&nbsp;&nbsp;' . $row['name'] . "</td>";
+            echo '<td align="right">' . '<u>' . $row['balance'] . '</u>' . "</td>";
+			$operatingexp+= $row['balance'];
+			 echo '<td align="right">' . '<u>' . '(' . $operatingexp .')' . '</u>' . "</td>";
+			
+        
+        	echo '</tr>';
+			$count10++;
+			
+			
+		}
+		
+		else
+		{
+			echo '<tr>';
+        
+        	echo '<td align="left">' . '&nbsp;&nbsp;' . $row['name'] . "</td>";
+            echo '<td align="right">' . $row['balance'] . "</td>";
+			echo '<td></td>';
+			$operatingexp+= $row['balance'];
+        
+        	echo '</tr>';
+			$count10++;
+			
+		}
+		
+		
+		}
+		 
 		$operatingincome=$grossprofit-$operatingexp;
 		echo "<tr>";
-        echo '<td align="center">' . '<b>Operating Income:</b>' . "</td>";
-        echo '<td align="right">' . '<b>'  . $operatingincome . '</b>' . "</td>";
+        echo '<td align="left">' . 'Operating Income' . "</td>";
+		echo '<td></td>';
+        echo '<td align="right">' .  $operatingincome  . "</td>";
         echo "</tr>";
 		
 		
+		echo "<tr>";
+        echo '<td align="left">' . 'Non Operating Revenue:' . "</td>";
+		echo '<td></td>';
+        echo '<td></td>';
+        echo "</tr>";
 		
-        echo '<tr><th scope="col" colspan="2" class="rounded-company" align="center"><b>Non-Operating Revenues</b></th></tr>';
 		
         while($row = mysqli_fetch_assoc($result8))
         {
 			echo '<tr>';
         
-        	echo '<td align="center">' . '&nbsp;&nbsp;' . $row['name'] . "</td>";
-            echo '<td align="center">' . $row['balance'] . "</td>";
+        	echo '<td align="left">' . '&nbsp;&nbsp;' . $row['name'] . "</td>";
+			echo '<td></td>';
+            echo '<td align="right">' . $row['balance'] . "</td>";
 			$nonoperatingrev+= $row['balance'];
         
         	echo '</tr>';
 			
 			
 		}
+	
 		
-		echo "<tr>";
-        echo '<td align="center">' . '<b>Total Non-Operating Revenues:</b>' . "</td>";
-        echo '<td align="right">' . '<b>'  . $nonoperatingrev . '</b>' . "</td>";
+       echo "<tr>";
+        echo '<td align="left">' . 'Non Operating Expenses:' . "</td>";
+		echo '<td></td>';
+        echo '<td></td>';
         echo "</tr>";
 		
-
-        
-        echo '<tr><th scope="col" colspan="2" class="rounded-company" align="center"><b>Non-Operating Expenses</b></th></tr>';
 		
+		$size11=mysqli_num_rows($result9);
+		$count11=1;
         while($row = mysqli_fetch_assoc($result9))
         {
-			echo '<tr>';
+			        	if($count11==1)
+		{
+        	echo '<tr>';
         
-        	echo '<td align="center">' . '&nbsp;&nbsp;' . $row['name'] . "</td>";
-            echo '<td align="center">' . $row['balance'] . "</td>";
+        	echo '<td align="left">' . '&nbsp;&nbsp;' . $row['name'] . "</td>";
+            echo '<td align="right">' . '$' . $row['balance'] . "</td>";
+			echo '<td></td>';
 			$nonoperatingexp+= $row['balance'];
         
         	echo '</tr>';
+			$count11++;
+		}
+		
+		else if($count11==$size11)
+		{
+			echo '<tr>';
+        
+        	echo '<td align="left">' . '&nbsp;&nbsp;' . $row['name'] . "</td>";
+            echo '<td align="right">' . '<u>' . $row['balance'] . '</u>' . "</td>";
+			$nonoperatingexp+= $row['balance'];
+			 echo '<td align="right">' . '<u>' . '(' . $nonoperatingexp .')' . '</u>' . "</td>";
+			
+        
+        	echo '</tr>';
+			$count11++;
 			
 			
 		}
 		
-		echo "<tr>";
-        echo '<td align="center">' . '<b>Total Non-Operating Expenses:</b>' . "</td>";
-        echo '<td align="right">' .'<b>' . $nonoperatingexp .'</b>' . "</td>";
-        echo "</tr>";
+		else
+		{
+			echo '<tr>';
+        
+        	echo '<td align="left">' . '&nbsp;&nbsp;' . $row['name'] . "</td>";
+            echo '<td align="right">' . $row['balance'] . "</td>";
+			echo '<td></td>';
+			$nonoperatingexp+= $row['balance'];
+        
+        	echo '</tr>';
+			$count11++;
+			
+		}
+			
+		}
 		
-		
-		echo '<tr><td>&nbsp;</td><td>&nbsp;</td></tr>';
 		
 		$nonoperatingsub=$nonoperatingrev-$nonoperatingexp;
 		
 		$netincome=$operatingincome+$nonoperatingsub;
 		
 		        echo '<tr>';
-				echo '<th scope="col" class="rounded-company" align="center"><b>Net Income:</b></th>';
-				echo '<td align="right">' .'<b>' . $netincome . '</b>' . "</td>";
+				echo '<td align="left"><b>Net Income</b></td>';
+				echo '<td></td>';
+				echo '<td align="right">' . '<u style=" border-bottom: 1px solid black">' .'$'  . $netincome  . '</u>' . "</td>";
 				echo '</tr>';
 				
 		echo '</tbody>';
