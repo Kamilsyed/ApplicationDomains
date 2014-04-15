@@ -140,11 +140,15 @@ if(Input::exists())
                 <label for="type" style="color:#FFF;">Account Type</label>
                 <select name="type" id="type">
                 <option>Select</option>
-                 <option value="asset"> Asset</option>
-                <option value="liability"> Liability</option>
-                 <option value="equity"> Equity</option>
-                <option value="revenue"> Revenue</option>
-                <option value="expenses"> Expenses</option>
+                 <option value="Current Assets">Current Assets</option>
+                 <option value="Long-Term Assests">Long-Term Assests</option>
+                <option value="Current Liabilities">Current Liabilities</option>
+                 <option value="Long-Term Liabilites">Long-Term Liabilites</option>
+                <option value="Equity">Equity</option>
+                <option value="Operating Revenue">Operating Revenue</option>
+                <option value="Operating Expenses">Operating Expenses</option>
+                <option value="Non-Operating Revenue">Non-Operating Revenue</option>
+                <option value="Non-Operating Expenses">Non-Operating Expenses</option>
                 </select>
           		<span class="selectRequiredMsg">Please select an type.</span></span>
                 
