@@ -3,8 +3,8 @@ require_once 'core/init.php';
 
 $user = new User();
 
-if($user->hasPermission('admin'))
-{
+/*if($user->hasPermission('admin'))
+{*/
 	try
 	{
 		Account::disable($_POST['accounth']);
@@ -14,5 +14,5 @@ if($user->hasPermission('admin'))
 	{
 		Redirect::to('errors/500.php');
 	}
-}
+/*}*/
 ?>

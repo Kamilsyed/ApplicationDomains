@@ -1,12 +1,12 @@
 <?php
 require_once 'core/init.php';
 
-$user = new User();
+/*$user = new User();
 if(!$user->hasPermission('admin'))
 {
 	Redirect::to('index.php');
 }
-
+*/
 ?>
 
 <head>
