@@ -192,7 +192,7 @@ class Account
 
 	public static function disable($number)
 	{
-		$con = mysqli_connect('localhost', 'host', 'test', 'test');
+		$con = mysqli_connect('localhost', 'mmollica', 'Thepw164', 'app_domain');
 
 		if(!$con){Redirect::to('errors/500.php');}
 
@@ -204,7 +204,7 @@ class Account
 
 	public static function enable($number)
 	{
-		$con = mysqli_connect('localhost', 'host', 'test', 'test');
+		$con = mysqli_connect('localhost', 'mmollica', 'Thepw164', 'app_domain');
 
 		if(!$con){Redirect::to('errors/500.php');}
 
