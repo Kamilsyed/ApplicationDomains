@@ -3,6 +3,12 @@
 //ini_set('display_errors',1); 
 //error_reporting(E_ALL);
 require_once 'core/init.php';
+$user = new User();
+if(!$user->hasPermission('accountant'))
+{
+	Redirect::to('index.php');
+}
+?>
 
 
     $con = mysqli_connect("localhost","mmollica","Thepw164", "app_domain");

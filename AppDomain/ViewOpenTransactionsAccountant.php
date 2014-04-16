@@ -1,7 +1,10 @@
 <?php
-
 require_once 'core/init.php';
-
+$user = new User();
+if(!$user->hasPermission('accountant'))
+{
+	Redirect::to('index.php');
+}
 ?>
 <head>
 		<meta charset="utf-8">
