@@ -56,7 +56,7 @@ class Event
 		$arr = array(
 			'description' => "$user created a new account: $number $account with starting balance" . number_format($bal),
 			'user' => $user,
-			'location' => "Chart Of Accounts"
+			'location' => "Accounts"
 			);
 
 		try{$this->create($arr);}
@@ -161,7 +161,7 @@ class Event
 			{
 				echo "<form name='form1' method='post' action=''>";
 				echo "<table id='rounded-corner'>";
-				echo "<thead> <h3 style='margin-left:190px; color:#FFFFFF'> Transaction Log</h3></thead><tbody>";
+				echo "<thead> <h3 style='margin-left:190px; color:#FFFFFF'>Transaction Log</h3></thead><tbody>";
 
 				while($row = mysqli_fetch_assoc($results))
 				{
@@ -178,5 +178,55 @@ class Event
 
 			mysqli_close($con);
 		}
+	}
+
+	/* This function is used to find events pertaining to specifics parts of the website
+		such as
+			$loc = a particular catergory, should be left blank (or ''/"") if you want all categories
+				valid categories -> 'Finalized Transactions', 'Account Status', 'Accounts', or a specific account NAME
+			$d = a specific date you want results from, should be left blank (or ''/"") if you want all dates
+			$u = entries from a specific user, should be left blank or (''/"") if you want all user entries
+	*/
+	public static function dislay_events_from($loc, $d, $u)
+	{
+		$con =  mysqli_connect('localhost', 'host', 'test', 'test');
+
+		if(!$con) {die('Could not connect to server!!';)}
+
+		$query = 'This will be a mysqli_query value';
+
+		//Default
+		if($loc == '' && $d == '' && $u == '')
+		{
+			Event::display_events();
+			return;
+		}
+		//User
+		else if($loc == '' && $d == '' $u != '')
+		{
+			$query = "SELECT * FROM events WHERE user='{$u}'";
+		}
+		//User and date
+		else if($loc == '' && $d != '' $u != '')
+		{
+			$query = "SELECT * FROM events WHERE date LIKE '{$d}%' AND user='{$u}'";
+		}
+		//All fields
+		else if($loc != '' && $d != '' && $u !='')
+		{
+			$query = "SELECT * FROM events WHERE date LIKE '{$d}%' AND user='{$u}' AND location='{$loc}'";
+		}
+		//Location and Date
+		else if($loc != '' && $d != '' && $u == '')
+		{
+			$query = "SELECT * FROM events WHERE date LIKE '{$d}%' AND location='{$loc}'";
+		}
+		//Location and User
+		else if($loc != '' && $d == '' && $u != '')
+		{
+			$query = "SELECT * FROM events WHERE user='{$u}' AND location='{$loc}'";
+		}
+		//Date only
+		//Location only
 	}
 }
