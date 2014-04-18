@@ -103,14 +103,31 @@ class Event
 	}
 
 	/*	Event listener for creating users, or changing user status
-		$action should be either 'created' or 'changed'
+		$action should be either 'created', 'changed user level of', 'activated', or 'deactivated'
+		$var should either be a comment to show reason behind deactivation or activation of user, or
+			a user's group level for cretion or changing group level
 	*/
-	public function user_event($action, $user_changed, $user)
+	public function user_event($action, $user, $user_changed, $var)
 	{
+		$description = '';
+
+		if($action == 'userlevel')
+		{
+			$description = "$user has changed user level of $user_changed to $var";
+		}
+		else if($action == 'created')
+		{
+			$description = "$user has $action $user_changed, group $var";
+		}
+		else
+		{
+			$description = "$user $action {$user_changed}'s account. Reason: $var";
+		}
+
 		$arr = array(
-			'description' => "$user has $status Transaction Set: $setnum $setname Reason: $comment",
+			'description' => $description,
 			'user' => $user,
-			'location' => "Finalized Transactions"
+			'location' => "Users"
 			);
 
 		try{$this->create($arr);}
@@ -192,7 +209,7 @@ class Event
 	{
 		$con =  mysqli_connect('localhost', 'host', 'test', 'test');
 
-		if(!$con) {die('Could not connect to server!!';)}
+		if(!$con) {die('Could not connect to server!!');}
 
 		$query = 'This will be a mysqli_query value';
 
@@ -203,12 +220,12 @@ class Event
 			return;
 		}
 		//User
-		else if($loc == '' && $d == '' $u != '')
+		else if($loc == '' && $d == '' && $u != '')
 		{
 			$query = "SELECT * FROM events WHERE user='{$u}'";
 		}
 		//User and date
-		else if($loc == '' && $d != '' $u != '')
+		else if($loc == '' && $d != '' && $u != '')
 		{
 			$query = "SELECT * FROM events WHERE date LIKE '{$d}%' AND user='{$u}'";
 		}
@@ -230,10 +247,10 @@ class Event
 		//Date only
 		else if($loc == '' && $d != '' && $u == '')
 		{
-			$query = "SELECT * FROM events WHERE date LIKE '{$d%}'";	
+			$query = "SELECT * FROM events WHERE date LIKE '{$d}%'";	
 		}
 		//Location only
-		else if($loc != '' && $d == '' && $ == '')
+		else if($loc != '' && $d == '' && $u == '')
 		{
 			$query = "SELECT * FROM events WHERE location='{$loc}'";
 		}
@@ -276,7 +293,7 @@ class Event
 	{
 		$con =  mysqli_connect('localhost', 'host', 'test', 'test');
 
-		if(!$con) {die('Could not connect to server!!';)}
+		if(!$con) {die('Could not connect to server!!');}
 
 		$query = "UPDATE events SET flag='{$flag}', comment='{$comment}' WHERE id='{$id}'";
 
@@ -320,6 +337,7 @@ class Event
 				echo "</tbody></table></form>";
 			}
 
-			mysqli_close($con);
+				mysqli_close($con);
+			}
 	}
 }
