@@ -161,7 +161,8 @@ class Event
 			{
 				echo "<form name='form1' method='post' action=''>";
 				echo "<table id='rounded-corner'>";
-				echo "<thead> <h3 style='margin-left:190px; color:#FFFFFF'>Transaction Log</h3></thead><tbody>";
+				echo "<h3 style='margin-left:190px; color:#FFFFFF'>Event Log</h3>";
+				echo "<thead></thead><tbody>";
 
 				while($row = mysqli_fetch_assoc($results))
 				{
@@ -170,7 +171,7 @@ class Event
 					echo "<td>". $row['user'] ."</td>";
 					echo "<td>". $row['date'] ."</td>";
 					echo "<td>". $row['location'] ."</td>";
-					echo "<td>". $row['comments'] ."</td>";
+					echo "<td>". $row['comments'] ."</td></tr>";
 				}
 
 				echo "</tbody></table></form>";
@@ -227,6 +228,98 @@ class Event
 			$query = "SELECT * FROM events WHERE user='{$u}' AND location='{$loc}'";
 		}
 		//Date only
+		else if($loc == '' && $d != '' && $u == '')
+		{
+			$query = "SELECT * FROM events WHERE date LIKE '{$d%}'";	
+		}
 		//Location only
+		else if($loc != '' && $d == '' && $ == '')
+		{
+			$query = "SELECT * FROM events WHERE location='{$loc}'";
+		}
+		else
+		{
+			throw new Exception('Event search failed. Please check values and try again');
+		}
+
+		$results =  mysqli_query($con, $query);
+
+		if(mysqli_num_rows($results) > 0)
+			{
+				echo "<form name='form1' method='post' action=''>";
+				echo "<table id='rounded-corner'>";
+				echo "<h3 style='margin-left:190px; color:#FFFFFF'>Event Log</h3>";
+				echo "<thead></thead><tbody>";
+
+				while($row = mysqli_fetch_assoc($results))
+				{
+					echo "<tr><td>". $row['id'] . "</td>";
+					echo "<td>". $row['description'] ."</td>";
+					echo "<td>". $row['user'] ."</td>";
+					echo "<td>". $row['date'] ."</td>";
+					echo "<td>". $row['location'] ."</td>";
+					echo "<td>". $row['comments'] ."</td></tr>";
+				}
+
+				echo "</tbody></table></form>";
+				mysqli_close($con);
+			}
+		else
+		{
+			echo "<h3 style='margin-left:190px; color:#FFFFFF'>No Events were found using those parameters.</h3>";
+			mysqli_close($con);
+		}
+	}
+
+	//Some events will need to be flagged for review. This function will allow a user to flag events.
+	public static function flag($id, $flag, $comment)
+	{
+		$con =  mysqli_connect('localhost', 'host', 'test', 'test');
+
+		if(!$con) {die('Could not connect to server!!';)}
+
+		$query = "UPDATE events SET flag='{$flag}', comment='{$comment}' WHERE id='{$id}'";
+
+		$results = mysqli_query($con, $query);
+
+		if(!$results)
+		{
+			throw new Exception('Flag query failed!');
+		}
+
+		mysqli_close($con);
+	}
+
+	//Display flagged events
+	public static function display_flagged()
+	{
+		$con = mysqli_connect('localhost', 'host', 'test', 'test');
+
+		if($con)
+		{
+			$query = "SELECT * FROM events WHERE flag='1'";
+			$results = mysqli_query($con, $query);
+
+			if(mysqli_num_rows($results) > 0)
+			{
+				echo "<form name='form1' method='post' action=''>";
+				echo "<table id='rounded-corner'>";
+				echo "<h3 style='margin-left:190px; color:#FFFFFF'>Event Log</h3>";
+				echo "<thead></thead><tbody>";
+
+				while($row = mysqli_fetch_assoc($results))
+				{
+					echo "<tr><td>". $row['id'] . "</td>";
+					echo "<td>". $row['description'] ."</td>";
+					echo "<td>". $row['user'] ."</td>";
+					echo "<td>". $row['date'] ."</td>";
+					echo "<td>". $row['location'] ."</td>";
+					echo "<td>". $row['comments'] ."</td></tr>";
+				}
+
+				echo "</tbody></table></form>";
+			}
+
+			mysqli_close($con);
 	}
 }
