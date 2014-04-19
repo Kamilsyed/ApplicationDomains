@@ -2,7 +2,14 @@
 ini_set('display_startup_errors', TRUE);
 ini_set('display_errors',1); 
 error_reporting(E_ALL);
+
 require_once 'core/init.php';
+$user = new User();
+if(!$user->data()->groups==3)
+{
+	Redirect::to('index.php');
+}
+
 
 
     $con = mysqli_connect("localhost","mmollica","Thepw164", "app_domain");
@@ -141,7 +148,7 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 	          <div class="navbar-inner">
 	            <div class="container">
 	              <ul class="nav">
-	               <li style="margin-left:190px"><a href="AccountantHomepage.html">Home</a></li>
+	               <li style="margin-left:190px"><a href="AccountantHomepage.php">Home</a></li>
 	                <li style="margin-left:25px"><a href="aboutus.html" >About Us</a></li>
                     <li  style="margin-left:25px"><a href="services.html">Services</a></li>
 	                <li  style="margin-left:25px"><a href="contactus.html">Contact Us</a></li>
@@ -172,7 +179,7 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 					  <li><a href="JournalizeTransactions.php">Journalize Transactions</a></li>
 					  <li><a href="ViewOpenTransactionsAccountant.php">Open Transactions</a></li>
                       <li><a href="ViewFinalizedTransactionsAccountant.php">Finalized Transactions</a></li>
-                      <li class="active"><a href="viewreportsaccountant.html">Reports</a></li>
+                      <li class="active"><a href="viewreportsaccountant.php">Reports</a></li>
                       
 					</ul>
 	        	</div>

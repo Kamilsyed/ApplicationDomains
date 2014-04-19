@@ -4,6 +4,12 @@ ini_set('display_errors',1);
 error_reporting(E_ALL);
 require_once 'core/init.php';
 
+$user = new User();
+if(!$user->data()->groups==3)
+{
+	Redirect::to('index.php');
+}
+
 
     $con = mysqli_connect("localhost","mmollica","Thepw164", "app_domain");
 
@@ -91,7 +97,7 @@ $b = mysqli_query($con,"SELECT set_id FROM transactions WHERE acct_id=$id");
 					  <li><a href="JournalizeTransactions.php">Journalize Transactions</a></li>
 					  <li><a href="ViewOpenTransactionsAccountant.php">Open Transactions</a></li>
                       <li><a href="ViewFinalizedTransactionsAccountant.php">Finalized Transactions</a></li>
-                      <li><a href="viewreportsaccountant.html">Reports</a></li>
+                      <li><a href="viewreportsaccountant.php">Reports</a></li>
                       
 					  
 					</ul>

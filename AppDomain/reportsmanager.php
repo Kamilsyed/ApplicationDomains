@@ -2,7 +2,14 @@
 ini_set('display_startup_errors', TRUE);
 ini_set('display_errors',1); 
 error_reporting(E_ALL);
+
 require_once 'core/init.php';
+$user = new User();
+if(!$user->data()->groups==2)
+{
+	Redirect::to('index.php');
+}
+
 
 
      $con = mysqli_connect("localhost","mmollica","Thepw164", "app_domain");
@@ -140,7 +147,7 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 	          <div class="navbar-inner">
 	            <div class="container">
 	              <ul class="nav">
-	                <li style="margin-left:190px"><a href="ManagerHomepage.html">Home</a></li>
+	                <li style="margin-left:190px"><a href="ManagerHomepage.php">Home</a></li>
 	                <li style="margin-left:25px"><a href="aboutus.html" >About Us</a></li>
                     <li  style="margin-left:25px"><a href="services.html">Services</a></li>
 	                <li  style="margin-left:25px"><a href="contactus.html">Contact Us</a></li>
@@ -172,7 +179,7 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 					  <li><a href="PostTransactions.html">Post Transactions</a></li>
 					  <li><a href="ViewOpenTransactions.php">Open Transactions</a></li>
                       <li><a href="ViewFinalizedTransactions.php">Final Transactions</a></li>
-                      <li class="active"><a href="viewreportsmanager.html">Reports</a></li>
+                      <li class="active"><a href="viewreportsmanager.php">Reports</a></li>
 					  
 					</ul>
 	        	</div>

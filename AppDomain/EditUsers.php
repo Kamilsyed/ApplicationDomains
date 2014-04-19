@@ -1,13 +1,11 @@
 <?php
-
 require_once 'core/init.php';
-
 $user = new User();
-
-if(!$user->isLoggedIn())
+if(!$user->data()->groups==1)
 {
 	Redirect::to('index.php');
 }
+
 
 if(Input::exists())
 {

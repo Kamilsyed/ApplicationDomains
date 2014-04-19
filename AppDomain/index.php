@@ -28,13 +28,13 @@ if(Input::exists())
                switch($level)
                {
                	case '1':
-               		Redirect::to('AdminHomepage.html');
+               		Redirect::to('AdminHomepage.php');
                	break;
                	case '2':
-               		Redirect::to('ManagerHomepage.html');
+               		Redirect::to('ManagerHomepage.php');
                	break;
                	case '3':
-               		Redirect::to('AccountantHomepage.html');
+               		Redirect::to('AccountantHomepage.php');
                	default:
                		//DISPLAY POP UP ERROR
                	break;

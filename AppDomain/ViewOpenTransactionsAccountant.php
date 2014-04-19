@@ -1,7 +1,7 @@
 <?php
 require_once 'core/init.php';
 $user = new User();
-if(!$user->hasPermission('accountant'))
+if(!$user->data()->groups==3)
 {
 	Redirect::to('index.php');
 }
@@ -43,7 +43,7 @@ if(!$user->hasPermission('accountant'))
 	          <div class="navbar-inner">
 	            <div class="container">
 	              <ul class="nav">
-	             	<li style="margin-left:190px"><a href="AccountantHomepage.html">Home</a></li>
+	             	<li style="margin-left:190px"><a href="AccountantHomepage.php">Home</a></li>
 	                <li style="margin-left:25px"><a href="aboutus.html" >About Us</a></li>
                     <li  style="margin-left:25px"><a href="services.html">Services</a></li>
 	                <li  style="margin-left:25px"><a href="contactus.html">Contact Us</a></li>
@@ -64,7 +64,7 @@ if(!$user->hasPermission('accountant'))
 					  <li><a href="JournalizeTransactions.php">Journalize Transactions</a></li>
 					  <li class="active"><a href="ViewOpenTransactionsAccountant.php">View Open Transactions</a></li>
                       <li><a href="ViewFinalizedTransactionsAccountant.php">View Finalized Transactions</a></li>
-                      <li><a href="viewreportsaccountant.html">Reports</a></li>
+                      <li><a href="viewreportsaccountant.php">Reports</a></li>
                       
 					</ul>
 	        	</div>

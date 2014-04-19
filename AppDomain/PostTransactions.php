@@ -1,7 +1,13 @@
 <?php
 ini_set('display_startup_errors', TRUE);
 ini_set('display_errors',1); 
+
 require_once 'core/init.php';
+$user = new User();
+if(!$user->data()->groups==2)
+{
+	Redirect::to('index.php');
+}
 
 $set = new Set();
 date_default_timezone_set('America/New_York');
@@ -96,7 +102,7 @@ if(Input::exists())
 	          <div class="navbar-inner">
 	            <div class="container">
 	              <ul class="nav">
-	                <li style="margin-left:190px"><a href="ManagerHomepage.html">Home</a></li>
+	                <li style="margin-left:190px"><a href="ManagerHomepage.php">Home</a></li>
 	                <li style="margin-left:25px"><a href="aboutus.html" >About Us</a></li>
                     <li  style="margin-left:25px"><a href="services.html">Services</a></li>
 	                <li  style="margin-left:25px"><a href="contactus.html">Contact Us</a></li>
@@ -118,7 +124,7 @@ if(Input::exists())
                        <li ><a href="edittransactions.html">Edit Transactions</a></li>
 					  <li><a href="ViewOpenTransactions.php">View Open Transactions</a></li>
                       <li ><a href="ViewFinalizedTransactions.php"> View Finalized Transactions</a></li>
-                      <li><a href="viewreportsmanager.html">Reports</a></li>
+                      <li><a href="viewreportsmanager.php">Reports</a></li>
 					  
 					</ul>
 	        	</div>

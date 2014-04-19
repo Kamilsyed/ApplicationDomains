@@ -3,6 +3,11 @@
 //ini_set('display_errors',1); 
 //error_reporting(E_ALL);
 require_once 'core/init.php';
+$user = new User();
+if(!$user->data()->groups==2)
+{
+	Redirect::to('index.php');
+}
 
 
     $con = mysqli_connect("localhost","mmollica","Thepw164", "app_domain");
@@ -63,7 +68,7 @@ $b = mysqli_query($con,"SELECT set_id FROM transactions WHERE acct_id=$id");
 	          <div class="navbar-inner">
 	            <div class="container">
 	              <ul class="nav">
-	                <li style="margin-left:190px"><a href="MangerHomepage.html">Home</a></li>
+	                <li style="margin-left:190px"><a href="MangerHomepage.php">Home</a></li>
 	                <li style="margin-left:25px"><a href="aboutus.html" >About Us</a></li>
                     <li  style="margin-left:25px"><a href="services.html">Services</a></li>
 	                <li  style="margin-left:25px"><a href="contactus.html">Contact Us</a></li>
@@ -90,7 +95,7 @@ $b = mysqli_query($con,"SELECT set_id FROM transactions WHERE acct_id=$id");
                       <li ><a href="edittransactions.html">Edit Transactions</a></li>
 					  <li><a href="ViewOpenTransactions.php">Open Transactions</a></li>
                       <li><a href="ViewFinalizedTransactions.php">Final Transactions</a></li>
-                      <li><a href="viewreportsmanager.html">Reports</a></li>
+                      <li><a href="viewreportsmanager.php">Reports</a></li>
                       
 					  
 					</ul>
