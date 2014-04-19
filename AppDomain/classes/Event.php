@@ -54,7 +54,7 @@ class Event
 	public function account_event($account, $number, $user, $bal)
 	{
 		$arr = array(
-			'description' => "$user created a new account: $number $account with starting balance" . number_format($bal),
+			'description' => "{$user} created a new account {$number}: {$account} with starting balance $" . number_format($bal),
 			'user' => $user,
 			'location' => "Accounts"
 			);
@@ -69,14 +69,9 @@ class Event
 	*/
 	public function account_status_event($account, $number, $user, $status)
 	{
-		$st = '';
-
-		if($status == 1)
-		{$st = 'enabled';}
-		else {$st = 'disabled';}
 
 		$arr = array(
-			'description' => "$user $st account: $number $account",
+			'description' => "{$user} {$status} account {$number}: {$account}",
 			'user' => $user,
 			'location' => "Account Status"
 			);
@@ -178,8 +173,15 @@ class Event
 			{
 				echo "<form name='form1' method='post' action=''>";
 				echo "<table id='rounded-corner'>";
-				echo "<h3 style='margin-left:190px; color:#FFFFFF'>Event Log</h3>";
-				echo "<thead></thead><tbody>";
+				echo "<h3 style='margin-left:180px; color:#FFFFFF'>Event Log</h3>";
+				echo "<thead>";
+				echo "<th scope='col' class='rounded-company'>Event ID</th>";
+				echo "<th scope='col' class='rounded-company'>Event</th>";
+				echo "<th scope='col' class='rounded-company'>User</th>";
+				echo "<th scope='col' class='rounded-company'>Date</th>";
+				echo "<th scope='col' class='rounded-company'>Location</th>";
+				echo "<th scope='col' class='rounded-company'>Comments</th>";
+				echo "</thead><tbody>";
 
 				while($row = mysqli_fetch_assoc($results))
 				{
@@ -266,7 +268,14 @@ class Event
 				echo "<form name='form1' method='post' action=''>";
 				echo "<table id='rounded-corner'>";
 				echo "<h3 style='margin-left:190px; color:#FFFFFF'>Event Log</h3>";
-				echo "<thead></thead><tbody>";
+				echo "<thead>";
+				echo "<th scope='col' class='rounded-company'>Event ID</th>";
+				echo "<th scope='col' class='rounded-company'>Event</th>";
+				echo "<th scope='col' class='rounded-company'>User</th>";
+				echo "<th scope='col' class='rounded-company'>Date</th>";
+				echo "<th scope='col' class='rounded-company'>Location</th>";
+				echo "<th scope='col' class='rounded-company'>Comments</th>";
+				echo "</thead><tbody>";
 
 				while($row = mysqli_fetch_assoc($results))
 				{
@@ -283,7 +292,7 @@ class Event
 			}
 		else
 		{
-			echo "<h3 style='margin-left:190px; color:#FFFFFF'>No Events were found using those parameters.</h3>";
+			echo "<h3 style='color:#FFFFFF'>No Events were found using those parameters.</h3>";
 			mysqli_close($con);
 		}
 	}
@@ -321,7 +330,7 @@ class Event
 			{
 				echo "<form name='form1' method='post' action=''>";
 				echo "<table id='rounded-corner'>";
-				echo "<h3 style='margin-left:190px; color:#FFFFFF'>Event Log</h3>";
+				echo "<h3 style='margin-left:180px; color:#FFFFFF'>Event Log</h3>";
 				echo "<thead></thead><tbody>";
 
 				while($row = mysqli_fetch_assoc($results))

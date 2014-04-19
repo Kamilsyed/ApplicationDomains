@@ -5,31 +5,14 @@ error_reporting(E_ALL);
 
 require_once 'core/init.php';
 
-require_once 'core/init.php';
-$user = new User();
-if(!$user->data()->groups==1)
-{
-	Redirect::to('index.php');
-}
-
-//t.a.03.28.2014
-include 'checkpassword.php';
-
-
-//****TESTING*****erase when finished testing input
-/*if (!empty($_POST)) {
-testAllStuff();
-}*/
-//****TESTING*****erase when finished testing input
-
 if(Input::exists())
 {
-	/*if(Token::check(Input::get('token')))
-	{*/
+	if(Token::check(Input::get('token')))
+	{
 		$validate = new Validate();
 	
 		$validation = $validate->check($_POST, array(
-			'username' => array('required' => true, 'min' => 5, 'max' => 25, 'unique' => 'users', 'user' => true),
+			'username' => array('required' => true, 'min' => 6, 'max' => 25, 'unique' => 'users', /*'user' => true*/),
 			'password' => array('required' => true, 'min' => 6, 'max' => 25, 'password' => true),
 			'password_again' => array('required' => true, 'matches' => 'password'),
 			'first' => array('required' => true, 'min' => 1, 'max' => 25, 'name' => true),
@@ -54,13 +37,13 @@ if(Input::exists())
 					'groups' => Input::get('groups')
 					));
 
-				
+				Session::flash('home', 'You have registered a user');
+				Redirect::to('AdminHomepage.html');
 			}
 			catch(Exception $e)
 			{
 				die($e->getMessage());
 			}
-
 		}
 		else
 		{
@@ -69,8 +52,7 @@ if(Input::exists())
 				echo $error, '<br>';
 			}
 		}
-	//}
-	Redirect::to('AdminHomepage.html');
+	}
 }
 
 ?>
@@ -108,12 +90,12 @@ if(Input::exists())
 	          <div class="navbar-inner">
 	            <div class="container">
 	              <ul class="nav">
-	              <li style="margin-left:190px"><a href="AdminHomepage.php">Home</a></li>
-                  <li style="margin-left:25px"><a href="aboutus.html" >About Us</a></li>
+	                <li class="nav-header">Features</li>
+					  <li style="margin-left:190px"><a href="adminHomepage.html">Home</a></li>
+	                <li style="margin-left:25px"><a href="aboutus.html" >About Us</a></li>
                     <li  style="margin-left:25px"><a href="services.html">Services</a></li>
-                  <li  style="margin-left:25px"><a href="contactus.html">Contact Us</a></li>
+	                <li class="active" style="margin-left:25px"><a href="contactus.html">Contact Us</a></li>
                     <li style="margin-left:25px"><a href="logout.php">Log out</a></li>
-	              </ul>
 	            </div>
 	          </div>
           </div>
@@ -128,12 +110,11 @@ if(Input::exists())
 	        	<div class="span4">
 	        		<ul class="nav nav-list">
 					  <li class="nav-header">Features</li>
-					  <li ><a href="adminchartofaccounts.php">Chart of Accounts</a></li>
+					  <li><a href="adminchartofaccounts.php">Chart of Accounts</a></li>
 					  <li><a href="CreateAccount.php">Create Account</a></li>
 					  <li><a href="DeactivateAccount.php">Deactivate Account</a></li>
 					  <li class="active"><a href="CreateUsers.php">Create Users</a></li>
-					  <li><a href="EditUsers.php">Edit Users</a></li>
-					  <li><a href="deactivatedaccounts.php"> View Deactivated Accounts</a></li>					  
+					  <li><a href="EditUsers.php">Edit Users</a></li>					  
 					</ul>
 	        	</div>
 
@@ -148,17 +129,17 @@ if(Input::exists())
 
                 <span id="sprytextfield1">
 	        	 <label for="Username" style="color:#FFF;">Username</label>
-	        	 <input type="text" name="username" id="username" autocomplete="off">
+	        	 <input type="text" name="username" id="username" value="<?php echo escape(Input::get('username')); ?>" autocomplete="off">
 	        	 <span class="textfieldRequiredMsg">A Username is required.</span></span>  
 
                 <span id="sprytextfield2">
           		 <label for="Password" style="color:#FFF;">Password</label>
-          		 <input type="password" name="password" id="password"  autocomplete="off">         		
+          		 <input type="password" name="password" id="password" value="<?php echo escape(Input::get('password')); ?>" autocomplete="off">         		
           		 <span class="textfieldRequiredMsg">A Password is required.</span></span>
 
           		<span id="sprytextfield3">
           		 <label for="Password" style="color:#FFF;">Confirm Password</label>
-          		 <input type="password" name="password_again" id="password_again"  autocomplete="off">          		
+          		 <input type="password" name="password_again" id="password_again" value="<?php echo escape(Input::get('password_again')); ?>" autocomplete="off">          		
                  <span class="textfieldRequiredMsg">Enter Password again.</span></span>
 
 
@@ -173,17 +154,16 @@ if(Input::exists())
 
 	        	<span id="sprytextfield5">
 	        	 <label for="fname" style="color:#FFF;">First Name</label>
-	        	 <input type="text" name="first" id="first" autocomplete="off">
+	        	 <input type="text" name="first" id="first" value="<?php echo escape(Input::get('first')); ?>" autocomplete="off">
 	        	 <span class="textfieldRequiredMsg">A First Name is required.</span></span>
 
 	        	<span id="sprytextfield6">
 	        	 <label for="lname" style="color:#FFF;">Last Name</label>
-	        	 <input type="text" name="last" id="last" autocomplete="off">
+	        	 <input type="text" name="last" id="last" value="<?php echo escape(Input::get('last')); ?>" autocomplete="off">
 	        	 <span class="textfieldRequiredMsg">A Last Name is required.</span></span>
 
                 <br/>   
-
-                <input type="hidden" name="token" >
+                <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">
 				<input type="submit" value="Add User"class="btn btn-large btn-success"></td>
               </form> 
         	 </div>

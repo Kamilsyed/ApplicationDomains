@@ -88,7 +88,7 @@ require_once 'core/init.php';
 
 	        			while($row = mysqli_fetch_assoc($res))
 	        			{
-	        				echo "<option value='". $row['name']."'>". $row['name']."</option>";
+	        				echo "<option value='". $row['number']."'>". $row['name']."</option>";
 	        			}
 	        		?>
 	        	</select><br>

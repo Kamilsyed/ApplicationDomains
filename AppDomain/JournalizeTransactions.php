@@ -143,6 +143,10 @@ if(Input::exists())
 								'file_size'=>$fileSize,
 								'file_data'=>$fileData
 			                    ));
+
+			                $event = new Event();
+
+			                $event->transaction_event(floatval($amount[$y]), $acct_number, $user->data()->username);
 			            }
 			            catch(Exception $e)
 			            {
@@ -166,6 +170,10 @@ if(Input::exists())
 		                    'user_added' => $user->data()->username,
 		                    'date_added' => date("Y-m-d H:i:s")
 		                     ));
+
+		                $event = new Event();
+
+			            $event->transaction_event(floatval($amount[$y]), $acct_number, $user->data()->username);
 		            }
 		            catch(Exception $e)
 		            {
@@ -267,7 +275,7 @@ if(Input::exists())
 				              	  	<span id="spryselect2">
 					             		<label for="accountname" style="color:#FFFFFF;">Account</label>
 					            		<select name="accountname[]" id="account">
-						            		<?php $con = mysqli_connect("localhost","mmollica","Thepw164", "app_domain");?> 
+						            		<?php $con = mysqli_connect("localhost","host","test", "test");?> 
 										   	<?php $result = mysqli_query($con,'SELECT * FROM accounts WHERE status=1 ORDER BY name'); ?> 
 										   	<?php while($row = mysqli_fetch_assoc($result)) { ?> 
 										       	<option value="<?php echo htmlspecialchars($row['name']);?>"> 
@@ -307,7 +315,7 @@ if(Input::exists())
 		              	  <span id="spryselect2">
 			             		<label for="accountname" style="color:#FFFFFF;">Account</label>
 			            		<select name="accountname[]" id="account">
-				            		<?php $con = mysqli_connect("localhost","mmollica","Thepw164", "app_domain");?> 
+				            		<?php $con = mysqli_connect("localhost","host","test", "test");?> 
 								   	<?php $result = mysqli_query($con,'SELECT * FROM accounts WHERE status=1 ORDER BY name'); ?> 
 								   	<?php while($row = mysqli_fetch_assoc($result)) { ?> 
 								       	<option value="<?php echo htmlspecialchars($row['name']);?>"> 

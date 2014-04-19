@@ -21,14 +21,14 @@ class Account
 	public function get_number($type)
 	{	
 
-		$con = mysqli_connect("localhost","mmollica","Thepw164", "app_domain");
+		$con = mysqli_connect("localhost","host","test","test");
 
 	    if (!$con)
 	        {
-	             die('Could not connect: ' . mysqli_error($con));
+	             die('Could not connect: ' . mysqli_error());
 	        }
 
-	    
+	    // mysql_select_db('test');
 	    $query = "SELECT number FROM accounts WHERE type='" . $type ."' ORDER BY `number` DESC LIMIT 1"; 
 	    $result = mysqli_query($con, $query);
 	    $row = mysqli_fetch_assoc($result);
@@ -36,7 +36,7 @@ class Account
 
 	    if(!$result)
 	        {
-	        	die(mysqli_error($con));
+	        	die(mysql_error());
 	        }
 
 		switch($type)
@@ -65,7 +65,7 @@ class Account
 				else
 					{return 300000000;}
 			break;
-			case 'Long Term Liabilites':
+			case 'Long-Term Liabilities':
 				if($number >= 400000000)
 				{
 					return $number + 1;
@@ -119,7 +119,8 @@ class Account
 		}
 	}
 
-	/*  NOTE IMPORTANT: THIS FUNCTION WILL NOT WORK IF THERE IS A SPACE IN THE NAME OF
+
+	/* NOTE IMPORTANT: THIS FUNCTION WILL NOT WORK IF THERE IS A SPACE IN THE NAME OF
 		THE ACCOUNT! USE Account::findByNumber() TO ACCESS ACCOUNT DATA
 
 		IF ANY PAGE REQUIRES A DROP DOWN TO GIVE INFORMATION TO ACCOUNT.php FOR DATA
@@ -175,24 +176,24 @@ class Account
 			$bal -= $amount;
 		}
 
-		mysqli_connect("localhost", "host", "test", "app_domain");
-		
+		mysql_connect("localhost", "host", "test");
+		mysql_select_db('test');
 
 	    $query = "UPDATE accounts SET balance='$bal' WHERE number='$num'";
 
 	    try
-	    {mysqli_query($con, $query);}
+	    {mysql_query($query);}
 	    catch(Exception $e)
 	    {
 	    	die('Balance did not update:<br>' . $query . "<br>" . mysql_error());
 	    }
 
-	    mysqli_close($con);
+	    mysql_close();
 	}
 
 	public static function disable($number)
 	{
-		$con = mysqli_connect('localhost', 'mmollica', 'Thepw164', 'app_domain');
+		$con = mysqli_connect('localhost', 'host', 'test', 'test');
 
 		if(!$con){Redirect::to('errors/500.php');}
 
@@ -204,7 +205,7 @@ class Account
 
 	public static function enable($number)
 	{
-		$con = mysqli_connect('localhost', 'mmollica', 'Thepw164', 'app_domain');
+		$con = mysqli_connect('localhost', 'host', 'test', 'test');
 
 		if(!$con){Redirect::to('errors/500.php');}
 

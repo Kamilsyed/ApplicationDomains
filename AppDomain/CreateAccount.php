@@ -28,6 +28,12 @@ if(Input::exists())
             //$u = $user->data()->username;
             date_default_timezone_set('America/New_York');
             $time = date("Y-m-d H:i:s");
+            $bal = intval(Input::get('balance'));
+
+            if($bal < 0)
+            {
+              $bal *= -1;
+            }
 
             try
             {
@@ -39,8 +45,13 @@ if(Input::exists())
                     'type' => Input::get('type'),
                     'normal' => Input::get('normal'),
                     'status' => 1,
-                    'date_added' => $time
+                    'date_added' => $time,
+                    'balance' => $bal
                     ));
+
+                $event = new Event();
+
+                $event->account_event(Input::get('name'), $num, $user->data()->username, $bal);
                 Redirect::to('AdminHomepage.html');
             }
             catch(Exception $e)
@@ -158,11 +169,11 @@ if(Input::exists())
                 </select>
           		<span class="selectRequiredMsg">Please select an type.</span></span>
                 
-<!--                 <span id="sprytextfield3">
-                <label for="Account Total" style="color:#FFF;">Account Total</label>
-                <input type="text" name="Account Total" id="Account Total">
+                <span id="sprytextfield3">
+                <label for="Account Total" style="color:#FFF;">Starting Balance</label>
+                <input type="text" name="balance" id="Account Total">
           		<span class="textfieldRequiredMsg">A value is required.</span></span>
-                 <br> -->
+                 <br>
                  <br>
                	 <input name="Create" type="submit" value="Create" class="btn btn-large btn-success">
               </form>
