@@ -4,7 +4,7 @@ ini_set('display_errors',1);
 
 require_once 'core/init.php';
 $user = new User();
-if(!$user->data()->groups==2)
+if($user->data()->groups!=2)
 {
 	Redirect::to('index.php');
 }

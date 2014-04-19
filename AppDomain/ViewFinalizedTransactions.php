@@ -1,7 +1,7 @@
 <?php
 require_once 'core/init.php';
 $user = new User();
-if(!$user->data()->groups==2)
+if($user->data()->groups!=2)
 {
     Redirect::to('index.php');
 }
@@ -25,6 +25,12 @@ if(!$user->data()->groups==2)
 <script src="SpryAssets/SpryValidationConfirm.js" type="text/javascript"></script>
 <link href="SpryAssets/SpryValidationTextField.css" rel="stylesheet" type="text/css">
 <link href="SpryAssets/SpryValidationConfirm.css" rel="stylesheet" type="text/css">
+<script language="JavaScript">
+            function download (id)
+            {
+                window.open ("download.php?fileId="+id, "hiddenFrame");
+            }
+</script>
 </head>
 <body>
         
