@@ -43,12 +43,7 @@ if(Input::exists())
 
 			try
 			{
-				$set->change(array(
-					'type' => Input::get($rad),
-					'comment' => Input::get($com),
-					'user_changed' => $user->data()->username,
-					'date_changed' => date("Y-m-d H:i:s"),
-					), Input::get($id));
+				$set->change(Input::get($id), Input::get($com), Input::get($rad));
 			}
 			catch(Exception $e)
 			{
