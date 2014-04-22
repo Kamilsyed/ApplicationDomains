@@ -21,7 +21,7 @@ class Account
 	public function get_number($type)
 	{	
 
-		$con = mysqli_connect("localhost","host","test","test");
+		$con = mysqli_connect("localhost","mmollica","Thepw164","app_domain");
 
 	    if (!$con)
 	        {
@@ -176,24 +176,24 @@ class Account
 			$bal -= $amount;
 		}
 
-		mysql_connect("localhost", "host", "test");
-		mysql_select_db('test');
+		$con = mysqli_connect("localhost","mmollica","Thepw164","app_domain");
+		
 
 	    $query = "UPDATE accounts SET balance='$bal' WHERE number='$num'";
 
 	    try
-	    {mysql_query($query);}
+	    {mysqli_query($con, $query);}
 	    catch(Exception $e)
 	    {
-	    	die('Balance did not update:<br>' . $query . "<br>" . mysql_error());
+	    	die('Balance did not update:<br>' . $query . "<br>" . mysqli_error($con));
 	    }
 
-	    mysql_close();
+	    mysqli_close($con);
 	}
 
 	public static function disable($number)
 	{
-		$con = mysqli_connect('localhost', 'host', 'test', 'test');
+		$con = mysqli_connect("localhost","mmollica","Thepw164","app_domain");
 
 		if(!$con){Redirect::to('errors/500.php');}
 
@@ -205,7 +205,7 @@ class Account
 
 	public static function enable($number)
 	{
-		$con = mysqli_connect('localhost', 'host', 'test', 'test');
+		$con = mysqli_connect("localhost","mmollica","Thepw164","app_domain");
 
 		if(!$con){Redirect::to('errors/500.php');}
 

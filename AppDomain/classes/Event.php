@@ -38,10 +38,13 @@ class Event
 	*/
 	public function transaction_event($amount, $account, $user)
 	{
+		date_default_timezone_set('America/New_York');
+        
 		$arr = array(
 			'description' => "$user created a transaction for $account in the amount of $". number_format($amount),
 			'user' => $user,
-			'location' => $account
+			'location' => $account,
+			'date'=>date("Y-m-d H:i:s")
 			);
 
 		try{$this->create($arr);}
@@ -53,10 +56,12 @@ class Event
 	*/
 	public function account_event($account, $number, $user, $bal)
 	{
+		date_default_timezone_set('America/New_York');
 		$arr = array(
 			'description' => "{$user} created a new account {$number}: {$account} with starting balance $" . number_format($bal),
 			'user' => $user,
-			'location' => "Accounts"
+			'location' => "Accounts",
+			'date'=>date("Y-m-d H:i:s")
 			);
 
 		try{$this->create($arr);}
@@ -69,11 +74,12 @@ class Event
 	*/
 	public function account_status_event($account, $number, $user, $status)
 	{
-
+		date_default_timezone_set('America/New_York');
 		$arr = array(
 			'description' => "{$user} {$status} account {$number}: {$account}",
 			'user' => $user,
-			'location' => "Account Status"
+			'location' => "Account Status",
+			'date'=>date("Y-m-d H:i:s")
 			);
 
 		try{$this->create($arr);}
@@ -86,10 +92,12 @@ class Event
 	*/
 	public function posting_event($setnum, $setname, $comment, $status, $user)
 	{
+		date_default_timezone_set('America/New_York');
 		$arr = array(
 			'description' => "$user has $status Transaction Set: $setnum $setname Reason: $comment",
 			'user' => $user,
-			'location' => "Finalized Transactions"
+			'location' => "Finalized Transactions",
+			'date'=>date("Y-m-d H:i:s")
 			);
 
 		try{$this->create($arr);}
@@ -104,6 +112,7 @@ class Event
 	*/
 	public function user_event($action, $user, $user_changed, $var)
 	{
+		date_default_timezone_set('America/New_York');
 		$description = '';
 
 		if($action == 'userlevel')
@@ -122,7 +131,8 @@ class Event
 		$arr = array(
 			'description' => $description,
 			'user' => $user,
-			'location' => "Users"
+			'location' => "Users",
+			'date'=>date("Y-m-d H:i:s")
 			);
 
 		try{$this->create($arr);}
@@ -162,7 +172,7 @@ class Event
 	*/
 	public static function display_events()
 	{
-		$con = mysqli_connect('localhost', 'host', 'test', 'test');
+		$con = mysqli_connect("localhost","mmollica","Thepw164","app_domain");
 
 		if($con)
 		{
@@ -209,7 +219,7 @@ class Event
 	*/
 	public static function dislay_events_from($loc, $d, $u)
 	{
-		$con =  mysqli_connect('localhost', 'host', 'test', 'test');
+		$con = mysqli_connect("localhost","mmollica","Thepw164","app_domain");
 
 		if(!$con) {die('Could not connect to server!!');}
 
@@ -300,7 +310,7 @@ class Event
 	//Some events will need to be flagged for review. This function will allow a user to flag events.
 	public static function flag($id, $flag, $comment)
 	{
-		$con =  mysqli_connect('localhost', 'host', 'test', 'test');
+		$con = mysqli_connect("localhost","mmollica","Thepw164","app_domain");
 
 		if(!$con) {die('Could not connect to server!!');}
 
@@ -319,7 +329,7 @@ class Event
 	//Display flagged events
 	public static function display_flagged()
 	{
-		$con = mysqli_connect('localhost', 'host', 'test', 'test');
+		$con = mysqli_connect("localhost","mmollica","Thepw164","app_domain");
 
 		if($con)
 		{
