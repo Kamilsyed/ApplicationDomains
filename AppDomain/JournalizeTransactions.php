@@ -15,6 +15,7 @@ if($user->data()->groups!=3 && !$user->isLoggedIn())
 /*This web page will collect data on transactions, validate those transactions
 and insert them into the database. PHP will NOT execute if no input is detected.*/
 
+
 if(Input::exists())
 {
 	/*
@@ -27,6 +28,7 @@ if(Input::exists())
 		$user = new user object to get current username
 		$set = new set to create a new transaction set
 	*/
+
 	$accountname = Input::get('accountname');
 	$amount = Input::get('amount');
 	$transaction = new Transaction();
@@ -36,7 +38,7 @@ if(Input::exists())
     date_default_timezone_set('America/New_York');
     $set = new Set();
  
-      
+     
     /*$file = 'userFile';
 	$upload = Set::upload($file);
 	$fileName = $upload['file_name'];
@@ -144,9 +146,9 @@ if(Input::exists())
 								'file_data'=>$fileData
 			                    ));
 
-			                $event = new Event();
+			               $event = new Event();
 
-			                $event->transaction_event(floatval($amount[$y]), $acct_number, $user->data()->username);
+			               $event->transaction_event(floatval($amount[$y]), $acct_number, $user->data()->username);
 			            }
 			            catch(Exception $e)
 			            {

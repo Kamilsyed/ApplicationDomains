@@ -75,7 +75,7 @@ if(!$user->data()->groups==1)
 					<?php
 						$con = mysqli_connect('localhost', 'mmollica', 'Thepw164', 'app_domain');
 
-						$query = "SELECT * FROM accounts";
+						$query = "SELECT * FROM accounts ORDER BY name";
 						$results = mysqli_query($con, $query);
 
 						while($row = mysqli_fetch_assoc($results))

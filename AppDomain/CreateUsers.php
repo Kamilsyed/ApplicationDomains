@@ -4,6 +4,7 @@ ini_set('display_errors',1);
 error_reporting(E_ALL);
 
 require_once 'core/init.php';
+include 'checkpassword.php';
 $user = new User();
 if($user->data()->groups!=1 && !$user->isLoggedIn())
 {
@@ -41,7 +42,9 @@ if(Input::exists())
 					'groups' => Input::get('groups')
 					));
 
-				Session::flash('home', 'You have registered a user');
+				$event = new Event();
+
+                $event->user_event('Created', $user->data()->username, Input::get('username'), Input::get('groups'));
 				Redirect::to('AdminHomepage.php');
 			}
 			catch(Exception $e)

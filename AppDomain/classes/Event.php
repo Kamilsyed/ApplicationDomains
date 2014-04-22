@@ -75,6 +75,7 @@ class Event
 	public function account_status_event($account, $number, $user, $status)
 	{
 		date_default_timezone_set('America/New_York');
+
 		$arr = array(
 			'description' => "{$user} {$status} account {$number}: {$account}",
 			'user' => $user,
@@ -176,7 +177,7 @@ class Event
 
 		if($con)
 		{
-			$query = "SELECT * FROM events";
+			$query = "SELECT * FROM events ORDER BY date DESC";
 			$results = mysqli_query($con, $query);
 
 			if(mysqli_num_rows($results) > 0)
@@ -234,37 +235,37 @@ class Event
 		//User
 		else if($loc == '' && $d == '' && $u != '')
 		{
-			$query = "SELECT * FROM events WHERE user='{$u}'";
+			$query = "SELECT * FROM events WHERE user='{$u}' ORDER BY date DESC";
 		}
 		//User and date
 		else if($loc == '' && $d != '' && $u != '')
 		{
-			$query = "SELECT * FROM events WHERE date LIKE '{$d}%' AND user='{$u}'";
+			$query = "SELECT * FROM events WHERE date LIKE '{$d}%' AND user='{$u}' ORDER BY date DESC";
 		}
 		//All fields
 		else if($loc != '' && $d != '' && $u !='')
 		{
-			$query = "SELECT * FROM events WHERE date LIKE '{$d}%' AND user='{$u}' AND location='{$loc}'";
+			$query = "SELECT * FROM events WHERE date LIKE '{$d}%' AND user='{$u}' AND location='{$loc}' ORDER BY date DESC";
 		}
 		//Location and Date
 		else if($loc != '' && $d != '' && $u == '')
 		{
-			$query = "SELECT * FROM events WHERE date LIKE '{$d}%' AND location='{$loc}'";
+			$query = "SELECT * FROM events WHERE date LIKE '{$d}%' AND location='{$loc}' ORDER BY date DESC";
 		}
 		//Location and User
 		else if($loc != '' && $d == '' && $u != '')
 		{
-			$query = "SELECT * FROM events WHERE user='{$u}' AND location='{$loc}'";
+			$query = "SELECT * FROM events WHERE user='{$u}' AND location='{$loc}' ORDER BY date DESC";
 		}
 		//Date only
 		else if($loc == '' && $d != '' && $u == '')
 		{
-			$query = "SELECT * FROM events WHERE date LIKE '{$d}%'";	
+			$query = "SELECT * FROM events WHERE date LIKE '{$d}%' ORDER BY date DESC";	
 		}
 		//Location only
 		else if($loc != '' && $d == '' && $u == '')
 		{
-			$query = "SELECT * FROM events WHERE location='{$loc}'";
+			$query = "SELECT * FROM events WHERE location='{$loc}' ORDER BY date DESC";
 		}
 		else
 		{

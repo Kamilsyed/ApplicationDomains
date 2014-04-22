@@ -82,7 +82,7 @@ require_once 'core/init.php';
 
 	        			if(!$con){die('SERVER ERROR');}
 
-	        			$q = "SELECT * FROM accounts";
+	        			$q = "SELECT * FROM accounts ORDER BY name";
 
 	        			$res = mysqli_query($con, $q);
 
