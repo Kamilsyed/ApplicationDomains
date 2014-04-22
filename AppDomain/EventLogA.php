@@ -1,7 +1,12 @@
 <?php
 
 require_once 'core/init.php';
+if($user->data()->groups!=3 || !$user->isLoggedIn())
+{
+  Redirect::to('index.php');
+}
 
+?>
 ?>
 
 <head>
@@ -76,7 +81,7 @@ require_once 'core/init.php';
 	        		<option value='Accounts'>Accounts</option>
 	        		<option value='Account Status'>Account Status</option>
 	        		<option value='Finalized Transactions'>Finalized Transactions</option>
-	        		<option value='Users'>Users</option>
+	        		<option value='Users'>User Created</option>
 	        	</select><br>
 	        	<select name='account'>
 	        	<option value=''>--OR Select an Account--</option>
