@@ -197,10 +197,33 @@ class Account
 
 		if(!$con){Redirect::to('errors/500.php');}
 
-		$query = "UPDATE accounts SET status='0' WHERE number='{$number}'";
+		$res = mysqli_query($con, "SELECT * FROM transactions WHERE acct_id='$number'");
 
-		if(!mysqli_query($con, $query))
-			{throw new Exception("Could not update account!");}
+		if(mysqli_num_rows($res) == 0)
+		{
+			$query = "UPDATE accounts SET status='0' WHERE number='{$number}'";
+
+			if(!mysqli_query($con, $query))
+				{throw new Exception("Could not update account!");}
+		}
+		else
+		{
+			while($row = mysqli_fetch_assoc($res))
+			{
+				$q2 = "SELECT * FROM sets WHERE id='". $row['set_id'] ."' AND type='1'";
+				$r2 = mysqli_query($con, $q2);
+
+				if(mysqli_num_rows($res) < 0)
+				{
+					throw new Exception('Cannot close an account with open transactions!!')				
+				}
+			}
+
+			$query = "UPDATE accounts SET status='0' WHERE number='{$number}'";
+
+			if(!mysqli_query($con, $query))
+				{throw new Exception("Could not update account!");}
+		}
 	}
 
 	public static function enable($number)
