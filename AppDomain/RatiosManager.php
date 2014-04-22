@@ -87,6 +87,7 @@ if(!$user->data()->groups==2)
                       <li ><a href="ViewFinalizedTransactions.php">Final Transactions</a></li>
                       <li><a href="viewreportsmanager.php">Reports</a></li>
                       <li class="active"><a href="RatiosManager.php">Ratios</a></li>
+                      <li><a href="EventLogM.php">Event Log</a></li>
 					</ul>
 	        	</div>
 	        	

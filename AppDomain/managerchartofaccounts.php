@@ -78,6 +78,24 @@ if(!$user->data()->groups==2)
 	            </div>
 	          </div>
 	        </div>
+	        <!-- Content Sections -->
+	        <div class="row">
+	        	<!-- Left Side Vertical Bar -->
+	        	<div class="span4">
+	        		<ul class="nav nav-list">
+					  <li class="nav-header">Features</li>
+					  <li class="active"><a href="managerchartofaccounts.php">Chart of Accounts</a></li>
+					  <li><a href="PostTransactions.php">Post Transactions</a></li>
+                      <li><a href="edittransactions.html">Edit Transactions</a></li>
+                      <li><a href="ViewOpenTransactions.php">View Open Transactions</a></li>
+                      <li><a href="ViewFinalizedTransactions.php">View Finalized Transactions</a></li>
+                      <li><a href="viewreportsmanager.php">Reports</a></li>
+                      <li><a href="RatiosManager.php">Ratios</a></li>
+                      <li><a href="EventLogM.php">Event Log</a></li>                      
+                      
+					  
+					</ul>
+	        	</div>
             
             <form name="form1" method="post" action="managersearchpage.php" style="margin-left:650px">
 	        	  <span id="sprytextfield1" title="Please Enter An Valid Account ID" >

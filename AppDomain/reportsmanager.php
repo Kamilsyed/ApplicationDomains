@@ -181,6 +181,8 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 					  <li><a href="ViewOpenTransactions.php">Open Transactions</a></li>
                       <li><a href="ViewFinalizedTransactions.php">Final Transactions</a></li>
                       <li class="active"><a href="viewreportsmanager.php">Reports</a></li>
+                      <li><a href="RatiosManager.php">Ratios</a></li>
+                      <li><a href="EventLogM.php">Events</a></li>
 					  
 					</ul>
 	        	</div>
