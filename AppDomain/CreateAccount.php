@@ -5,7 +5,7 @@ error_reporting(E_ALL);
 
 require_once 'core/init.php';
 $user = new User();
-if(!$user->data()->groups==1)
+if($user->data()->groups!=1 && !$user->isLoggedIn())
 {
   Redirect::to('index.php');
 }
@@ -52,7 +52,7 @@ if(Input::exists())
                 $event = new Event();
 
                 $event->account_event(Input::get('name'), $num, $user->data()->username, $bal);
-                Redirect::to('AdminHomepage.html');
+                Redirect::to('AdminHomepage.php');
             }
             catch(Exception $e)
             {

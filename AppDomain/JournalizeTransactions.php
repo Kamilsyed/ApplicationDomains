@@ -7,7 +7,7 @@ ini_set('display_errors',1);
 
 require_once 'core/init.php';
 $user = new User();
-if(!$user->data()->groups==3)
+if($user->data()->groups!=3 && !$user->isLoggedIn())
 {
 	Redirect::to('index.php');
 }
@@ -275,7 +275,7 @@ if(Input::exists())
 				              	  	<span id="spryselect2">
 					             		<label for="accountname" style="color:#FFFFFF;">Account</label>
 					            		<select name="accountname[]" id="account">
-						            		<?php $con = mysqli_connect("localhost","host","test", "test");?> 
+						            		<?php $con = mysqli_connect("localhost","mmollica","Thepw164", "app_domain");?> 
 										   	<?php $result = mysqli_query($con,'SELECT * FROM accounts WHERE status=1 ORDER BY name'); ?> 
 										   	<?php while($row = mysqli_fetch_assoc($result)) { ?> 
 										       	<option value="<?php echo htmlspecialchars($row['name']);?>"> 
@@ -315,7 +315,7 @@ if(Input::exists())
 		              	  <span id="spryselect2">
 			             		<label for="accountname" style="color:#FFFFFF;">Account</label>
 			            		<select name="accountname[]" id="account">
-				            		<?php $con = mysqli_connect("localhost","host","test", "test");?> 
+				            		<?php $con = mysqli_connect("localhost","mmollica","Thepw164", "app_domain");?> 
 								   	<?php $result = mysqli_query($con,'SELECT * FROM accounts WHERE status=1 ORDER BY name'); ?> 
 								   	<?php while($row = mysqli_fetch_assoc($result)) { ?> 
 								       	<option value="<?php echo htmlspecialchars($row['name']);?>"> 

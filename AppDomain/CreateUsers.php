@@ -4,7 +4,11 @@ ini_set('display_errors',1);
 error_reporting(E_ALL);
 
 require_once 'core/init.php';
-
+$user = new User();
+if($user->data()->groups!=1 && !$user->isLoggedIn())
+{
+  Redirect::to('index.php');
+}
 if(Input::exists())
 {
 	if(Token::check(Input::get('token')))
@@ -22,7 +26,7 @@ if(Input::exists())
 
 		if($validation->passed())
 		{
-			$user = new User();
+			
 
 			$salt = Hash::salt(32);
 
@@ -38,7 +42,7 @@ if(Input::exists())
 					));
 
 				Session::flash('home', 'You have registered a user');
-				Redirect::to('AdminHomepage.html');
+				Redirect::to('AdminHomepage.php');
 			}
 			catch(Exception $e)
 			{

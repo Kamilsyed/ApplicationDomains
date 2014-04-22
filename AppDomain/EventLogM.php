@@ -78,7 +78,7 @@ require_once 'core/init.php';
 	        	<select name='account'>
 	        	<option value=''>--OR Select an Account--</option>
 	        		<?php
-	        			$con = mysqli_connect('localhost', 'host', 'test', 'test');
+	        			$con = mysqli_connect("localhost","mmollica","Thepw164","app_domain");
 
 	        			if(!$con){die('SERVER ERROR');}
 
@@ -95,7 +95,7 @@ require_once 'core/init.php';
 	        	<select name='user'>
 	        		<option value=''>--Select a User--</option>
 	        		<?php
-	        			$con = mysqli_connect('localhost', 'host', 'test', 'test');
+	        			$con = mysqli_connect("localhost","mmollica","Thepw164","app_domain");
 
 	        			if(!$con){die('SERVER ERROR');}
 
