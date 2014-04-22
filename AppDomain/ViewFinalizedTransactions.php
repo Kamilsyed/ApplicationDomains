@@ -1,7 +1,7 @@
 <?php
 require_once 'core/init.php';
 $user = new User();
-if($user->data()->groups!=2)
+if(!$user->data()->groups==2 || !$user->isLoggedIn())
 {
     Redirect::to('index.php');
 }
@@ -66,6 +66,8 @@ if($user->data()->groups!=2)
                       <li><a href="ViewOpenTransactions.php">View Open Transactions</a></li>
                       <li class="active"><a href="ViewFinalizedTransactions.php">View Finalized Transactions</a></li>
                       <li><a href="viewreportsmanager.php">Reports</a></li>
+                      <li><a href="RatiosManager.php">Ratios</a></li>
+                      <li><a href="EventLogM.php">Event Log</a></li>
                       
                       
                     </ul>
