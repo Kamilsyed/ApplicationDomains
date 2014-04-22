@@ -48,7 +48,7 @@ $b = mysqli_query($con, "SELECT set_id FROM transactions WHERE acct_id=$id");
 <head>
 		<meta charset="utf-8">
 		<title>Homepage</title>
-	<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="bootstrap.css">
     <style>
 	body{
 		background-color:#000000;
