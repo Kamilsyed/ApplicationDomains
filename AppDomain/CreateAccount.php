@@ -52,7 +52,7 @@ if(Input::exists())
                 $event = new Event();
 
                 $event->account_event(Input::get('name'), $num, $user->data()->username, $bal);
-                Redirect::to('AdminHomepage.html');
+                Redirect::to('AdminHomepage.php');
             }
             catch(Exception $e)
             {

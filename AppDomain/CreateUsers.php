@@ -42,7 +42,7 @@ if(Input::exists())
 					));
 
 				Session::flash('home', 'You have registered a user');
-				Redirect::to('AdminHomepage.html');
+				Redirect::to('AdminHomepage.php');
 			}
 			catch(Exception $e)
 			{
