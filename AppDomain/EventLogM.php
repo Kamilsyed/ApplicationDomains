@@ -1,6 +1,12 @@
 
 <?php
 require_once 'core/init.php';
+if($user->data()->groups!=2 || !$user->isLoggedIn())
+{
+  Redirect::to('index.php');
+}
+
+?>
 ?>
 <head>
 		<meta charset="utf-8">
@@ -73,7 +79,7 @@ require_once 'core/init.php';
 	        		<option value='Accounts'>Accounts</option>
 	        		<option value='Account Status'>Account Status</option>
 	        		<option value='Finalized Transactions'>Finalized Transactions</option>
-	        		<option value='Users'>Users</option>
+	        		<option value='Users'>User Created</option>
 	        	</select><br>
 	        	<select name='account'>
 	        	<option value=''>--OR Select an Account--</option>
@@ -82,7 +88,7 @@ require_once 'core/init.php';
 
 	        			if(!$con){die('SERVER ERROR');}
 
-	        			$q = "SELECT * FROM accounts";
+	        			$q = "SELECT * FROM accounts ORDER BY name";
 
 	        			$res = mysqli_query($con, $q);
 

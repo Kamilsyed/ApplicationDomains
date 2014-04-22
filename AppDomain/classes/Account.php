@@ -215,7 +215,11 @@ class Account
 
 				if(mysqli_num_rows($res) < 0)
 				{
+<<<<<<< HEAD
 					throw new Exception('Cannot close an account with open transactions!!');				
+=======
+					throw new Exception('Cannot close an account with open transactions!!');		
+>>>>>>> aaf8b21dae29e0e4c59d2a4c9afd74cd137b61ce
 				}
 			}
 
