@@ -67,7 +67,7 @@ if($user->data()->groups!=2 || !$user->isLoggedIn())
                       <li><a href="ViewOpenTransactions.php">View Open Transactions</a></li>
                       <li><a href="ViewFinalizedTransactions.php">View Finalized Transactions</a></li>
                       <li><a href="viewreportsmanager.html">Reports</a></li>
-                      <li><a href="EventLogM.php">Event Log</a></li>
+                      <li class="active"><a href="EventLogM.php">Event Log</a></li>
 					</ul>
 	        	</div>
                

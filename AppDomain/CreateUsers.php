@@ -119,9 +119,10 @@ if(Input::exists())
 					  <li class="nav-header">Features</li>
 					  <li><a href="adminchartofaccounts.php">Chart of Accounts</a></li>
 					  <li><a href="CreateAccount.php">Create Account</a></li>
-					  <li><a href="DeactivateAccount.php">Deactivate Account</a></li>
+					  <li><a href="acountdetails.php">Change Account Status</a></li>
 					  <li class="active"><a href="CreateUsers.php">Create Users</a></li>
-					  <li><a href="EditUsers.php">Edit Users</a></li>					  
+					  <li><a href="EditUsers.php">Edit Users</a></li>
+					  <li><a href="EventLogA.php">Event Log</a></li>					  
 					</ul>
 	        	</div>
 
