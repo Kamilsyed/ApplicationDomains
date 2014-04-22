@@ -33,15 +33,15 @@ if(!$user->data()->groups==3)
 	
 $result = mysqli_query($con, "SELECT * FROM accounts WHERE date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
 	
-$result2 = mysqli_query($con, "SELECT * FROM accounts WHERE type LIKE '%Current Asset%' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
+$result2 = mysqli_query($con, "SELECT * FROM accounts WHERE type LIKE '%Current Asset%' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' AND balance > 0 ");
 
-$result21 = mysqli_query($con, "SELECT * FROM accounts WHERE type LIKE '%Long Term Asset%' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
+$result21 = mysqli_query($con, "SELECT * FROM accounts WHERE type LIKE '%Long Term Asset%' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' AND balance > 0 ");
 	
-$result3 = mysqli_query($con, "SELECT * FROM accounts WHERE type LIKE '%Current Liabilities%' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
+$result3 = mysqli_query($con, "SELECT * FROM accounts WHERE type LIKE '%Current Liabilities%' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' AND balance > 0 ");
 
-$result31 = mysqli_query($con, "SELECT * FROM accounts WHERE type LIKE '%Long Term Liabilities%' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
+$result31 = mysqli_query($con, "SELECT * FROM accounts WHERE type LIKE '%Long Term Liabilities%' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' AND balance > 0 ");
 	
-$result4 = mysqli_query($con, "SELECT * FROM accounts WHERE type LIKE '%Equity%' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
+$result4 = mysqli_query($con, "SELECT * FROM accounts WHERE type LIKE '%Equity%' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' AND balance > 0 ");
 
 $result5 = mysqli_query($con, "SELECT * FROM accounts WHERE type='Operating Revenue' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
 
@@ -56,6 +56,7 @@ $result9 = mysqli_query($con, "SELECT * FROM accounts WHERE type='Non-Operating 
 $result10 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Sales Returns and Allowances' OR name='Sales Discounts' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
 
 $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Returns and Allowances' OR name='Purchase Discounts' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
+
 
 
 
@@ -215,34 +216,56 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 		
         $totaldebit=0;
         $totalcredit=0;
-        
+		$dcount=1;
+        $count=1;
+		
         while($row = mysqli_fetch_assoc($result))
             {
              echo "<tr>";
              echo '<td align="left">' . $row['name'] . "</td>";
              $side= $row['normal'];
              
-             if($side=="Debit")
+			   if($side=="Debit" && $dcount==1)
              {
-             	echo '<td align="right">' . $row['balance'] . "</td>";
+             	echo '<td align="right">' .'$' . number_format($row['balance'],2) . "</td>";
+                echo '<td align="center">' . '&nbsp;' . "</td>";
+                $totaldebit+= $row['balance'];
+				$dcount++;
+             }
+             
+             
+             else if($side=="Credit" && $count==1)
+             {
+				echo '<td align="center">' . '&nbsp;' . "</td>";             
+             	echo '<td align="right">' .'$' . number_format($row['balance'],2) . "</td>";
+                $totalcredit+=$row['balance'];
+				$count++;
+             }
+			 
+			  if($side=="Debit" && $dcount > 2 )
+             {
+             	echo '<td align="right">' . number_format($row['balance'],2) . "</td>";
                 echo '<td align="center">' . '&nbsp;' . "</td>";
                 $totaldebit+= $row['balance'];
              }
-             
-             if($side=="Credit")
+			 
+			  if($side=="Credit" && $count > 2)
              {
 				echo '<td align="center">' . '&nbsp;' . "</td>";             
-             	echo '<td align="right">' . $row['balance'] . "</td>";
-                $totalcredit+= $row['balance'];
+             	echo '<td align="right">' . number_format($row['balance'],2) . "</td>";
+                $totalcredit+=$row['balance'];
              }
              
+             $dcount++;
+			 $count++;
+			 
              echo "</tr>";
             }
 			
   		echo "<tr>";
         echo '<th align="left">' . '<b>' . 'Total:' . '</b>' . "</th>";
-        echo "<td  align=right>" . '<b>' . $totaldebit . '</b>' . "</td>";
-		echo "<td  align=right>" . '<b>' . $totalcredit . '</b>' . "</td>";
+        echo "<td  align=right>" . '<b>' . number_format($totaldebit,2) . '</b>' . "</td>";
+		echo "<td  align=right>" . '<b>' . number_format($totalcredit,2) . '</b>' . "</td>";
         echo "</table>";        
        
         
@@ -269,10 +292,7 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 		$totallongassets=0;
 	    $totalassets=0;
 		
-			 echo "<tr>";
-             echo '<td align="left">' . '&nbsp' . "</td>";
-			 echo '<td align="center"  style="font-size:15px;">' . 'January 6,<br> <u>2014</u>' . "</td>";       
-             echo "</tr>";
+			
 		
 			 echo "<tr>";
              echo '<td align="left">' . '<b>' . 'Assets' . '</b>' . "</td>";
@@ -293,7 +313,7 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 			{
 			 echo "<tr>";
              echo '<td align="left">' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
-			 echo '<td align="right">' . '$'  . $row['balance'] . "</td>";
+			 echo '<td align="right">' . '$'  . number_format($row['balance'],2) . "</td>";
              $totalcurassets+= $row['balance'];        
              echo "</tr>";
 			 $count++;
@@ -304,7 +324,7 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 			{
 			 echo "<tr>";
              echo '<td align="left">' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
-			 echo '<td align="right">' . '<u>' . $row['balance'] . '</u>' . "</td>";
+			 echo '<td align="right">' . '<u>' . number_format($row['balance'],2) . '</u>' . "</td>";
              $totalcurassets+= $row['balance'];        
              echo "</tr>";
 			 $count++;	
@@ -315,7 +335,7 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 			{
              echo "<tr>";
              echo '<td align="left">' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
-			 echo '<td align="right">' . $row['balance'] . "</td>";
+			 echo '<td align="right">' . number_format($row['balance'],2) . "</td>";
              $totalcurassets+= $row['balance'];        
              echo "</tr>";
 			 $count++;
@@ -325,7 +345,7 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
             }	
   		echo "<tr>";
         echo '<td align="left">' . '&nbsp;&nbsp;&nbsp;'  . 'Total current assets' . "</td>";
-        echo '<td align="right">'  . $totalcurassets  . "</td>";
+        echo '<td align="right">'  . number_format($totalcurassets,2)  . "</td>";
         echo "</tr>";
 		
 		
@@ -347,7 +367,7 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 			{
              echo "<tr>";
              echo '<td align="left">' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
-			 echo '<td align="right">' . '<u>' . $row['balance'] . '</u>' . "</td>";
+			 echo '<td align="right">' . '<u>' . number_format($row['balance'],2) . '</u>' . "</td>";
              $totallongassets+= $row['balance'];        
              echo "</tr>";
 			 
@@ -356,7 +376,7 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 			{
 			 echo "<tr>";
              echo '<td align="left">' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
-			 echo '<td align="right">' . $row['balance'] . "</td>";
+			 echo '<td align="right">' . number_format($row['balance'],2) . "</td>";
              $totallongassets+= $row['balance'];        
              echo "</tr>";
 			 $count2++;
@@ -368,7 +388,7 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 				
   		echo "<tr>";
         echo '<td align="left">' . '&nbsp;&nbsp;&nbsp;&nbsp;'  . 'Total assets' . "</td>";
-        echo '<td align="right">' .'<u style=" border-bottom: 1px solid black">' .'$' . $totalassets . '</u>' .  "</td>";
+        echo '<td align="right">' .'<u>' .'$' . number_format($totalassets,2) . '</u>' .  "</td>";
         echo "</tr>";
 		   
         echo '<tr><td>&nbsp;</td><td>&nbsp;</td></tr>';
@@ -399,7 +419,7 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 			{
 			 echo "<tr>";
              echo '<td align="left">' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
-			 echo '<td align="right">' . '$'  . $row['balance'] . "</td>";
+			 echo '<td align="right">' . '$'  . number_format($row['balance'],2) . "</td>";
              $totalcurlib+= $row['balance'];        
              echo "</tr>";
 			 $count3++;
@@ -410,7 +430,7 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 			{
 			 echo "<tr>";
              echo '<td align="left">' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
-			 echo '<td align="right">' . '<u>' . $row['balance'] . '</u>' . "</td>";
+			 echo '<td align="right">' . '<u>' .number_format($row['balance'],2) . '</u>' . "</td>";
              $totalcurlib+= $row['balance'];        
              echo "</tr>";
 			 $count3++;	
@@ -420,7 +440,7 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 			{
              echo "<tr>";
              echo '<td align="left">' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
-			 echo '<td align="right">' . $row['balance'] . "</td>";
+			 echo '<td align="right">' . number_format($row['balance'],2) . "</td>";
              $totalcurlib+= $row['balance'];        
              echo "</tr>";
 			 $count3++;
@@ -429,7 +449,7 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 		}
   		echo "<tr>";
         echo '<td align="left">' . '&nbsp;&nbsp;&nbsp;&nbsp;'  . 'Total current liabilities' . "</td>";
-        echo '<td align="right">' . $totalcurlib  . "</td>";
+        echo '<td align="right">' . number_format($totalcurlib,2)  . "</td>";
         echo "</tr>";
 		
 		
@@ -451,7 +471,7 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 			{
              echo "<tr>";
              echo '<td align="left">' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
-			 echo '<td align="right">' . '<u>' . $row['balance'] . '</u>' . "</td>";
+			 echo '<td align="right">' . '<u>' . number_format($row['balance'],2) . '</u>' . "</td>";
              $totallonglib+= $row['balance'];        
              echo "</tr>";
 			 
@@ -460,7 +480,7 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 			{
 			 echo "<tr>";
              echo '<td align="left" >' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
-			 echo '<td align="right">' . $row['balance'] . "</td>";
+			 echo '<td align="right">' . number_format($row['balance'],2). "</td>";
              $totallonglib+= $row['balance'];        
              echo "</tr>";
 			 $count4++;
@@ -473,7 +493,7 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 				
   		echo "<tr>";
         echo '<td align="left">' . '&nbsp;&nbsp;&nbsp;&nbsp;'  . 'Total liabilties' . "</td>";
-        echo '<td align="right">' . $totallib .  "</td>";
+        echo '<td align="right">' .'$' . number_format($totallib,2) .  "</td>";
         echo "</tr>";
 		
 		
@@ -496,7 +516,7 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 			{
              echo "<tr>";
              echo '<td align="left">' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
-			 echo '<td align="right">' . '<u>' . $row['balance'] . '</u>' . "</td>";
+			 echo '<td align="right">' . '<u>' . number_format($row['balance'],2) . '</u>' . "</td>";
              $equity+= $row['balance'];        
              echo "</tr>";
 			 
@@ -505,7 +525,7 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 			{
 			 echo "<tr>";
              echo '<td align="left">' . '&nbsp;&nbsp;'  . $row['name'] . "</td>";
-			 echo '<td align="right">' . $row['balance'] . "</td>";
+			 echo '<td align="right">' . number_format($row['balance'],2) . "</td>";
              $equity+= $row['balance'];        
              echo "</tr>";
 			 $count5++;
@@ -516,14 +536,14 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
             }
   		echo "<tr>";
         echo '<td align="left">' . '&nbsp;&nbsp;&nbsp;&nbsp;' . "Total Stockholder's Equity:" . "</td>";
-        echo '<td  align="right">' . '<u>' . $equity . '</u>' . "</td>";
+        echo '<td  align="right">' . '<u>' . number_format($equity,2) . '</u>' . "</td>";
         echo "</tr>"; 
 		
 		$totalrightside+= $totallib + $equity;
 		
 		echo "<tr>";
         echo '<td align="left">' . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . "Total Liabilities &amp; Stockholder's Equity:" . "</td>";
-         echo '<td align="right">' .'<u style=" border-bottom: 1px solid black">' .'$' . $totalrightside . '</u>' .  "</td>";
+         echo '<td align="right">' .'<u>' .'$' . number_format($totalrightside,2) . '</u>' .  "</td>";
         echo "</tr>";      
         
         
@@ -574,7 +594,7 @@ echo '<table id="rounded-corner" summary="2007 Major IT Companies Profit">';
 		echo "<tr>";
         echo '<td align="left">' . 'Net Sales' . "</td>";
 		echo '<td></td>';
-        echo '<td align="right">' . '$' . $operatingrev  . "</td>";
+        echo '<td align="right">' . '$' . number_format($operatingrev,2)  . "</td>";
         echo "</tr>";
 		
         
@@ -593,7 +613,7 @@ echo '<table id="rounded-corner" summary="2007 Major IT Companies Profit">';
 		echo "<tr>";
         echo '<td align="left">' . 'Total Cost Of Goods Sold' . "</td>";
 		echo '<td></td>';
-        echo '<td align="right">'. '&nbsp;&nbsp;' . '<u>' . '(' . $cost  . ')' . '</u>' . "</td>";
+        echo '<td align="right">'. '&nbsp;&nbsp;' . '<u>' . '(' . number_format($cost,2)  . ')' . '</u>' . "</td>";
         echo "</tr>";
 		
         $grossprofit=($operatingrev-$cost);
@@ -601,7 +621,7 @@ echo '<table id="rounded-corner" summary="2007 Major IT Companies Profit">';
         echo "<tr>";
         echo '<td align="left">'  . 'Gross Profit' . "</td>";
 		echo '<td></td>';
-        echo '<td align="right">' . '&nbsp;&nbsp;' .'<u>'  . $grossprofit .  '</u>' . "</td>";
+        echo '<td align="right">' . '&nbsp;&nbsp;' .'<u>'  . number_format($grossprofit,2) .  '</u>' . "</td>";
         echo "</tr>";  
         
         echo '<tr>';
@@ -619,7 +639,7 @@ echo '<table id="rounded-corner" summary="2007 Major IT Companies Profit">';
         	echo '<tr>';
         
         	echo '<td align="left">' . '&nbsp;&nbsp;' . $row['name'] . "</td>";
-            echo '<td align="right">' . '$' . $row['balance'] . "</td>";
+            echo '<td align="right">' . '$' . number_format($row['balance'],2) . "</td>";
 			echo '<td></td>';
 			$operatingexp+= $row['balance'];
         
@@ -632,9 +652,9 @@ echo '<table id="rounded-corner" summary="2007 Major IT Companies Profit">';
 			echo '<tr>';
         
         	echo '<td align="left">' . '&nbsp;&nbsp;' . $row['name'] . "</td>";
-            echo '<td align="right">' . '<u>' . $row['balance'] . '</u>' . "</td>";
+            echo '<td align="right">' . '<u>' . number_format($row['balance'],2) . '</u>' . "</td>";
 			$operatingexp+= $row['balance'];
-			 echo '<td align="right">' . '<u>' . '(' . $operatingexp .')' . '</u>' . "</td>";
+			 echo '<td align="right">' . '<u>' . '(' . number_format($operatingexp,2) .')' . '</u>' . "</td>";
 			
         
         	echo '</tr>';
@@ -648,7 +668,7 @@ echo '<table id="rounded-corner" summary="2007 Major IT Companies Profit">';
 			echo '<tr>';
         
         	echo '<td align="left">' . '&nbsp;&nbsp;' . $row['name'] . "</td>";
-            echo '<td align="right">' . $row['balance'] . "</td>";
+            echo '<td align="right">' . number_format($row['balance'],2) . "</td>";
 			echo '<td></td>';
 			$operatingexp+= $row['balance'];
         
@@ -664,7 +684,7 @@ echo '<table id="rounded-corner" summary="2007 Major IT Companies Profit">';
 		echo "<tr>";
         echo '<td align="left">' . 'Operating Income' . "</td>";
 		echo '<td></td>';
-        echo '<td align="right">' .  $operatingincome  . "</td>";
+        echo '<td align="right">' .  number_format($operatingincome,2)  . "</td>";
         echo "</tr>";
 		
 		
@@ -681,7 +701,7 @@ echo '<table id="rounded-corner" summary="2007 Major IT Companies Profit">';
         
         	echo '<td align="left">' . '&nbsp;&nbsp;' . $row['name'] . "</td>";
 			echo '<td></td>';
-            echo '<td align="right">' . $row['balance'] . "</td>";
+            echo '<td align="right">' . number_format($row['balance'],2) . "</td>";
 			$nonoperatingrev+= $row['balance'];
         
         	echo '</tr>';
@@ -706,7 +726,7 @@ echo '<table id="rounded-corner" summary="2007 Major IT Companies Profit">';
         	echo '<tr>';
         
         	echo '<td align="left">' . '&nbsp;&nbsp;' . $row['name'] . "</td>";
-            echo '<td align="right">' . '$' . $row['balance'] . "</td>";
+            echo '<td align="right">' . '$' . number_format($row['balance'],2) . "</td>";
 			echo '<td></td>';
 			$nonoperatingexp+= $row['balance'];
         
@@ -719,9 +739,9 @@ echo '<table id="rounded-corner" summary="2007 Major IT Companies Profit">';
 			echo '<tr>';
         
         	echo '<td align="left">' . '&nbsp;&nbsp;' . $row['name'] . "</td>";
-            echo '<td align="right">' . '<u>' . $row['balance'] . '</u>' . "</td>";
+            echo '<td align="right">' . '<u>' . number_format($row['balance'],2) . '</u>' . "</td>";
 			$nonoperatingexp+= $row['balance'];
-			 echo '<td align="right">' . '<u>' . '(' . $nonoperatingexp .')' . '</u>' . "</td>";
+			 echo '<td align="right">' . '<u>' . '(' . number_format($nonoperatingexp,2) .')' . '</u>' . "</td>";
 			
         
         	echo '</tr>';
@@ -735,7 +755,7 @@ echo '<table id="rounded-corner" summary="2007 Major IT Companies Profit">';
 			echo '<tr>';
         
         	echo '<td align="left">' . '&nbsp;&nbsp;' . $row['name'] . "</td>";
-            echo '<td align="right">' . $row['balance'] . "</td>";
+            echo '<td align="right">' . number_format($row['balance'],2) . "</td>";
 			echo '<td></td>';
 			$nonoperatingexp+= $row['balance'];
         
@@ -752,9 +772,16 @@ echo '<table id="rounded-corner" summary="2007 Major IT Companies Profit">';
 		$netincome=$operatingincome+$nonoperatingsub;
 		
 		        echo '<tr>';
-				echo '<td align="left"><b>Net Income</b></td>';
+				if( $netincome < 0)
+				{
+				echo '<td align="left"><b>Net Income{Loss}</b></td>';
+				}
+				else
+				{
+					echo '<td align="left"><b>Net Income</b></td>';	
+				}
 				echo '<td></td>';
-				echo '<td align="right">' . '<u style=" border-bottom: 1px solid black">' .'$'  . $netincome  . '</u>' . "</td>";
+				echo '<td align="right">' . '<u>' .'$'  . number_format($netincome,2)  . '</u>' . "</td>";
 				echo '</tr>';
 				
 		echo '</tbody>';
