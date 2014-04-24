@@ -10,7 +10,7 @@ if($user->data()->groups!=2 || !$user->isLoggedIn())
 ?>
 <head>
 		<meta charset="utf-8">
-		<title>Homepage</title>
+		<title>Event Log - Manager</title>
 	<link rel="stylesheet" type="text/css" href="bootstrap.css">
     <style>
 	body{

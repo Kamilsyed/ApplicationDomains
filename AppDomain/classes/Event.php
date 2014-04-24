@@ -93,9 +93,24 @@ class Event
 	*/
 	public function posting_event($setnum, $setname, $comment, $status, $user)
 	{
+		$stat = '';
+
+		if($status == '2')
+		{
+			$stat = 'posted';
+		}
+		else if($status == '3')
+		{
+			$stat = 'rejected';
+		}
+		else
+		{
+			$stat = $status;
+		}
+
 		date_default_timezone_set('America/New_York');
 		$arr = array(
-			'description' => "$user has $status Transaction Set: $setnum $setname Reason: $comment",
+			'description' => "{$user} has {$stat} Transaction Set {$setnum}: {$setname} Reason: {$comment}",
 			'user' => $user,
 			'location' => "Finalized Transactions",
 			'date'=>date("Y-m-d H:i:s")

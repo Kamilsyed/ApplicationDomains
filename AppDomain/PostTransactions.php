@@ -35,15 +35,20 @@ if(Input::exists())
 			$query = "SELECT * FROM `transactions` WHERE set_id='". Input::get($id) ."'";
 			$results = mysqli_query($con, $query);
 
+			//POSSIBLE BUG, UPDATES BALANCE OF ACCOUNTS INCLUDED IN REJECTED SETS
 			while($res = mysqli_fetch_assoc($results))
 			{
 				$acc->findByNumber($res['acct_id']);
 				$acc->update_balance($res['acct_id'], $res['type'], $res['amount']);
 			}
+			//END BUG
 
 			try
 			{
+				$set->find(Input::get($id));
 				$set->change(Input::get($id), Input::get($com), Input::get($rad));
+				$event = new Event();
+				$event->posting_event(Input::get($id), $set->data()->description, Input::get($com), Input::get($rad), $user->data()->username);
 			}
 			catch(Exception $e)
 			{
