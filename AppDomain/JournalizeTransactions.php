@@ -256,7 +256,7 @@ if(Input::exists())
 	        	</div>
 	        	<!-- Right side Content Vertical Area -->
 	        	<div class="span8" spry:region="mulitple">
-	        		<form enctype="multipart/form-data" action="" method="post">
+	        		<form enctype="multipart/form-data" action="" method="post" onsubmit ="checkNegativeValue()">
 	        		<input type="button" value="Add Account" onClick="addRow('account')"class="btn btn-med btn-success" /> 
 					<input type="button" value="Remove Account" onClick="deleteRow('account')" class="btn btn-med btn-success" /> 
 	        		<input name="Journalize" type="submit" value="Journalize" class="btn btn-med btn-success" />
@@ -304,7 +304,7 @@ if(Input::exists())
 		             			<!--select first amount-->
 		             			<span id="sprytextfield3">
 				                <label for="amount[]" style="color:#FFFFFF;">Amount</label>
-				                	<input type="text" name="amount[]" id="amount[]">
+				                	<input type="text" onkeyup="checkNegativeValue()" name="amount[]" id="amount[]">
 			          	 		<span class="textfieldRequiredMsg">A numeric value is required.</span></span> 
 			            		<span id="spryselect2"></span>
 			            		</td>
@@ -343,7 +343,7 @@ if(Input::exists())
 		             			<!--select second amount-->
 		             			<span id="sprytextfield3">
 				                <label for="amount[]" style="color:#FFFFFF;">Amount</label>
-				                	<input type="text" name="amount[]" id="amount[]">
+				                	<input type="text" onkeyup="checkNegativeValue()" name="amount[]" id="amount[]">
 			          	 		<span class="textfieldRequiredMsg">A numeric value is required.</span></span> 
 			            		<span id="spryselect2"></span> 
 			            		</td>
@@ -420,6 +420,18 @@ function deleteRow(tableID) {
 		}
 	}
 }
+function checkNegativeValue()
+{
+  var value = parseFloat(document.getElementById("amount[]").value);
+  if(value<0)
+  {
+   alert("Negative Value is not allowed.");
+   return false;
+  }
+}
+
+
+
 </script>
 <script type="text/javascript">
 var sc_project=9046834; 

@@ -5,7 +5,7 @@ error_reporting(E_ALL);
 
 require_once 'core/init.php';
 $user = new User();
-if(!$user->data()->groups==2 || !$user->isLoggedIn())
+if($user->data()->groups!=2 || !$user->isLoggedIn())
 {
 	Redirect::to('index.php');
 }

@@ -5,7 +5,7 @@ error_reporting(E_ALL);
 
 require_once 'core/init.php';
 $user = new User();
-if(!$user->data()->groups==3 || !$user->isLoggedIn())
+if($user->data()->groups!=3 || !$user->isLoggedIn())
 {
 	Redirect::to('index.php');
 }
@@ -264,7 +264,7 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 			
   		echo "<tr>";
         echo '<th align="left">' . '<b>' . 'Total:' . '</b>' . "</th>";
-        echo "<td  align=right>" . '<b>' . number_format($totaldebit,2) . '</b>' . "</td>";
+        echo "<td  align=right style='border-bottom: 1 px'>" . '<b>' . number_format($totaldebit,2) . '</b>' . "</td>";
 		echo "<td  align=right>" . '<b>' . number_format($totalcredit,2) . '</b>' . "</td>";
         echo "</table>";        
        

@@ -5,7 +5,7 @@
 
 require_once 'core/init.php';
 $user = new User();
-if(!$user->data()->groups==3 || !$user->isLoggedIn())
+if($user->data()->groups!=3 || !$user->isLoggedIn())
 {
 	Redirect::to('index.php');
 }

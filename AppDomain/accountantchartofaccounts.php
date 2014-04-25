@@ -5,16 +5,12 @@
 require_once 'core/init.php';
 
 $user = new User();
-if(!$user->data()->groups==3)
+if($user->data()->groups!=3 || !$user->isLoggedIn())
 {
 	Redirect::to('index.php');
 }
 
-	$user = new User();
-	if(!$user->hasPermission('accountant'))
-	{
-		Redirect::to('index.php');
-	}
+
 
     $con = mysqli_connect("localhost","mmollica","Thepw164", "app_domain");
 
