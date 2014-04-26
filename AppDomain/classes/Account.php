@@ -197,26 +197,7 @@ class Account
 
 		if(!$con){Redirect::to('errors/500.php');}
 
-		//BEGIN CHECK FOR OPEN TRANSACTION SETS
-
-		$query = "SELECT * FROM sets WHERE status='1'";
-
-		$results = mysqli_query($con, $query);
-
-		while($row = mysqli_fetch_assoc($results))
-		{
-			$query2 = "SELECT * FROM transactions WHERE set_id='". $row['id'] ."' AND acct_id='{$number}'";
-
-			$results2 = mysqli_query($con, $query2);
-
-			if(mysqli_num_rows($results2) < 0)
-			{
-				die("Open transactions for this account exists.");
-			}
-		}
-		//END
-
-		$update = "UPDATE accounts SET status='0' WHERE number='{$number}'";
+		$query = "UPDATE accounts SET status='0' WHERE number='{$number}'";
 
 		if(!mysqli_query($con, $query))
 			{throw new Exception("Could not update account!");}
