@@ -95,7 +95,7 @@ if($user->data()->groups!=1 || !$user->isLoggedIn())
               </form>
               
               <?php
-					if(isset($_POST('account')))
+					if(Input::exists())
 					{
 						$user = new User();
 						
