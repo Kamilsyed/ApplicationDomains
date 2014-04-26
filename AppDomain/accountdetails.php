@@ -95,7 +95,7 @@ if($user->data()->groups!=1 || !$user->isLoggedIn())
               </form>
               
               <?php
-					if(Input::exists())
+					if(isset($_POST('account')))
 					{
 						$user = new User();
 						
@@ -131,9 +131,9 @@ if($user->data()->groups!=1 || !$user->isLoggedIn())
 							echo "<td>" . $acc->data()->balance. "</td>";
 							echo "<td>Active</td>";
 							echo "<td><button type='submit'>Disable Account</button>";
-							echo "<input name='accounth' type='hidden' value=" . $acc->data()->number . "></input>";
-							echo "<input name='accountx' type='hidden' value=" . $acc->data()->name . "></input>";
-							echo "<input name='act' type='hidden' value='disabled'></input>";
+							echo "<input name='acct_num' type='hidden' value=" . $acc->data()->number . "></input>";
+							echo "<input name='acct_name' type='hidden' value=" . $acc->data()->name . "></input>";
+							echo "<input name='action' type='hidden' value='disabled'></input>";
 							echo "<input name='user' type='hidden' value=" . $user->data()->username . "></input>";
 							echo "</tr></tbody></table>";
 							echo "</form>";
@@ -162,9 +162,9 @@ if($user->data()->groups!=1 || !$user->isLoggedIn())
 							echo "<td>" . $acc->data()->balance. "</td>";
 							echo "<td>Inactive</td>";
 							echo "<td><button type='submit'>Activate Account</button>";
-							echo "<input name='accounth' type='hidden' value=" . $acc->data()->number . "></input>";
-							echo "<input name='accountx' type='hidden' value=" . $acc->data()->name . "></input>";
-							echo "<input name='act' type='hidden' value='enabled'></input>";
+							echo "<input name='acct_num' type='hidden' value=" . $acc->data()->number . "></input>";
+							echo "<input name='acct_name' type='hidden' value=" . $acc->data()->name . "></input>";
+							echo "<input name='action' type='hidden' value='enabled'></input>";
 							echo "<input name='user' type='hidden' value=" . $user->data()->username . "></input>";
 							echo "</tr></tbody></table>";
 							echo "</form>";
