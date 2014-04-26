@@ -25,7 +25,7 @@ class Set
 	{
 		if(is_numeric($set))
 		{
-			$data = $this->_db->get('set', array('id', '=', $set));
+			$data = $this->_db->get('sets', array('id', '=', $set));
 
 			if($data->count())
 			{
