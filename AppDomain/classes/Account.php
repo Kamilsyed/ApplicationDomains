@@ -197,35 +197,30 @@ class Account
 
 		if(!$con){Redirect::to('errors/500.php');}
 
-		$res = mysqli_query($con, "SELECT * FROM transactions WHERE acct_id='$number'");
+		//BEGIN CHECK FOR OPEN TRANSACTION SETS
 
-		if(mysqli_num_rows($res) == 0)
-		{
-			$query = "UPDATE accounts SET status='0' WHERE number='{$number}'";
+		$query = "SELECT * FROM sets WHERE status='1'";
 
-			if(!mysqli_query($con, $query))
-				{throw new Exception("Could not update account!");}
-		}
-		else
+		$results = mysqli_query($con, $query);
+
+		while($row = mysqli_fetch_assoc($results))
 		{
-			while($row = mysqli_fetch_assoc($res))
+			$query2 = "SELECT * FROM transactions WHERE set_id='". $row['id'] ."' AND acct_id='{$number}'";
+
+			$results2 = mysqli_query($con, $query2);
+
+			if(mysqli_num_rows($results2) < 0)
 			{
-				$q2 = "SELECT * FROM sets WHERE id='". $row['set_id'] ."' AND type='1'";
-				$r2 = mysqli_query($con, $q2);
-
-				if(mysqli_num_rows($res) < 0)
-				{
-
-					throw new Exception('Cannot close an account with open transactions!!');						
-
-				}
+				die("Open transactions for this account exists.");
 			}
-
-			$query = "UPDATE accounts SET status='0' WHERE number='{$number}'";
-
-			if(!mysqli_query($con, $query))
-				{throw new Exception("Could not update account!");}
 		}
+		//END
+
+		$update = "UPDATE accounts SET status='0' WHERE number='{$number}'";
+
+		if(!mysqli_query($con, $query))
+			{throw new Exception("Could not update account!");}
+		
 	}
 
 	public static function enable($number)
