@@ -13,7 +13,16 @@ $user = new User();
 	}
 	catch(Exception $e)
 	{
-		Redirect::to('errors/500.php');
+		echo "<?php echo disablefailed(".$_POST['accountx'].") ?>";
 	}
 //
 ?>
+
+<script type="text/javascript">
+
+function disablefailed(account)
+{
+	window.alert("Disabling " + account + " failed, there are currently open transactions for this account.");
+}
+
+</script>
