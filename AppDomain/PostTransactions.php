@@ -106,7 +106,7 @@ if(Input::exists())
 	                <li style="margin-left:25px"><a href="aboutus.html" >About Us</a></li>
                     <li  style="margin-left:25px"><a href="services.html">Services</a></li>
 	                <li  style="margin-left:25px"><a href="contactus.html">Contact Us</a></li>
-                    <li style="margin-left:25px"><a href="">Log out</a></li>
+                    <li style="margin-left:25px"><a href="logout.php">Log out</a></li>
 	              </ul>
 	            </div>
 	          </div>
