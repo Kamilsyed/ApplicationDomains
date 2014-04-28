@@ -35,13 +35,17 @@ if(Input::exists())
 			$query = "SELECT * FROM `transactions` WHERE set_id='". Input::get($id) ."'";
 			$results = mysqli_query($con, $query);
 
-			//POSSIBLE BUG, UPDATES BALANCE OF ACCOUNTS INCLUDED IN REJECTED SETS
+			//TO TEST
+			//Previously would update balances if transaction was rejected. Should no longer
+			//do that.
 			while($res = mysqli_fetch_assoc($results))
 			{
-				$acc->findByNumber($res['acct_id']);
-				$acc->update_balance($res['acct_id'], $res['type'], $res['amount']);
+				if($rad == '2')
+				{
+					$acc->findByNumber($res['acct_id']);
+					$acc->update_balance($res['acct_id'], $res['type'], $res['amount']);
+				}
 			}
-			//END BUG
 
 			try
 			{
