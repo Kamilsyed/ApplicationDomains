@@ -195,7 +195,7 @@ class Account
 	{
 		$con = mysqli_connect("localhost","mmollica","Thepw164","app_domain");
 
-		if(!$con){Redirect::to('errors/500.php');}
+		if(!$con){throw new Exception('Database error, if this error persists please contact host.');}
 
 		$query = "SELECT * FROM sets WHERE type='1'";
 
