@@ -197,9 +197,26 @@ class Account
 
 		if(!$con){Redirect::to('errors/500.php');}
 
-		$query = "UPDATE accounts SET status='0' WHERE number='{$number}'";
+		$query = "SELECT * FROM sets WHERE type='1'";
 
-		if(!mysqli_query($con, $query))
+		$results = mysqli_query($con, $query);
+
+		while($row = mysqli_fetch_assoc($results))
+		{
+			$query2 = "SELECT * FROM transactions WHERE set_id='". $row['id'] ."' AND acct_id='{$number}'";
+
+			$results2 = mysqli_query($con, $query2);
+
+			if(mysqli_num_rows($results2) < 0)
+			{
+				throw new Exception("Open transactions for this account exists.");
+			}
+		}
+		//END
+
+		$query2 = "UPDATE accounts SET status='0' WHERE number='{$number}'";
+
+		if(!mysqli_query($con, $query2))
 			{throw new Exception("Could not update account!");}
 		
 	}
