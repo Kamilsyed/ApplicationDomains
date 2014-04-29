@@ -203,13 +203,16 @@ class Account
 
 		while($row = mysqli_fetch_assoc($results))
 		{
-			$query2 = "SELECT * FROM transactions WHERE set_id='". $row['id'] ."' AND acct_id='{$number}'";
+			$query2 = "SELECT * FROM transactions WHERE set_id='". $row['id'] "'";
 
 			$results2 = mysqli_query($con, $query2);
 
-			if(mysqli_num_rows($results2) < 0)
+			while($row2 = mysqli_fetch_assoc($results2))
 			{
-				throw new Exception("Open transactions for this account exists.");
+				if($row['acct_id'] === $number)
+				{
+					throw new Exception("Open transactions for this account exists.");
+				}
 			}
 		}
 		//END
