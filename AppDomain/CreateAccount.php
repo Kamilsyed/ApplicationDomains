@@ -13,7 +13,7 @@ if(Input::exists())
 {
         $validate = new Validate();
         $validation = $validate->check($_POST, array(
-            'name' => array('required' => true, 'min' => 2, 'max' => 20, 'unique' => 'accounts'),
+            'name' => array('required' => true, 'min' => 2, 'unique' => 'accounts'),
             'description' => array(),
             'normal' => array('dropdown_not_default' => 'Select'),
             'type' => array('dropdown_not_default' => 'Select')
@@ -72,7 +72,7 @@ if(Input::exists())
 
 <head>
 		<meta charset="utf-8">
-		<title>Create a user</title>
+		<title>Create an Account</title>
 	<link rel="stylesheet" type="text/css" href="bootstrap.css">
     <style>
 	body{
@@ -159,7 +159,7 @@ if(Input::exists())
                  <option value="Current Assets">Current Assets</option>
                  <option value="Long Term Assets">Long-Term Assets</option>
                 <option value="Current Liabilities">Current Liabilities</option>
-                 <option value="Long Term Liabilites">Long-Term Liabilites</option>
+                 <option value="Long Term Liabilities">Long-Term Liabilites</option>
                 <option value="Equity">Equity</option>
                 <option value="Operating Revenue">Operating Revenue</option>
                 <option value="Operating Expenses">Operating Expenses</option>

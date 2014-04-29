@@ -65,7 +65,7 @@ class Account
 				else
 					{return 300000000;}
 			break;
-			case 'Long-Term Liabilities':
+			case 'Long Term Liabilities':
 				if($number >= 400000000)
 				{
 					return $number + 1;
@@ -201,11 +201,11 @@ class Account
 
 		$results = mysqli_query($con, $query);
 
-		while($row = mysqli_fetch_assoc($results))
+		while($row2 = mysqli_fetch_assoc($results))
 		{
-			$query2 = "SELECT * FROM transactions WHERE set_id='". $row['id'] ."' AND acct_id='{$number}'";
+			$id = $row2['id'];
 
-			$results2 = mysqli_query($con, $query2);
+			$results2 = mysqli_query($con, "SELECT * FROM transactions WHERE set_id=$id AND acct_id='{$number}'");
 
 			if(mysqli_num_rows($results2) < 0)
 			{
