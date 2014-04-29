@@ -201,11 +201,11 @@ class Account
 
 		$results = mysqli_query($con, $query);
 
-		while($row2 = mysqli_fetch_assoc($results))
+		while($row = mysqli_fetch_assoc($results))
 		{
-			$id = $row2['id'];
+			$query2 = "SELECT * FROM transactions WHERE set_id='". $row['id'] ."' AND acct_id='{$number}'";
 
-			$results2 = mysqli_query($con, "SELECT * FROM transactions WHERE set_id=$id AND acct_id='{$number}'");
+			$results2 = mysqli_query($con, $query2);
 
 			if(mysqli_num_rows($results2) < 0)
 			{

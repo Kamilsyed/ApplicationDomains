@@ -211,12 +211,16 @@ class Event
 
 				while($row = mysqli_fetch_assoc($results))
 				{
-					echo "<tr><td>". $row['id'] . "</td>";
+					echo "<tr name='event[]' value='". $row['id'] ."'>";
+					echo "<td>". $row['id'] . "</td>";
 					echo "<td>". $row['description'] ."</td>";
 					echo "<td>". $row['user'] ."</td>";
 					echo "<td>". $row['date'] ."</td>";
 					echo "<td>". $row['location'] ."</td>";
-					echo "<td>". $row['comments'] ."</td></tr>";
+					echo "<td>". $row['comments'] ."</td>";
+					echo "<input type='checkbox' name='check[]' value='flag'>Flag Event</input>";
+					echo "<input type='text' name='comment[]'></input>";
+					echo "</tr>";
 				}
 
 				echo "</tbody></table></form>";
@@ -305,12 +309,16 @@ class Event
 
 				while($row = mysqli_fetch_assoc($results))
 				{
-					echo "<tr><td>". $row['id'] . "</td>";
+					echo "<tr name='event[]' value='". $row['id'] ."'>";
+					echo "<td>". $row['id'] . "</td>";
 					echo "<td>". $row['description'] ."</td>";
 					echo "<td>". $row['user'] ."</td>";
 					echo "<td>". $row['date'] ."</td>";
 					echo "<td>". $row['location'] ."</td>";
-					echo "<td>". $row['comments'] ."</td></tr>";
+					echo "<td>". $row['comments'] ."</td>";
+					echo "<input type='checkbox' name='check[]' value='flag'>Flag Event</input>";
+					echo "<input type='text' name='comment[]'></input>";
+					echo "</tr>";
 				}
 
 				echo "</tbody></table></form>";
@@ -328,7 +336,7 @@ class Event
 	{
 		$con = mysqli_connect("localhost","mmollica","Thepw164","app_domain");
 
-		if(!$con) {die('Could not connect to server!!');}
+		if(!$con) {throw new Exception('Server connection failed. See host if issue persists.');}
 
 		$query = "UPDATE events SET flag='{$flag}', comment='{$comment}' WHERE id='{$id}'";
 
@@ -361,12 +369,16 @@ class Event
 
 				while($row = mysqli_fetch_assoc($results))
 				{
-					echo "<tr><td>". $row['id'] . "</td>";
+					echo "<tr name='event[]' value='". $row['id'] ."'>";
+					echo "<td>". $row['id'] . "</td>";
 					echo "<td>". $row['description'] ."</td>";
 					echo "<td>". $row['user'] ."</td>";
 					echo "<td>". $row['date'] ."</td>";
 					echo "<td>". $row['location'] ."</td>";
-					echo "<td>". $row['comments'] ."</td></tr>";
+					echo "<td>". $row['comments'] ."</td>";
+					echo "<input type='checkbox' name='check[]' value='flag'>Unflag Event</input>";
+					echo "<input type='text' name='comment[]'></input>";
+					echo "</tr>";
 				}
 
 				echo "</tbody></table></form>";

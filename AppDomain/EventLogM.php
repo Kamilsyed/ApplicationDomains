@@ -129,6 +129,18 @@ if($user->data()->groups!=2 || !$user->isLoggedIn())
 	        	if(Input::exists())
 	        	{
 	        		
+	        		$event = Input::get('event');
+	        		$check = Input::get('check');
+	        		$comment = Input::get('comment');
+
+	        		for($a = 0; $a < count($check); $a++)
+	        		{
+	        			if($check[$a] == 'flag')
+	        			{
+	        				Event::flag($event[$a], '1', $comment[$a]);
+	        			}
+	        		}
+
 	        		if(Input::get('where') != '' && Input::get('account') != '')
 	        		{
 	        			echo "Please select either a location or account, not both!";

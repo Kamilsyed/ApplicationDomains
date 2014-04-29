@@ -129,6 +129,17 @@ if($user->data()->groups != 1 || !$user->isLoggedIn())
 	        	<?php
 	        	if(Input::exists())
 	        	{
+	        		$event = Input::get('event');
+	        		$check = Input::get('check');
+	        		$comment = Input::get('comment');
+
+	        		for($a = 0; $a < count($check); $a++)
+	        		{
+	        			if($check[$a] == 'flag')
+	        			{
+	        				Event::flag($event[$a], '1', $comment[$a]);
+	        			}
+	        		}
 	        		
 	        		if(Input::get('where') != '' && Input::get('account') != '')
 	        		{
