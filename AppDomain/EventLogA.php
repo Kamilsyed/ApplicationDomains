@@ -121,7 +121,7 @@ if($user->data()->groups != 1 || !$user->isLoggedIn())
 				<input type='date' name='date'></input></tr>
 	        	
 	        	<br>
-	        	<input name="Sumbit" type="submit" value="Search" class="btn btn-small btn-success">
+	        	<input name="Submit" type="submit" value="Search" class="btn btn-small btn-success">
 	        	<br>
 	        	<label>Fields may be left blank.</label>
 	        	</form>
@@ -137,7 +137,14 @@ if($user->data()->groups != 1 || !$user->isLoggedIn())
 	        		{
 	        			if($check[$a] == 'flag')
 	        			{
-	        				Event::flag($event[$a], '1', $comment[$a]);
+	        				try
+	        				{
+	        					Event::flag($event[$a], '1', $comment[$a]);
+	        				}
+	        				catch(Exception $e)
+							{
+								die($e->getMessage());
+							}
 	        			}
 	        		}
 	        		

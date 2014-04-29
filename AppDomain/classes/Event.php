@@ -198,6 +198,7 @@ class Event
 			if(mysqli_num_rows($results) > 0)
 			{
 				echo "<form name='form1' method='post' action=''>";
+				echo "<input name='Submit' type='submit' value='Flag' class='btn btn-small btn-success'>";
 				echo "<table id='rounded-corner'>";
 				echo "<h3 style='margin-left:180px; color:#FFFFFF'>Event Log</h3>";
 				echo "<thead>";
@@ -207,6 +208,8 @@ class Event
 				echo "<th scope='col' class='rounded-company'>Date</th>";
 				echo "<th scope='col' class='rounded-company'>Location</th>";
 				echo "<th scope='col' class='rounded-company'>Comments</th>";
+				echo "<th></th>";
+				echo "<th></th>";
 				echo "</thead><tbody>";
 
 				while($row = mysqli_fetch_assoc($results))
@@ -218,8 +221,8 @@ class Event
 					echo "<td>". $row['date'] ."</td>";
 					echo "<td>". $row['location'] ."</td>";
 					echo "<td>". $row['comments'] ."</td>";
-					echo "<input type='checkbox' name='check[]' value='flag'>Flag Event</input>";
-					echo "<input type='text' name='comment[]'></input>";
+					echo "<td><input type='checkbox' name='check[]' value='flag'>Flag Event</input></td>";
+					echo "<td><input type='text' name='comment[]'></input></td>";
 					echo "</tr>";
 				}
 
@@ -337,8 +340,13 @@ class Event
 		$con = mysqli_connect("localhost","mmollica","Thepw164","app_domain");
 
 		if(!$con) {throw new Exception('Server connection failed. See host if issue persists.');}
-
-		$query = "UPDATE events SET flag='{$flag}', comment='{$comment}' WHERE id='{$id}'";
+		echo $id;
+		echo "<br />";
+		echo $flag;
+		echo "<br />";
+		echo $comment;
+		echo "<br />";
+		$query = "UPDATE events SET flag=$flag, comments=$comment WHERE id=$id";
 
 		$results = mysqli_query($con, $query);
 
