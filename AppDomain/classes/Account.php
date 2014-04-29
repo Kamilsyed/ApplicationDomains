@@ -199,19 +199,18 @@ class Account
 
 		$query = "SELECT * FROM sets WHERE type='1'";
 		$results = mysqli_query($con, $query);
-		$row = mysqli_fetch_assoc($results);
-
-		foreach($row as $set)
+		
+		while($row = mysqli_fetch_assoc($results))
 		{
-			$temp = $set['id'];
+			$temp = $row['id'];
 
-			$query2 = "SELECT * FROM transactions WHERE set_id='{$temp}'";
+			$query2 = "SELECT * FROM transactions WHERE set_id=$temp";
 			$results2 = mysqli_query($con, $query2);
-			$row2 = mysqli_fetch_assoc($results2);
-
-			foreach($row2 as $trans)
+		
+			while($row2 = mysqli_fetch_assoc($results2))
 			{
-				if($trans['acct_id'] == $number)
+				
+				if($row2['acct_id'] == $number)
 				{
 					throw new Exception("Open transactions for this account exists.");
 				}
