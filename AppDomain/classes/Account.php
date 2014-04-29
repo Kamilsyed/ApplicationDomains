@@ -198,18 +198,20 @@ class Account
 		if(!$con){throw new Exception('Database error, if this error persists please contact host.');}
 
 		$query = "SELECT * FROM sets WHERE type='1'";
-
 		$results = mysqli_query($con, $query);
+		$row = mysqli_fetch_assoc($results);
 
-		while($row = mysqli_fetch_assoc($results))
+		foreach($row as $set)
 		{
-			$query2 = "SELECT * FROM transactions WHERE set_id='". $row['id'] "'";
+			$temp = $set['id'];
 
+			$query2 = "SELECT * FROM transactions WHERE set_id='{$temp}'";
 			$results2 = mysqli_query($con, $query2);
+			$row2 = mysqli_fetch_assoc($results2);
 
-			while($row2 = mysqli_fetch_assoc($results2))
+			foreach($row2 as $trans)
 			{
-				if($row['acct_id'] === $number)
+				if($trans['acct_id'] == $number)
 				{
 					throw new Exception("Open transactions for this account exists.");
 				}
