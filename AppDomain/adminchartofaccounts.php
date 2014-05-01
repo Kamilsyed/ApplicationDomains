@@ -92,11 +92,15 @@ if($user->data()->groups!=1 || !$user->isLoggedIn())
   <thead>
     	<tr>
         	
-        	<th scope="col" class="rounded-q1">Account Name</th>
-            <th scope="col" class="rounded-q2">Account Number</th>
+        	<th scope="col" class="rounded-q1">Act. Name</th>
+            <th scope="col" class="rounded-q2">Act. Number</th>  
             <th scope="col" class="rounded-q3">Normal Side</th>
+            <th scope="col" class="rounded-q5">Act. Type</th>
+            <th scope="col" class="rounded-q6">Act. Total</th>
+            <th scope="col" class="rounded-q7">Act. Status</th>
+            <th scope="col" class="rounded-q4">User Added</th>
             <th scope="col" class="rounded-q4">Date Added</th>
-            <th scope="col" class="rounded-q5">Description</th>
+            <th scope="col" class="rounded-q3">Act. Description</th>
         </tr>
     </thead>
         <tfoot>
@@ -113,11 +117,24 @@ if($user->data()->groups!=1 || !$user->isLoggedIn())
              echo "<td>" . $row['name'] . "</td>";
              echo "<td>" . $row['number'] . "</td>";
              echo "<td>" . $row['normal'] . "</td>";
+             echo "<td>" . $row['type'] . "</td>";
+             echo "<td>" . $row['balance'] . "</td>";
+             if(intval($row['status'])==1)
+				{
+					echo "<td>Active</td>";
+				}
+			else
+				{
+					echo"<td>Inactive</td>";
+				}
+             echo "<td>" . $row['user_added'] . "</td>";
              echo "<td>" . $row['date_added'] . "</td>";
              echo "<td>" . $row['description'] . "</td>";
+
              echo "</tr>";
             }
         echo "</table>";        
+        ?>   
         ?>
     </tbody>
 </table>

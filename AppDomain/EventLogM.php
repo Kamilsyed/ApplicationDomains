@@ -38,7 +38,7 @@ if($user->data()->groups!=2 || !$user->isLoggedIn())
 	          <div class="navbar-inner">
 	            <div class="container">
 	              <ul class="nav">
-	                <li style="margin-left:190px"><a href="ManagerHomepage.html">Home</a></li>
+	                <li style="margin-left:190px"><a href="ManagerHomepage.php">Home</a></li>
 	                <li style="margin-left:25px"><a href="aboutus.html" >About Us</a></li>
                     <li  style="margin-left:25px"><a href="services.html">Services</a></li>
 	                <li  style="margin-left:25px"><a href="contactus.html">Contact Us</a></li>
@@ -62,7 +62,7 @@ if($user->data()->groups!=2 || !$user->isLoggedIn())
 					  <li class="nav-header">Features</li>
 					  <li><a href="managerchartofaccounts.php">Chart of Accounts</a></li>
 					  <li><a href="PostTransactions.php">Post Transactions</a></li>
-                      <li ><a href="edittransactions.html">Edit Transactions</a></li>
+                      <li ><a href="edittransactions.php">Edit Transactions</a></li>
                       <li><a href="ViewOpenTransactions.php">View Open Transactions</a></li>
                       <li><a href="ViewFinalizedTransactions.php">View Finalized Transactions</a></li>
                       <li><a href="viewreportsmanager.html">Reports</a></li>

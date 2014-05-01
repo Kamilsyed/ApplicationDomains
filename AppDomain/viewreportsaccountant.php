@@ -76,6 +76,7 @@ if($user->data()->groups!=3 || !$user->isLoggedIn())
                <option value="TrialBalance" >Trial Balance</option>
                <option value="BalanceSheet">Balance Sheet</option>
                <option value="IncomeStatement">Income Statement</option>
+               <option value="Cashflow">Cash Flow Statement</option>
                </select>
 	           <span class="selectRequiredMsg">Please select an item.</span></span>
                <br>

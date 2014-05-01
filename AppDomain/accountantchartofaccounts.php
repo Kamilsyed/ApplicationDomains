@@ -106,7 +106,6 @@ if($user->data()->groups!=3 || !$user->isLoggedIn())
             <th scope="col" class="rounded-q4">User Added</th>
             <th scope="col" class="rounded-q4">Date Added</th>
             <th scope="col" class="rounded-q3">Act. Description</th>
-        </tr>
     </thead>
         
     <tbody>
