@@ -58,6 +58,7 @@ $result10 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Sales Returns
 
 $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Returns and Allowances' OR name='Purchase Discounts' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
 
+$result12 = mysqli_query($con, "SELECT * FROM transactions WHERE acct_id=100000000 AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
 
 
     if(!$result)
@@ -821,11 +822,11 @@ break;
      				if($row3['type'] == 'debit' || $row3['type'] == 'Debit')
 	             	{
 		             	$account1 = new Account();
-		             	$account1->findByNumber($row2['acct_id']);
+		             	$account1->findByNumber($row3['acct_id']);
 
 						echo "<tr>";
 						echo "<td>" . $account1->data()->name . "</td>";
-						echo "<td>" . $row2['amount'] . "</td>";
+						echo "<td>" . $row3['amount'] . "</td>";
 						echo "<td></td>";
 						echo "</tr>";
 	             	}

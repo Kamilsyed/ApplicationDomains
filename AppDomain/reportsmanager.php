@@ -772,11 +772,11 @@ break;
      				if($row3['type'] == 'debit' || $row3['type'] == 'Debit')
 	             	{
 		             	$account1 = new Account();
-		             	$account1->findByNumber($row2['acct_id']);
+		             	$account1->findByNumber($row3['acct_id']);
 
 						echo "<tr>";
 						echo "<td>" . $account1->data()->name . "</td>";
-						echo "<td>" . $row2['amount'] . "</td>";
+						echo "<td>" . $row3['amount'] . "</td>";
 						echo "<td></td>";
 						echo "</tr>";
 	             	}
