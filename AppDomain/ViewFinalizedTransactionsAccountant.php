@@ -60,7 +60,7 @@ if($user->data()->groups!=3 || !$user->isLoggedIn())
                 <div class="span4">
                     <ul class="nav nav-list">
                       <li class="nav-header">Features</li>
-                      <li><a href="accountantchartofAccounts.php">Chart of Accounts</a></li>
+                      <li><a href="accountantchartofaccounts.php">Chart of Accounts</a></li>
                       <li><a href="JournalizeTransactions.php">Journalize Transactions</a></li>
                       <li><a href="ViewOpenTransactionsAccountant.php">View Open Transactions</a></li>
                       <li class="active"><a href="ViewFinalizedTransactionsAccountant.php">View Finalized Transactions</a></li>
