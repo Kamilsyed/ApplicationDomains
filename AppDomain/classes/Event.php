@@ -223,6 +223,7 @@ class Event
 					echo "<td>". $row['comments'] ."</td>";
 					echo "<td><input type='checkbox' name='check[]' value='flag'>Flag Event</input></td>";
 					echo "<td><input type='text' name='comment[]'></input></td>";
+					echo "<input type='hidden' name='event[]' value='". $row['id']."'";
 					echo "</tr>";
 				}
 
@@ -299,6 +300,7 @@ class Event
 		if(mysqli_num_rows($results) > 0)
 			{
 				echo "<form name='form1' method='post' action=''>";
+				echo "<input name='Submit' type='submit' value='Flag' class='btn btn-small btn-success'>";
 				echo "<table id='rounded-corner'>";
 				echo "<h3 style='margin-left:190px; color:#FFFFFF'>Event Log</h3>";
 				echo "<thead>";
@@ -319,8 +321,8 @@ class Event
 					echo "<td>". $row['date'] ."</td>";
 					echo "<td>". $row['location'] ."</td>";
 					echo "<td>". $row['comments'] ."</td>";
-					echo "<input type='checkbox' name='check[]' value='flag'>Flag Event</input>";
-					echo "<input type='text' name='comment[]'></input>";
+					echo "<td><input type='checkbox' name='check[]' value='flag'>Flag Event</input></td>";
+					echo "<td><input type='text' name='comment[]'></input></td>";
 					echo "<input type='hidden' name='event[]' value='". $row['id']."'";
 					echo "</tr>";
 				}
@@ -367,6 +369,7 @@ class Event
 			if(mysqli_num_rows($results) > 0)
 			{
 				echo "<form name='form1' method='post' action=''>";
+				echo "<input name='Submit' type='submit' value='Flag' class='btn btn-small btn-success'>";
 				echo "<table id='rounded-corner'>";
 				echo "<h3 style='margin-left:180px; color:#FFFFFF'>Event Log</h3>";
 				echo "<thead></thead><tbody>";
@@ -380,8 +383,9 @@ class Event
 					echo "<td>". $row['date'] ."</td>";
 					echo "<td>". $row['location'] ."</td>";
 					echo "<td>". $row['comments'] ."</td>";
-					echo "<input type='checkbox' name='check[]' value='flag'>Unflag Event</input>";
-					echo "<input type='text' name='comment[]'></input>";
+					echo "<td><input type='checkbox' name='check[]' value='flag'>Unflag Event</input></td>";
+					echo "<td><input type='text' name='comment[]'></input></td>";
+					echo "<input type='hidden' name='event[]' value='". $row['id']."'";
 					echo "</tr>";
 				}
 
