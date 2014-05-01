@@ -8,7 +8,7 @@ if($user->data()->groups!=2 || !$user->isLoggedIn())
 ?>
 <head>
 		<meta charset="utf-8">
-		<title>My First Bootstrap project</title>
+		<title>View Open Transactions</title>
 	<link rel="stylesheet" type="text/css" href="bootstrap.css">
     <style>
 	body{
@@ -47,7 +47,7 @@ if($user->data()->groups!=2 || !$user->isLoggedIn())
 	                <li style="margin-left:25px"><a href="aboutus.html" >About Us</a></li>
                     <li  style="margin-left:25px"><a href="services.html">Services</a></li>
 	                <li  style="margin-left:25px"><a href="contactus.html">Contact Us</a></li>
-                    <li style="margin-left:25px"><a href="#">Log out</a></li>
+                    <li style="margin-left:25px"><a href="logout.php">Log out</a></li>
 	              </ul>
 	            </div>
 	          </div>
@@ -63,7 +63,7 @@ if($user->data()->groups!=2 || !$user->isLoggedIn())
 					  <li ><a href="managerchartofaccounts.php">Chart of Accounts</a></li>
 					  <li><a href="PostTransactions.php">Post Transactions</a></li>
 					  <li class="active"><a href="ViewOpenTransactions.php">View Open Transactions</a></li>
-                      <li><a href="ViewFinalizedTransactions.html">View Finalized Transactions</a></li>
+                      <li><a href="ViewFinalizedTransactions.php">View Finalized Transactions</a></li>
                       <li><a href="viewreportsmanager.php">Reports</a></li>
                       <li><a href="RatiosManager.php">Ratios</a></li>
                       <li><a href="EventLogM.php">Event Log</a></li>
@@ -71,25 +71,21 @@ if($user->data()->groups!=2 || !$user->isLoggedIn())
 	        	</div>
 	        	<!-- Right side Content Vertical Area -->
 	        	<div class="span8">
-               <form name="form1" method="post" action="" style="margin-left:175px">
+<!--                <form name="form1" method="post" action="" style="margin-left:175px">
 	        	  <span id="sprytextfield1" title="Please Enter An Valid Account ID" >
 	        	    <label for="Username"><h4 style="color:#FFF;">Search:</h4></label>
 	        	    <input type="text" name="Username" id="Username">
 	        	    <span class="textfieldRequiredMsg">A value is required.</span></span>
         	  
               <input name="Sumbit" type="submit" value="Sumbit" class="btn btn-small btn-success" style="margin-top:-10px;">
-              </form> 
+              </form>  -->
                 
-                
-<table id="rounded-corner" summary="2007 Major IT Companies' Profit">
-  <thead> <h3 style="margin-left:190px; color:#FFFFFF">Current Open Transactions</h3>
-    	<tr>
-        	<th scope="col" class="rounded-company">Set Description</th>
-        	<th scope="col" class="rounded-q1">User Added</th>
-            <th scope="col" class="rounded-q3">Date Added</th>
-            <th></th>
-            
-        </tr>
+    <form method='post'>          
+	<table id="rounded-corner" summary="2007 Major IT Companies' Profit">
+	<thead> <h3 style="margin-left:190px; color:#FFFFFF">Current Open Transactions</h3>
+	<input type='date' name='date' style="margin-left:190px">
+	<br>
+    <input type='submit' value='Search' class="btn btn-small btn-success" style="margin-left:190px"></input> 
     </thead>
         
     <tbody>
@@ -102,38 +98,58 @@ if($user->data()->groups!=2 || !$user->isLoggedIn())
 	             die('Could not connect: ' . mysqli_error($con));
 	        }
 
-		    
-		    $result = mysqli_query($con, "SELECT * FROM sets WHERE type='1'");
+	        $result = 'THIS WILL BE A SQL THINGY';
 
-		    if(!$result)
-	        {
-	            die(mysqli_error($con));
-	        }
+		    //Here
+		    if(Input::exists())
+		    {
+		    	$date = Input::get('date');
+		    	$result = mysqli_query($con, "SELECT * FROM sets WHERE type='1' AND date_added LIKE '{$date}%'");
+		    }
+		    else
+		    {
+		    	$result = mysqli_query($con, "SELECT * FROM sets WHERE type='1'");
+		    }
 
-	        while($row = mysqli_fetch_assoc($result))
-	            {
+			if(!$result)
+			{
+				die(mysqli_error($con));
+			}
 
-		    	echo "<tr>";
-	        	echo "<th scope='col' class='rounded-company'>". $row['description'] . "</th>";
-	        	echo "<th scope='col' class='rounded-q2'>". $row['user_added'] . "</th>";
-	            echo "<th scope='col' class='rounded-q1'>". $row['date_added'] . "</th>";
-	             echo "<th></th>";
-	            echo "</tr>";
-	            echo "<tr>";
-	            echo "<th scope='col' class='rounded-q1'>Account Name</th>";
-	            echo "<th scope='col' class='rounded-q1'>DR</th>";
-	            echo "<th scope='col' class='rounded-q1'>CR</th>";
-	            echo "<th scope='col' class='rounded-q1'>File</th>";
-		        echo "</tr>"; 
-	             
-	            $q = mysqli_query($con, "SELECT * FROM transactions WHERE set_id='" . $row['id'] . "'");
+			if(mysqli_num_rows($result) == 0)
+			{
+				die('<h3 style="margin-left:190px; color:#FFFFFF">Cannot find Transactions for this date.</h3>');
+			}
 
-	             while($row2 = mysqli_fetch_assoc($q))
-	             {
-	             	if($row2['type'] == 'debit' || $row2['type'] == 'Debit')
-	             	{
-		             	$account1 = new Account();
-		             	$account1->findByNumber($row2['acct_id']);
+			echo "<tr><th scope='col' class='rounded-company'>Set Description</th>";
+			echo "<th scope='col' class='rounded-q1'>User Added</th>";
+	    	echo "<th scope='col' class='rounded-q3'>Date Added</th>";
+	    	echo "<th></th></tr>";
+
+			while($row = mysqli_fetch_assoc($result))
+			{
+
+				echo "<tr>";
+				echo "<th scope='col' class='rounded-company'>". $row['description'] . "</th>";
+				echo "<th scope='col' class='rounded-q2'>". $row['user_added'] . "</th>";
+				echo "<th scope='col' class='rounded-q1'>". $row['date_added'] . "</th>";
+				echo "<th></th>";
+				echo "</tr>";
+				echo "<tr>";
+				echo "<th scope='col' class='rounded-q1'>Account Name</th>";
+				echo "<th scope='col' class='rounded-q1'>DR</th>";
+				echo "<th scope='col' class='rounded-q1'>CR</th>";
+				echo "<th scope='col' class='rounded-q1'>File</th>";
+				echo "</tr>"; 
+
+				$q = mysqli_query($con, "SELECT * FROM transactions WHERE set_id='" . $row['id'] . "'");
+
+				while($row2 = mysqli_fetch_assoc($q))
+				{
+					if($row2['type'] == 'debit' || $row2['type'] == 'Debit')
+					{
+						$account1 = new Account();
+						$account1->findByNumber($row2['acct_id']);
 
 						echo "<tr>";
 						echo "<td>" . $account1->data()->name . "</td>";
@@ -141,17 +157,17 @@ if($user->data()->groups!=2 || !$user->isLoggedIn())
 						echo "<td></td>";
 						echo "<td><a href='javascript:download(".$row2['trans_id'].")'> ".$row2['file_name']."</a></td>";
 						echo "</tr>";
-	             	}
-	             }
+					}
+				}
 
-	            $q2 = mysqli_query($con, "SELECT * FROM transactions WHERE set_id='" . $row['id'] . "'");
-	             
-	             while($row3 = mysqli_fetch_assoc($q2))
-	             {
-	             	if($row3['type'] == 'credit' || $row3['type'] == 'Credit')
-	             	{
-		             	$account2 = new Account();
-		             	$account2->findByNumber($row3['acct_id']);
+				$q2 = mysqli_query($con, "SELECT * FROM transactions WHERE set_id='" . $row['id'] . "'");
+
+				while($row3 = mysqli_fetch_assoc($q2))
+				{
+					if($row3['type'] == 'credit' || $row3['type'] == 'Credit')
+					{
+						$account2 = new Account();
+						$account2->findByNumber($row3['acct_id']);
 
 						echo "<tr>";
 						echo "<td>" . $account2->data()->name . "</td>";
@@ -159,19 +175,20 @@ if($user->data()->groups!=2 || !$user->isLoggedIn())
 						echo "<td>" . $row3['amount'] . "</td>";
 						echo "<td><a href='javascript:download(".$row3['trans_id'].")'> ".$row3['file_name']."</a></td>";
 						echo "</tr>";
-	             	}
-	             }
+					}
+				}
 
-	             
-	             echo "</tr>";
- 	            }
+				echo "</tr>";
+			}
 
- 	            ?>
+	    
 
-        </tr>
-        
-    </tbody>
-</table>
+			?>
+
+			</tr>
+			</tbody>
+			</table>
+			</form>
 
 
 

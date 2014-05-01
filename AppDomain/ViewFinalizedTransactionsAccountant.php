@@ -70,44 +70,64 @@ if($user->data()->groups!=3 || !$user->isLoggedIn())
                 </div>
                 <!-- Right side Content Vertical Area -->
                 <div class="span8">
-               <form name="form1" method="post" action="" style="margin-left:175px">
+<!--                <form name="form1" method="post" action="" style="margin-left:175px">
                   <span id="sprytextfield1" title="Please Enter An Valid Account ID" >
                     <label for="Username"><h4 style="color:#FFF;">Search:</h4></label>
                     <input type="text" name="Username" id="Username">
                     <span class="textfieldRequiredMsg">A value is required.</span></span>
               
               <input name="Sumbit" type="submit" value="Sumbit" class="btn btn-small btn-success" style="margin-top:-10px;">
-              </form> 
+              </form> --> 
                 
                 
-<table id="rounded-corner">
-  <thead> <h3 style="margin-left:190px; color:#FFFFFF">Posted Transaction Log</h3>
-        <tr>
-            <th scope="col" class="rounded-company">Set Description</th>
-            <th scope="col" class="rounded-q1">User Added</th>
-            <th scope="col" class="rounded-q3">Date Added</th>
-            <th scope="col" class="rounded-q4">Modified By</th>
-            <th scope="col" class="rounded-q5">Date Modified</th>
-            <th scope="col" class="rounded-q6">Comments</th>            
-        </tr>
+    <form method='post'>          
+    <table id="rounded-corner" summary="2007 Major IT Companies' Profit">
+    <input type='date' name='date' style="margin-left:190px">
+    <input type='submit' value='Search' class="btn btn-small btn-success" style="margin-left:190px"></input>
+    <br>
+    <thead> <h3 style="margin-left:190px; color:#FFFFFF">Posted Transaction Log</h3>
+    <br> 
     </thead>
         
     <tbody>
         <?php
             $con = mysqli_connect("localhost","mmollica","Thepw164", "app_domain");
 
+            
+
             if (!$con)
             {
-                 die('Could not connect: ' . mysql_error());
+                 die('SERVER ERROR');
             }
 
-             
-            $result = mysqli_query($con, "SELECT * FROM sets WHERE type='2'");
+            if(Input::exists())
+            {
+                $date = Input::get('date');
+                $result = mysqli_query($con, "SELECT * FROM sets WHERE type='2' AND date_added LIKE '{$date}%'");
+            }
+            else
+            {
+                $result = mysqli_query($con, "SELECT * FROM sets WHERE type='2'");
+            }
 
             if(!$result)
             {
                 die(mysqli_error($con));
             }
+
+
+            if(mysqli_num_rows($result) == 0)
+            {
+                echo '<h3 style="margin-left:190px; color:#FFFFFF">Cannot find Posted Transactions for this date.</h3>';
+            }
+            else
+            {
+                echo "<th scope='col' class='rounded-company'>Set Description</th>";
+            echo "<th scope='col' class='rounded-q1'>User Added</th>";
+            echo "<th scope='col' class='rounded-q3'>Date Added</th>";
+            echo "<th scope='col' class='rounded-q4'>Modified By</th>";
+            echo "<th scope='col' class='rounded-q5'>Date Modified</th>";
+            echo "<th scope='col' class='rounded-q6'>Comments</th>";
 
             while($row = mysqli_fetch_assoc($result))
                 {
@@ -165,14 +185,16 @@ if($user->data()->groups!=3 || !$user->isLoggedIn())
                  echo "</tr>";
                 }
 
-                ?>        
+            }
+
+            ?>        
     </tbody>
 </table>
 
 
 <table id="rounded-corner">
   <thead> <h3 style="margin-left:190px; color:#FFFFFF"> Rejected Transaction Log</h3>
-        <tr>
+<!--         <tr>
             <th scope="col" class="rounded-company">Set Description</th>
             <th scope="col" class="rounded-q1">User Added</th>
             <th scope="col" class="rounded-q3">Date Added</th>
@@ -180,7 +202,7 @@ if($user->data()->groups!=3 || !$user->isLoggedIn())
             <th scope="col" class="rounded-q5">Date Modified</th>
             <th scope="col" class="rounded-q6">Comments</th>
             
-        </tr>
+        </tr> -->
     </thead>
         
     <tbody>
@@ -192,13 +214,35 @@ if($user->data()->groups!=3 || !$user->isLoggedIn())
                  die('Could not connect: ' . mysql_error());
             }
 
+
             
-            $result = mysqli_query($con, "SELECT * FROM sets WHERE type='3'");
+            if(Input::exists())
+            {
+                $date = Input::get('date');
+                $result = mysqli_query($con, "SELECT * FROM sets WHERE type='3' AND date_added LIKE '{$date}%'");
+            }
+            else
+            {
+                $result = mysqli_query($con, "SELECT * FROM sets WHERE type='3'");
+            }
 
             if(!$result)
             {
                 die(mysqli_error($con));
             }
+
+            if(mysqli_num_rows($result) == 0)
+            {
+                echo '<h3 style="margin-left:190px; color:#FFFFFF">Cannot find Posted Transactions for this date.</h3>';
+            }
+            else
+            {
+                echo "<th scope='col' class='rounded-company'>Set Description</th>";
+            echo "<th scope='col' class='rounded-q1'>User Added</th>";
+            echo "<th scope='col' class='rounded-q3'>Date Added</th>";
+            echo "<th scope='col' class='rounded-q4'>Modified By</th>";
+            echo "<th scope='col' class='rounded-q5'>Date Modified</th>";
+            echo "<th scope='col' class='rounded-q6'>Comments</th>";
 
             while($row = mysqli_fetch_assoc($result))
                 {
@@ -250,17 +294,19 @@ if($user->data()->groups!=3 || !$user->isLoggedIn())
                     echo "<td colspan='2'></td>";
                     echo "<td colspan='2' align='center'>" . $row3['amount'] . "</td>";
                     echo "<td><a href='javascript:download(".$row3['trans_id'].")'> ".$row3['file_name']."</a></td>";
-                    echo "</tr>";
                     }
                 }
                  
                  echo "</tr>";
                 }
 
+            }
+
                 ?>
         
     </tbody>
 </table>
+</form>
 
 
 
