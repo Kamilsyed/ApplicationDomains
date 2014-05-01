@@ -18,7 +18,7 @@ if(Input::exists())
 	
 		$validation = $validate->check($_POST, array(
 			'username' => array('required' => true, 'min' => 6, 'max' => 25, 'unique' => 'users', /*'user' => true*/),
-			'password' => array('required' => true, 'min' => 6, 'max' => 25, 'password' => true),
+			'password' => array('required' => true, 'min' => 6, 'max' => 25),
 			'password_again' => array('required' => true, 'matches' => 'password'),
 			'first' => array('required' => true, 'min' => 1, 'max' => 25, 'name' => true),
 			'last' => array('required' => true, 'max' => 25, 'name' => true),
@@ -45,7 +45,7 @@ if(Input::exists())
 				$event = new Event();
 
                 $event->user_event('Created', $user->data()->username, Input::get('username'), Input::get('groups'));
-				Redirect::to('AdminHomepage.php');
+				//Redirect::to('AdminHomepage.php');
 			}
 			catch(Exception $e)
 			{
@@ -66,7 +66,7 @@ if(Input::exists())
 
 <head>
 		<meta charset="utf-8">
-		<title>My First Bootstrap project</title>
+		<title>Create User</title>
 	<link rel="stylesheet" type="text/css" href="bootstrap.css">
     <style>
 	body{
