@@ -86,7 +86,7 @@ if($user->data()->groups!=2 || !$user->isLoggedIn())
 					  <li class="nav-header">Features</li>
 					  <li class="active"><a href="managerchartofaccounts.php">Chart of Accounts</a></li>
 					  <li><a href="PostTransactions.php">Post Transactions</a></li>
-                      <li><a href="edittransactions.html">Edit Transactions</a></li>
+                      <li><a href="edittransactions.php">Edit Transactions</a></li>
                       <li><a href="ViewOpenTransactions.php">View Open Transactions</a></li>
                       <li><a href="ViewFinalizedTransactions.php">View Finalized Transactions</a></li>
                       <li><a href="viewreportsmanager.php">Reports</a></li>
@@ -96,7 +96,7 @@ if($user->data()->groups!=2 || !$user->isLoggedIn())
 					  
 					</ul>
 	        	</div>
-            
+        
             <form name="form1" method="post" action="managersearchpage.php" style="margin-left:650px">
 	        	  <span id="sprytextfield1" title="Please Enter An Valid Account ID" >
 	        	    <input type="text" name="searchid" id="Username" 	>
@@ -105,7 +105,7 @@ if($user->data()->groups!=2 || !$user->isLoggedIn())
               <input name="Sumbit" type="submit" value="Search" class="btn btn-small btn-success" style="margin-top:-10px;">
               </form> 
               
-	        <div class="hero-unit" style="background-color:#000;">
+	       
             	
                 <h2 style="margin:auto; color:#FFFFFF;"><blockquote style="background-color:#000000; color:#FFFFFF; ">Chart Of Accounts</blockquote></h2>
                 <br>
@@ -152,34 +152,7 @@ if($user->data()->groups!=2 || !$user->isLoggedIn())
         ?>
     </tbody>
 </table>
-              </div>
-	        <!-- Footer Section -->
-	       <hr>
-	          <div class="row">
-				<div class="span4">
-					
-					<p></p>
-					
-				</div>
-				<div class="span4">
-					
-					<p></p>
-					
-				</div>
-				<div class="span4">
-				
-					<p></p>
-					
-				</div>
-			</div>
-			<!-- Copyright Area -->
-			<hr>
-			<div class="footer">
-            <div class="hero-unit">
-            
-				<p>&copy; 2013</p>
-			</div>
-            </div>
+             
 		</div>
 
 		<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>

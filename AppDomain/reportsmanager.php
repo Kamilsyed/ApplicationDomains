@@ -60,59 +60,7 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 
 
 
-    if(!$result)
-        {
-       		die(mysqli_error($con));
-        }
-		
-	if(!$result2)
-        {
-        die(mysqli_error($con));
-        }
-		
-	if(!$result3)
-        {
-        die(mysqli_error($con));
-        }
-		
-	if(!$result4)
-        {
-        die(mysqli_error($con));
-        }
-		
-	if(!$result5)
-        {
-        die(mysqli_error($con));
-        }
-		
-	if(!$result6)
-        {
-        die(mysqli_error($con));
-        }
-		
-	if(!$result7)
-        {
-        die(mysqli_error($con));
-        }
-		
-	if(!$result8)
-        {
-        die(mysqli_error($con));
-        }
-	if(!$result9)
-        {
-        die(mysqli_error($con));
-        }
-    
-		if(!$result10)
-        {
-        die(mysqli_error($con));
-        }
-		
-		if(!$result11)
-        {
-        die(mysqli_error($con));
-        }
+
     
 ?>
 <head>
@@ -176,13 +124,14 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 	        	<div class="span4">
 	        		<ul class="nav nav-list">
 					  <li class="nav-header">Features</li>
-					  <li><a href="managerchartofaccounts.php">Chart of Accounts</a></li>
-					  <li><a href="PostTransactions.html">Post Transactions</a></li>
-					  <li><a href="ViewOpenTransactions.php">Open Transactions</a></li>
-                      <li><a href="ViewFinalizedTransactions.php">Final Transactions</a></li>
+					    <li ><a href="managerchartofaccounts.php">Chart of Accounts</a></li>
+					  <li><a href="PostTransactions.php">Post Transactions</a></li>
+					  <li><a href="edittransactions.php">Edit Transactions</a></li>
+					  <li><a href="ViewOpenTransactions.php">View Open Transactions</a></li>
+                      <li><a href="ViewFinalizedTransactions.php">View Finalized Transactions</a></li>
                       <li class="active"><a href="viewreportsmanager.php">Reports</a></li>
                       <li><a href="RatiosManager.php">Ratios</a></li>
-                      <li><a href="EventLogM.php">Events</a></li>
+                      <li><a href="EventLogM.php">Event Log</a></li>
 					  
 					</ul>
 	        	</div>

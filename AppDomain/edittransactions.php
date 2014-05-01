@@ -1,14 +1,53 @@
 <?php
+ini_set('display_startup_errors', TRUE);
+ini_set('display_errors',1); 
+error_reporting(E_ALL);
 require_once 'core/init.php';
 $user = new User();
 if($user->data()->groups!=2 || !$user->isLoggedIn())
 {
 	Redirect::to('index.php');
 }
+$con = mysqli_connect("localhost","mmollica","Thepw164", "app_domain");
+
+		    if (!$con)
+	        {
+	             die('Could not connect: ' . mysqli_error($con));
+	        }
+if(Input::exists())
+{
+
+$id = Input::get('id');
+$count = count($id);
+
+	for($y = 0; $y < $count; $y++)
+	    {
+	    	
+	    	$id = Input::get('id');
+	    	$amount = Input::get('amount');
+
+	    	if(is_numeric($amount[$y]))
+	        {
+	            if(isset($amount[$y]))
+	            {
+	              $amount = $amount[$y];
+	            }
+	            if(isset($id[$y]))
+	            {
+	              $id = $id[$y];
+	            }
+				$check = mysqli_query($con,"SELECT * FROM transactions WHERE trans_id = $id");
+				if(mysqli_fetch_assoc($check)==true)
+	            {
+	              $update = mysqli_query($con, "UPDATE transactions SET amount='$amount' WHERE trans_id= $id");  
+	            }
+	        }
+	    }
+}
 ?>
 <head>
 		<meta charset="utf-8">
-		<title>My First Bootstrap project</title>
+		<title>Edit Transactions</title>
 	<link rel="stylesheet" type="text/css" href="bootstrap.css">
     <style>
 	body{
@@ -30,6 +69,7 @@ if($user->data()->groups!=2 || !$user->isLoggedIn())
             {
                 window.open ("download.php?fileId="+id, "hiddenFrame");
             }
+
 </script>
 </head>
 <body>
@@ -62,8 +102,8 @@ if($user->data()->groups!=2 || !$user->isLoggedIn())
 					  <li class="nav-header">Features</li>
 					  <li ><a href="managerchartofaccounts.php">Chart of Accounts</a></li>
 					  <li><a href="PostTransactions.php">Post Transactions</a></li>
-					  <li><a href="edittransactions.php">Edit Transactions</a></li>
-					  <li class="active"><a href="ViewOpenTransactions.php">View Open Transactions</a></li>
+					  <li class="active"><a href="edittransactions.php">Edit Transactions</a></li>
+					  <li><a href="ViewOpenTransactions.php">View Open Transactions</a></li>
                       <li><a href="ViewFinalizedTransactions.php">View Finalized Transactions</a></li>
                       <li><a href="viewreportsmanager.php">Reports</a></li>
                       <li><a href="RatiosManager.php">Ratios</a></li>
@@ -78,7 +118,7 @@ if($user->data()->groups!=2 || !$user->isLoggedIn())
 	        	    <input type="text" name="Username" id="Username">
 	        	    <span class="textfieldRequiredMsg">A value is required.</span></span>
         	  
-              <input name="Sumbit" type="submit" value="Sumbit" class="btn btn-small btn-success" style="margin-top:-10px;">
+              <input name="Submit" type="submit" value="Submit" class="btn btn-small btn-success" style="margin-top:-10px;">
               </form> 
                 
                 
@@ -89,21 +129,16 @@ if($user->data()->groups!=2 || !$user->isLoggedIn())
         	<th scope="col" class="rounded-q1">User Added</th>
             <th scope="col" class="rounded-q3">Date Added</th>
             <th></th>
+            <th></th>
             
         </tr>
     </thead>
         
     <tbody>
     	<tr>
+    		<form enctype="multipart/form-data" action="" method="post" onsubmit ="checkNegativeValue()">
     		<?php
-			$con = mysqli_connect("localhost","mmollica","Thepw164", "app_domain");
-
-		    if (!$con)
-	        {
-	             die('Could not connect: ' . mysqli_error($con));
-	        }
-
-		    
+			
 		    $result = mysqli_query($con, "SELECT * FROM sets WHERE type='1'");
 
 		    if(!$result)
@@ -118,13 +153,16 @@ if($user->data()->groups!=2 || !$user->isLoggedIn())
 	        	echo "<th scope='col' class='rounded-company'>". $row['description'] . "</th>";
 	        	echo "<th scope='col' class='rounded-q2'>". $row['user_added'] . "</th>";
 	            echo "<th scope='col' class='rounded-q1'>". $row['date_added'] . "</th>";
-	             echo "<th></th>";
+	            echo "<th></th>";
+	            echo "<th></th>";
+	            
 	            echo "</tr>";
 	            echo "<tr>";
 	            echo "<th scope='col' class='rounded-q1'>Account Name</th>";
 	            echo "<th scope='col' class='rounded-q1'>DR</th>";
 	            echo "<th scope='col' class='rounded-q1'>CR</th>";
 	            echo "<th scope='col' class='rounded-q1'>File</th>";
+	            echo "<th scope='col' class='rounded-q1'>New Amount</th>";
 		        echo "</tr>"; 
 	             
 	            $q = mysqli_query($con, "SELECT * FROM transactions WHERE set_id='" . $row['id'] . "'");
@@ -135,12 +173,14 @@ if($user->data()->groups!=2 || !$user->isLoggedIn())
 	             	{
 		             	$account1 = new Account();
 		             	$account1->findByNumber($row2['acct_id']);
-
+		             	$id = $row2['trans_id'];
 						echo "<tr>";
 						echo "<td>" . $account1->data()->name . "</td>";
 						echo "<td>" . $row2['amount'] . "</td>";
 						echo "<td></td>";
 						echo "<td><a href='javascript:download(".$row2['trans_id'].")'> ".$row2['file_name']."</a></td>";
+						echo '<td><input id="amount" name="amount[]" type="text"size="4" onkeyup="checkNegativeValue()"></td>';
+						echo "<input name='id[]' value='" . $id . "' type='hidden' >";
 						echo "</tr>";
 	             	}
 	             }
@@ -153,22 +193,26 @@ if($user->data()->groups!=2 || !$user->isLoggedIn())
 	             	{
 		             	$account2 = new Account();
 		             	$account2->findByNumber($row3['acct_id']);
-
+		             	$id = $row3['trans_id'];
 						echo "<tr>";
 						echo "<td>" . $account2->data()->name . "</td>";
 						echo "<td></td>";
 						echo "<td>" . $row3['amount'] . "</td>";
 						echo "<td><a href='javascript:download(".$row3['trans_id'].")'> ".$row3['file_name']."</a></td>";
+						echo '<td><input id="amount" name="amount[]" type="text"size="4" onkeyup="checkNegativeValue()"></td>';
+						echo "<input name='id[]' value='" . $id . "' type='hidden' >";
 						echo "</tr>";
 	             	}
 	             }
 
 	             
 	             echo "</tr>";
+
  	            }
-
+ 	            echo '<input name"add" type="submit" value="Update Amount(s)" class="btn btn-med btn-success">';
+ 	            
  	            ?>
-
+ 	        </form>;
         </tr>
         
     </tbody>
@@ -201,11 +245,19 @@ if($user->data()->groups!=2 || !$user->isLoggedIn())
 
 			<!-- Copyright Area -->
 			<hr>
-			<div class="footer">
-				<p>&copy; 2013</p>
-			</div>
+		
 		</div>
-
+<script>
+function checkNegativeValue()
+{
+  var value = parseFloat(document.getElementById("amount").value);
+  if(value<0)
+  {
+   alert("Negative Value is not allowed.");
+   return false;
+  }
+}
+</script>
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <script scr="js/bootstrap.js">
 var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1");

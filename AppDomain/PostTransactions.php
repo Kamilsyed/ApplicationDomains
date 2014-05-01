@@ -125,7 +125,7 @@ if(Input::exists())
 					  <li class="nav-header">Features</li>
 					  <li ><a href="managerchartofaccounts.php">Chart of Accounts</a></li>
 					  <li class="active"><a href="PostTransactions.php">Post Transactions</a></li>
-                       <li ><a href="edittransactions.html">Edit Transactions</a></li>
+                       <li ><a href="edittransactions.php">Edit Transactions</a></li>
 					  <li><a href="ViewOpenTransactions.php">View Open Transactions</a></li>
                       <li ><a href="ViewFinalizedTransactions.php"> View Finalized Transactions</a></li>
                       <li><a href="viewreportsmanager.php">Reports</a></li>
