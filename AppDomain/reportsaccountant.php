@@ -5,7 +5,7 @@ error_reporting(E_ALL);
 
 require_once 'core/init.php';
 $user = new User();
-if($user->data()->groups!=3 || !$user->isLoggedIn())
+if(!$user->data()->groups==3 || !$user->isLoggedIn())
 {
 	Redirect::to('index.php');
 }
@@ -20,6 +20,7 @@ if($user->data()->groups!=3 || !$user->isLoggedIn())
         }
 
   
+	 
 	 
 	$todate=$_POST["todate"] . "23:59:59";
 	$header=$_POST["todate"]. "23:59:59";
@@ -47,7 +48,7 @@ $result5 = mysqli_query($con, "SELECT * FROM accounts WHERE type='Operating Reve
 
 $result6 = mysqli_query($con, "SELECT * FROM accounts WHERE name LIKE '%Goods Sold%' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
 
-$result7 = mysqli_query($con, "SELECT * FROM accounts WHERE type='Operating Expenses' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
+$result7 = mysqli_query($con, "SELECT * FROM accounts WHERE type='Operating Expenses' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' AND name !='Cost of Goods Sold' ");
 
 $result8 = mysqli_query($con, "SELECT * FROM accounts WHERE type='Non-Operating Revenue' AND name !='Sales Discounts' AND name !='Sales Returns and Allowances' AND   date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
 
@@ -56,7 +57,6 @@ $result9 = mysqli_query($con, "SELECT * FROM accounts WHERE type='Non-Operating 
 $result10 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Sales Returns and Allowances' OR name='Sales Discounts' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
 
 $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Returns and Allowances' OR name='Purchase Discounts' AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
-
 
 
 
@@ -264,8 +264,8 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 			
   		echo "<tr>";
         echo '<th align="left">' . '<b>' . 'Total:' . '</b>' . "</th>";
-        echo "<td  align=right style='border-bottom: 1 px'>" . '<b>' . number_format($totaldebit,2) . '</b>' . "</td>";
-		echo "<td  align=right>" . '<b>' . number_format($totalcredit,2) . '</b>' . "</td>";
+        echo "<td  align=right>" . '<u style="text-decoration:underline; border-bottom: 1px double #000;">' . number_format($totaldebit,2) . '</u>' . "</td>";
+		echo "<td  align=right>" . '<u style="text-decoration:underline; border-bottom: 1px double #000;">' . number_format($totalcredit,2) . '</u>' . "</td>";
         echo "</table>";        
        
         
@@ -295,12 +295,12 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 			
 		
 			 echo "<tr>";
-             echo '<td align="left">' . '<b>' . 'Assets' . '</b>' . "</td>";
+             echo '<td align="left" style="font-size:20px">' . '<b>' . 'Assets' . '</b>' . "</td>";
 			 echo '<td align="center">' . '&nbsp' . "</td>";       
              echo "</tr>";
 			 
 			 echo "<tr>";
-             echo '<td align="left">'  . 'Current Assets:' .  "</td>";
+             echo '<td align="left" style="font-size:16px">'  . '<b>' .  'Current Assets:' . '</b>' .  "</td>";
 			 echo '<td align="center">' . '&nbsp;' . "</td>";       
              echo "</tr>";
 			 
@@ -354,7 +354,7 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 		
 		
 		 echo "<tr>";
-             echo '<td align="left">'  . 'Long Term Assets:' .  "</td>";
+             echo '<td align="left" style="font-size:16px">'  . '<b>' .  'Long-Term Assets:' . '</b>' .  "</td>";
 			 echo '<td align="center">' . '&nbsp;' . "</td>";       
              echo "</tr>";
 		
@@ -388,7 +388,7 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 				
   		echo "<tr>";
         echo '<td align="left">' . '&nbsp;&nbsp;&nbsp;&nbsp;'  . 'Total assets' . "</td>";
-        echo '<td align="right">' .'<u>' .'$' . number_format($totalassets,2) . '</u>' .  "</td>";
+        echo '<td align="right">' .'<u style="text-decoration:underline; border-bottom: 1px double #000;">' .'$' . number_format($totalassets,2) . '</u>' .  "</td>";
         echo "</tr>";
 		   
         echo '<tr><td>&nbsp;</td><td>&nbsp;</td></tr>';
@@ -402,12 +402,12 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 		
 		
 			 echo "<tr>";
-             echo '<td align="left">' . '<b>' . 'Liabilities' . '</b>' . "</td>";
+               echo '<td align="left" style="font-size:20px">' . '<b>' . ' Liabilities' . '</b>' . "</td>";
 			 echo '<td align="center">' . '&nbsp' . "</td>";       
              echo "</tr>";
 			 
 			 echo "<tr>";
-             echo '<td align="left">'  . 'Current Liabilities:' .  "</td>";
+             echo '<td align="left" style="font-size:16px">'  . '<b>' .  'Current Liabilities:' . '</b>' .  "</td>";
 			 echo '<td align="center">' . '&nbsp;' . "</td>";       
              echo "</tr>";
 		
@@ -458,7 +458,7 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 		
 		
 		 echo "<tr>";
-             echo '<td align="left">'  . 'Long Term Liabilities:' .  "</td>";
+              echo '<td align="left" style="font-size:16px">'  . '<b>' .  'Long-Term Liabilities:' . '</b>' .  "</td>";
 			 echo '<td align="center">' . '&nbsp;' . "</td>";       
              echo "</tr>";
 		
@@ -493,14 +493,14 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 				
   		echo "<tr>";
         echo '<td align="left">' . '&nbsp;&nbsp;&nbsp;&nbsp;'  . 'Total liabilties' . "</td>";
-        echo '<td align="right">' .'$' . number_format($totallib,2) .  "</td>";
+        echo '<td align="right">' . '<u style="text-decoration:underline; border-bottom: 1px double #000;">' .'$' . number_format($totallib,2) . '</u>' .  "</td>";
         echo "</tr>";
 		
 		
 		echo '<tr><td>&nbsp;</td><td>&nbsp;</td></tr>';
 		
 			 echo "<tr>";
-             echo '<td align="left">' .'<b>' . "Stockholder's Equity:"  . '</b>' . "</td>";
+             echo '<td align="left" style="font-size:20px">' . '<b>' . "Stockholder's Equity" . '</b>' . "</td>";
 			 echo '<td align="right">' . '&nbsp' . "</td>";       
              echo "</tr>";
 			 
@@ -543,7 +543,7 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 		
 		echo "<tr>";
         echo '<td align="left">' . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . "Total Liabilities &amp; Stockholder's Equity:" . "</td>";
-         echo '<td align="right">' .'<u>' .'$' . number_format($totalrightside,2) . '</u>' .  "</td>";
+         echo '<td align="right">' .'<u style="text-decoration:underline; border-bottom: 1px double #000;">' .'$' . number_format($totalrightside,2) . '</u>' .  "</td>";
         echo "</tr>";      
         
         
@@ -619,13 +619,13 @@ echo '<table id="rounded-corner" summary="2007 Major IT Companies Profit">';
         $grossprofit=($operatingrev-$cost);
 		
         echo "<tr>";
-        echo '<td align="left">'  . 'Gross Profit' . "</td>";
+        echo '<td align="left" style="font-size:16px">' . 'Gross Profit' . "</td>";
 		echo '<td></td>';
         echo '<td align="right">' . '&nbsp;&nbsp;' .'<u>'  . number_format($grossprofit,2) .  '</u>' . "</td>";
         echo "</tr>";  
         
         echo '<tr>';
-		echo '<td align="left">'  . 'Operating Expenses:' . "</td>";
+		echo '<td align="left" style="font-size:16px">'  . 'Operating Expenses:' . "</td>";
         echo '<td></td>';
 		echo '<td></td>';
 		echo '</tr>';
@@ -682,14 +682,14 @@ echo '<table id="rounded-corner" summary="2007 Major IT Companies Profit">';
 		 
 		$operatingincome=$grossprofit-$operatingexp;
 		echo "<tr>";
-        echo '<td align="left">' . 'Operating Income' . "</td>";
+        echo '<td align="left" style="font-size:16px">' . 'Operating Income' . "</td>";
 		echo '<td></td>';
         echo '<td align="right">' .  number_format($operatingincome,2)  . "</td>";
         echo "</tr>";
 		
 		
 		echo "<tr>";
-        echo '<td align="left">' . 'Non Operating Revenue:' . "</td>";
+        echo '<td align="left" style="font-size:16px">' . 'Non Operating Revenue:' . "</td>";
 		echo '<td></td>';
         echo '<td></td>';
         echo "</tr>";
@@ -711,7 +711,7 @@ echo '<table id="rounded-corner" summary="2007 Major IT Companies Profit">';
 	
 		
        echo "<tr>";
-        echo '<td align="left">' . 'Non Operating Expenses:' . "</td>";
+        echo '<td align="left" style="font-size:16px">' . 'Non Operating Expenses:' . "</td>";
 		echo '<td></td>';
         echo '<td></td>';
         echo "</tr>";
@@ -722,6 +722,7 @@ echo '<table id="rounded-corner" summary="2007 Major IT Companies Profit">';
         while($row = mysqli_fetch_assoc($result9))
         {
 			        	if($count11==1)
+
 		{
         	echo '<tr>';
         
@@ -774,14 +775,14 @@ echo '<table id="rounded-corner" summary="2007 Major IT Companies Profit">';
 		        echo '<tr>';
 				if( $netincome < 0)
 				{
-				echo '<td align="left"><b>Net Income{Loss}</b></td>';
+				echo '<td align="left" style="font-size:16px">' . '<b>Net Income{Loss}</b></td>';
 				}
 				else
 				{
-					echo '<td align="left"><b>Net Income</b></td>';	
+					echo '<td align="left" style="font-size:16px">' . '<b>Net Income</b></td>';	
 				}
 				echo '<td></td>';
-				echo '<td align="right">' . '<u>' .'$'  . number_format($netincome,2)  . '</u>' . "</td>";
+				echo '<td align="right">' . '<u style="text-decoration:underline; border-bottom: 1px double #000;">' .'$'  . number_format($netincome,2)  . '</u>' . "</td>";
 				echo '</tr>';
 				
 		echo '</tbody>';
@@ -790,7 +791,70 @@ echo '</table>';
 
 break;
 	
-	
+	case 'Cashflow':
+
+		echo '<table id="rounded-corner" summary="Cash Flow">';
+ 	    echo '<thead>';
+         echo '<tr>';
+            echo '<th scope="col" class="rounded-company" align="center" colspan="3"> <b>Astute Solutions<br>Cash Flow<br> As of ' . $hea. '</b></th>';
+         echo '</tr>';
+     echo '</thead>';
+     echo '<tbody>';
+
+        	 echo "<th scope='col' class='rounded-q1'>Account Name</th>";
+	         echo "<th scope='col' class='rounded-q1'>DR</th>";
+	         echo "<th scope='col' class='rounded-q1'>CR</th>";
+	         
+        
+
+     	$setid=0;
+     	while($row = mysqli_fetch_assoc($result12))
+     	{
+     		$setid=$row['set_id'];
+     		$result13 = mysqli_query($con, "SELECT * FROM sets WHERE id=$setid AND type=2");
+     		while($row2 = mysqli_fetch_assoc($result13))
+     		{
+     			$setid=$row2['id'];
+     			$result14 = mysqli_query($con, "SELECT * FROM transactions WHERE set_id=$setid AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
+     			while($row3 = mysqli_fetch_assoc($result14))
+     			{
+     				if($row3['type'] == 'debit' || $row3['type'] == 'Debit')
+	             	{
+		             	$account1 = new Account();
+		             	$account1->findByNumber($row2['acct_id']);
+
+						echo "<tr>";
+						echo "<td>" . $account1->data()->name . "</td>";
+						echo "<td>" . $row2['amount'] . "</td>";
+						echo "<td></td>";
+						echo "</tr>";
+	             	}
+	             	elseif($row3['type'] == 'credit' || $row3['type'] == 'Credit')
+	             	{
+		             	$account2 = new Account();
+		             	$account2->findByNumber($row3['acct_id']);
+
+						echo "<tr>";
+						echo "<td>" . $account2->data()->name . "</td>";
+						echo "<td></td>";
+						echo "<td>" . $row3['amount'] . "</td>";
+						echo "</tr>";
+	             	}
+     			}
+     		}
+     	}
+     	$result15 = mysqli_query($con, "SELECT * FROM accounts WHERE number=100000000");
+     	while($row4 = mysqli_fetch_assoc($result15))
+     	{
+	     	echo "<tr>";
+			echo "<td>Total in Cash</td>";
+			echo "<td></td>";
+			echo "<td>" . $row4['balance'] . "</td>";
+			echo "</tr>";
+		}
+     echo '</tbody>';
+     echo '</table>';
+	break;
  
  }
 		 ?>
