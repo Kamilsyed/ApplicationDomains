@@ -312,7 +312,7 @@ class Event
 
 				while($row = mysqli_fetch_assoc($results))
 				{
-					echo "<tr name='event[]' value='". $row['id'] ."'>";
+					echo "<tr>";
 					echo "<td>". $row['id'] . "</td>";
 					echo "<td>". $row['description'] ."</td>";
 					echo "<td>". $row['user'] ."</td>";
@@ -321,6 +321,7 @@ class Event
 					echo "<td>". $row['comments'] ."</td>";
 					echo "<input type='checkbox' name='check[]' value='flag'>Flag Event</input>";
 					echo "<input type='text' name='comment[]'></input>";
+					echo "<input type='hidden' name='event[]' value='". $row['id']."'";
 					echo "</tr>";
 				}
 
@@ -340,12 +341,7 @@ class Event
 		$con = mysqli_connect("localhost","mmollica","Thepw164","app_domain");
 
 		if(!$con) {throw new Exception('Server connection failed. See host if issue persists.');}
-		echo $id;
-		echo "<br />";
-		echo $flag;
-		echo "<br />";
-		echo $comment;
-		echo "<br />";
+
 		$query = "UPDATE events SET flag=$flag, comments=$comment WHERE id=$id";
 
 		$results = mysqli_query($con, $query);

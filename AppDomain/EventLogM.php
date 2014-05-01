@@ -7,7 +7,6 @@ if($user->data()->groups!=2 || !$user->isLoggedIn())
 }
 
 ?>
-?>
 <head>
 		<meta charset="utf-8">
 		<title>Event Log - Manager</title>

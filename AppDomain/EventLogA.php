@@ -7,7 +7,6 @@ if($user->data()->groups != 1 || !$user->isLoggedIn())
 }
 
 ?>
-?>
 
 <head>
 		<meta charset="utf-8">
