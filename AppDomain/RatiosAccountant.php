@@ -197,7 +197,7 @@ if($user->data()->groups!=3 || !$user->isLoggedIn())
 			
 			if($CLSUM!=0)
 			{
-				$result3=$CASUM-$InvAmount/$CLSUM;
+				$result3=($CASUM-$InvAmount)/$CLSUM;
 				$result3=number_format($result3, 2);
 				echo "<tr>";
 				echo "<td>Quick Ratio</td>";
