@@ -5,7 +5,7 @@ error_reporting(E_ALL);
 
 require_once 'core/init.php';
 $user = new User();
-if(!$user->data()->groups==2 || !$user->isLoggedIn())
+if($user->data()->groups!=2 || !$user->isLoggedIn())
 {
 	Redirect::to('index.php');
 }
@@ -111,6 +111,7 @@ $result12 = mysqli_query($con, "SELECT * FROM transactions WHERE acct_id=1000000
                <option value="TrialBalance" >Trial Balance</option>
                <option value="BalanceSheet">Balance Sheet</option>
                <option value="IncomeStatement">Income Statement</option>
+               <option value="Cashflow">Cash Flow Statement</option>
                </select>
 	           <span class="selectRequiredMsg">Please select an item.</span></span>
                <input type="date" name="todate">
@@ -144,7 +145,7 @@ $result12 = mysqli_query($con, "SELECT * FROM transactions WHERE acct_id=1000000
  
  switch($report)
  {   
- 	case "TrialBalance": 
+ 	case "BalanceSheet": 
 	
 	
 	echo ' <table id="rounded-corner" summary="Trial Balance"> ';
@@ -225,13 +226,13 @@ $result12 = mysqli_query($con, "SELECT * FROM transactions WHERE acct_id=1000000
 		
 		break;
  
- 		case "BalanceSheet":
+ 		case "TrialBalance":
 		
 		
 		echo '<table id="rounded-corner" summary="Balance Sheet">';
  	    echo '<thead>';
          echo '<tr>';
-            echo '<th scope="col" class="rounded-company" align="center" colspan="2"> <b>Astute Solutions<br>Balance Sheet<br> As of ' . $hea. '</b></th>';
+            echo '<th scope="col" class="rounded-company" align="center" colspan="2"> <b>Astute Solutions<br>Trial Balance<br> As of ' . $hea. '</b></th>';
            
           
          echo '</tr>';

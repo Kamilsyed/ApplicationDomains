@@ -5,7 +5,7 @@ error_reporting(E_ALL);
 
 require_once 'core/init.php';
 $user = new User();
-if(!$user->data()->groups==3 || !$user->isLoggedIn())
+if($user->data()->groups!=3 || !$user->isLoggedIn())
 {
 	Redirect::to('index.php');
 }
@@ -61,60 +61,6 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 $result12 = mysqli_query($con, "SELECT * FROM transactions WHERE acct_id=100000000 AND  date_added >= '2014-01-15 0:00:00'  AND date_added < '$todate' ");
 
 
-    if(!$result)
-        {
-       		die(mysqli_error($con));
-        }
-		
-	if(!$result2)
-        {
-        die(mysqli_error($con));
-        }
-		
-	if(!$result3)
-        {
-        die(mysqli_error($con));
-        }
-		
-	if(!$result4)
-        {
-        die(mysqli_error($con));
-        }
-		
-	if(!$result5)
-        {
-        die(mysqli_error($con));
-        }
-		
-	if(!$result6)
-        {
-        die(mysqli_error($con));
-        }
-		
-	if(!$result7)
-        {
-        die(mysqli_error($con));
-        }
-		
-	if(!$result8)
-        {
-        die(mysqli_error($con));
-        }
-	if(!$result9)
-        {
-        die(mysqli_error($con));
-        }
-    
-		if(!$result10)
-        {
-        die(mysqli_error($con));
-        }
-		
-		if(!$result11)
-        {
-        die(mysqli_error($con));
-        }
-    
 ?>
 
 <head>
@@ -165,6 +111,7 @@ $result12 = mysqli_query($con, "SELECT * FROM transactions WHERE acct_id=1000000
                <option value="TrialBalance" >Trial Balance</option>
                <option value="BalanceSheet">Balance Sheet</option>
                <option value="IncomeStatement">Income Statement</option>
+               <option value="Cashflow">Cash Flow Statement</option>
                </select>
 	           <span class="selectRequiredMsg">Please select an item.</span></span>
                <input type="date" name="todate">
@@ -194,7 +141,7 @@ $result12 = mysqli_query($con, "SELECT * FROM transactions WHERE acct_id=1000000
  
  switch($report)
  {   
- 	case "TrialBalance": 
+ 	case "BalanceSheet": 
 	
 	
 	echo ' <table id="rounded-corner" summary="Trial Balance"> ';
@@ -275,13 +222,13 @@ $result12 = mysqli_query($con, "SELECT * FROM transactions WHERE acct_id=1000000
 		
 		break;
  
- 		case "BalanceSheet":
+ 		case "TrialBalance":
 		
 		
 		echo '<table id="rounded-corner" summary="Balance Sheet">';
  	    echo '<thead>';
          echo '<tr>';
-            echo '<th scope="col" class="rounded-company" align="center" colspan="2"> <b>Astute Solutions<br>Balance Sheet<br> As of ' . $hea. '</b></th>';
+            echo '<th scope="col" class="rounded-company" align="center" colspan="2"> <b>Astute Solutions<br>Trial Balance<br> As of ' . $hea. '</b></th>';
            
           
          echo '</tr>';
