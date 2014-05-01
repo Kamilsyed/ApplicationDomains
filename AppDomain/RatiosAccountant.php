@@ -33,7 +33,7 @@ if($user->data()->groups!=3 || !$user->isLoggedIn())
 
 <head>
 		<meta charset="utf-8">
-		<title>My First Bootstrap project</title>
+		<title>Ratios</title>
 	<link rel="stylesheet" type="text/css" href="bootstrap.css">
     <style>
 	body{

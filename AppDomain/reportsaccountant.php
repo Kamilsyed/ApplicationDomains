@@ -225,7 +225,7 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
              echo '<td align="left">' . $row['name'] . "</td>";
              $side= $row['normal'];
              
-			   if($side=="Debit" && $dcount==1)
+			   if($side=="debit" && $dcount==1)
              {
              	echo '<td align="right">' .'$' . number_format($row['balance'],2) . "</td>";
                 echo '<td align="center">' . '&nbsp;' . "</td>";
@@ -234,7 +234,7 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
              }
              
              
-             else if($side=="Credit" && $count==1)
+             else if($side=="credit" && $count==1)
              {
 				echo '<td align="center">' . '&nbsp;' . "</td>";             
              	echo '<td align="right">' .'$' . number_format($row['balance'],2) . "</td>";
@@ -242,14 +242,14 @@ $result11 = mysqli_query($con, "SELECT * FROM accounts WHERE name='Purchase Retu
 				$count++;
              }
 			 
-			  if($side=="Debit" && $dcount > 2 )
+			  if($side=="debit" && $dcount > 2 )
              {
              	echo '<td align="right">' . number_format($row['balance'],2) . "</td>";
                 echo '<td align="center">' . '&nbsp;' . "</td>";
                 $totaldebit+= $row['balance'];
              }
 			 
-			  if($side=="Credit" && $count > 2)
+			  if($side=="credit" && $count > 2)
              {
 				echo '<td align="center">' . '&nbsp;' . "</td>";             
              	echo '<td align="right">' . number_format($row['balance'],2) . "</td>";
